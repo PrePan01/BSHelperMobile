@@ -1,82 +1,122 @@
 <template>
-  <div id="app">
-    <a-layout id="components-layout-demo-custom-trigger">
-      <a-layout-sider v-model="collapsed" :trigger="null" collapsible>
-        <div class="logo">PrePan小助手</div>
+  <div>
+    <a-layout id="components-layout-demo-side" style="min-height: 100vh">
+      <a-layout-sider v-model="collapsed" collapsible @collapse="changeLogoClass" width="230">
+        <div :class="logoClass" class="logo" @click="toDefault">PrePan小助手</div>
         <a-menu theme="dark" mode="inline">
           <a-menu-item key="1" @click="cmd">
-            <a-icon type="customer-service" />
+            <a-icon type="pie-chart" />
             <span>网易云音频下载</span>
           </a-menu-item>
           <a-menu-item key="2" @click="mt">
-            <a-icon type="message" />
-            <span>组队小助手</span>
+            <a-icon type="desktop" />
+            <span>组队小助手（开发中）</span>
           </a-menu-item>
         </a-menu>
       </a-layout-sider>
+
       <a-layout>
         <a-layout-header style="background: #fff; padding: 0">
-          <a-icon
-              class="trigger"
-              :type="collapsed ? 'menu-unfold' : 'menu-fold'"
-              @click="() => (collapsed = !collapsed)"
-          />
+          <a-alert message="未适配移动端，建议使用PC访问" type="info" show-icon closable/>
         </a-layout-header>
-        <a-layout-content
-            :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }"
-        >
-          <router-view></router-view>
+        <a-layout-content style="margin: 0 16px">
+          <a-breadcrumb style="margin: 16px 0">
+            <!--<a-breadcrumb-item>User</a-breadcrumb-item>
+            <a-breadcrumb-item>Bill</a-breadcrumb-item>-->
+          </a-breadcrumb>
+          <div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
+            <router-view></router-view>
+          </div>
         </a-layout-content>
       </a-layout>
     </a-layout>
+
+    <Suggestion class="Suggestion"></Suggestion>
+
+    <div class="backTop">
+      <a-back-top />
+    </div>
   </div>
+
 </template>
 
 <script>
+import Suggestion from "@/components/Suggestion";
+
+//百度统计
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?fb1e2c3d5ac65a2dbdd77d08a2397c2b";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
 
 export default {
   name: 'App',
   components: {
-
+    Suggestion
   },
   data() {
     return {
       collapsed: false,
+      logoClass: 'logoClassFalse'
     };
   },
   methods: {
+    toDefault(){
+      this.$router.push('/')
+    },
     cmd(){
       this.$router.push('/cloudmusicdownload')
     },
     mt(){
       this.$router.push('/make-team')
+    },
+    changeLogoClass() {
+      if(this.collapsed){
+        this.logoClass = 'logoClassTrue'
+      }
+      else{
+        this.logoClass = 'logoClassFalse'
+      }
     }
   }
 }
 </script>
 
 <style>
-  .logo{
-    font-size: 22px;
-    color: white;
-    background: none !important;
-    text-align: center;
-  }
-  #components-layout-demo-custom-trigger .trigger {
-    font-size: 18px;
-    line-height: 64px;
-    padding: 0 24px;
-    cursor: pointer;
-    transition: color 0.3s;
-  }
-
-  #components-layout-demo-custom-trigger .trigger:hover {
-    color: #1890ff;
-  }
-
-  #components-layout-demo-custom-trigger .logo {
+  #components-layout-demo-side .logo {
     height: 32px;
     background: rgba(255, 255, 255, 0.2);
     margin: 16px;
+    background: none !important;
+    color: white;
+    text-align: center;
+  }
+  .logoClassFalse{
+    font-size: 22px;
+    transition: all 0.3s;
+  }
+  .logoClassTrue{
+    font-size: 14px;
+    transition: all 0.2s;
+    margin-bottom: 25px !important;
+  }
+  .Suggestion{
+    position: fixed;
+    right: 40px;
+    bottom: 90px;
+  }
+  .ant-back-top{
+    right: 52px !important;
+    bottom: 30px !important;
+  }
+  .logo{
+    color: lightskyblue !important;
+    background-color: #fff;
+  }
+  .logo:hover{
+    cursor: pointer;
   }
 </style>
