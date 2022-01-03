@@ -1,8 +1,9 @@
 <template>
+  <!--加载动画-->
   <div>
     <div v-show="loading">
       <a-spin>
-        <a-icon slot="indicator" type="loading" style="font-size: 64px" spin />
+        <a-icon slot="indicator" type="loading" style="font-size: 44px" spin />
       </a-spin>
     </div>
     <!--链接搜索结果-->

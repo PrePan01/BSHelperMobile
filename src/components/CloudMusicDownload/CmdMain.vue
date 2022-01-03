@@ -12,8 +12,8 @@
       </el-switch>
     </div>
 
-    <!--链接搜索输入框-->
-    <div v-if="inputSwitchValue">
+    <!--链接输入框-->
+    <div v-show="inputSwitchValue">
       <!--链接搜索-->
       <a-input-search
           placeholder="请输入网易云音乐链接"
@@ -21,8 +21,8 @@
           v-model="searchUrl"
           @search="search"
       >
-        <a-button slot="enterButton" >
-          搜索
+        <a-button slot="enterButton">
+          <i class="iconfont icon-sousuo"></i>
         </a-button>
       </a-input-search>
       <!--右侧抽屉-->
@@ -47,11 +47,11 @@
       </a-drawer>
     </div>
 
-    <!--关键词搜索输入框-->
-    <div v-if="!inputSwitchValue">
+    <!--关键词输入框-->
+    <div v-show="!inputSwitchValue">
       <a-input-search placeholder="请输入关键词" size="large" v-model="keyWords"  @search="searchkeyWord">
         <a-button slot="enterButton" >
-          搜索
+          <i class="iconfont icon-sousuo"></i>
         </a-button>
       </a-input-search>
     </div>
@@ -59,6 +59,7 @@
     <!--关键词搜索结果-->
     <KeywordsSearchResult v-show="isKeywordsSearchResultActive" />
     <UrlSearchResult v-show="isUrlSearchResultActive" />
+
   </div>
 </template>
 
@@ -161,6 +162,8 @@ export default {
 </script>
 
 <style scoped>
+@import '//at.alicdn.com/t/font_3113095_ffolbjphywl.css';
+
   .inputSwitchValue{
     margin-bottom: 20px;
   }
