@@ -1,5 +1,10 @@
 <template>
-  <div v-loading="loading">
+  <div>
+    <div v-show="loading">
+      <a-spin>
+        <a-icon slot="indicator" type="loading" style="font-size: 64px" spin />
+      </a-spin>
+    </div>
     <!--链接搜索结果-->
     <div class="leftContainer clearFloat">
       <p class="songName">{{ '《' + songName + '》' }}</p>
@@ -94,12 +99,12 @@
       </div>
     </div>
   </div>
+
 </template>
 
 <script>
 import axios from "axios";
 import download from 'downloadjs'
-
 
 export default {
   name: "UrlSearchResult",
@@ -117,7 +122,8 @@ export default {
       isCommentsLoading: false, //热评加载状态
       hotComments: [ ], //热评结果
       visible: false,
-      loading: false
+      loading: false,
+      indicator: <a-icon type="loading" style="font-size: 24px" spin />,
     }
   },
   methods:{
@@ -125,7 +131,6 @@ export default {
       this.getNameAndPic()
       this.getMp3url()
       this.getHotComments()
-
     },
 
     // 获取音乐名与专辑封面
@@ -159,8 +164,8 @@ export default {
       }).then((res)=>{
         this.artistsPic = res.data.data.artist.cover
         this.artistsInfo = res.data.data.artist.briefDesc
-        this.loading = false
       })
+      this.loading = false
     },
 
     //获取下载地址
@@ -201,7 +206,6 @@ export default {
         }
       }).then((res)=>{
         this.hotComments = res.data.hotComments
-        this.loading = false
         this.isCommentsLoading = false
       })
     },
@@ -232,16 +236,19 @@ export default {
   },
 
   mounted() {
-    this.loading = true
     this.$bus.$on('sendSongId', (searchId) => {
+      this.loading = true
       this.searchId = searchId
       this.searchSongId()
     })
   },
 
   watch: {
-    albumName(){
+    albumName(newValue){
       this.$bus.$emit('sendIsUrlSearchResultActive', true)
+      if(newValue === ''){
+        this.$bus.$emit('sendIsUrlSearchResultActive', false)
+      }
     }
   }
 
@@ -298,7 +305,7 @@ export default {
     font-size: 28px;
     font-weight: bold;
     margin-top: 170px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     width: 112px;
     border-bottom: 2px solid rgb(221,0,27);
   }
@@ -315,12 +322,8 @@ export default {
   .ant-list-item-meta-description{
     font-size: 16px !important;
     margin-left: -5px;
-
   }
   .ant-list-item-meta-avatar{
     margin-top: 4px;
   }
-
-
-
 </style>

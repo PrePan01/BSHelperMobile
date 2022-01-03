@@ -62,7 +62,6 @@ export default {
       this.searchId = id
       this.$bus.$emit('sendSongId', this.searchId)
       this.$bus.$emit('sendIsKeywordsSearchResultActive', false)
-      this.$bus.$emit('sendIsUrlSearchResultActive', true)
     },
   },
 

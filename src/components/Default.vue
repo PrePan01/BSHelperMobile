@@ -9,6 +9,15 @@
       <el-dialog title="更新日志" :visible.sync="dialogTableVisible">
 
         <el-timeline>
+          <el-timeline-item timestamp="2022/1/3" placement="top">
+            <el-card class="updataCard">
+              <h3>优化</h3>
+              <p>重构项目结构，优化加载速度</p>
+              <p>修复bug</p>
+            </el-card>
+          </el-timeline-item>
+
+
           <el-timeline-item timestamp="2022/1/1" placement="top">
             <el-card class="updataCard">
               <h3>新增</h3>
@@ -36,6 +45,7 @@
               <p>音乐详情页布局</p>
             </el-card>
           </el-timeline-item>
+
           <el-timeline-item timestamp="2021/12/29" placement="top">
             <el-card class="updataCard">
               <h3>新增</h3>
@@ -43,6 +53,7 @@
               <p>根据网易云链接搜索、下载音频功能</p>
             </el-card>
           </el-timeline-item>
+
           <el-timeline-item timestamp="2021/12/28" placement="top">
             <el-card class="updataCard">
               <h3>项目开启</h3>
