@@ -1,8 +1,8 @@
 import router from "vue-router";
 
-import CloudMusicDownload from "@/components/CloudMusicDownload";
 import MakeTeam from "@/components/MakeTeam";
 import Default from "@/components/Default";
+import CmdMain from "@/components/CloudMusicDownload/CmdMain";
 
 export default new router({
     routes: [
@@ -12,7 +12,7 @@ export default new router({
         },
         {
             path: '/cloudmusicdownload',
-            component: CloudMusicDownload
+            component: CmdMain
         },
         {
             path: '/make-team',

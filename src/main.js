@@ -16,8 +16,13 @@ Vue.use(Antd);
 Vue.use(VueRouter)
 Vue.use(ElementUI)
 
-
 new Vue({
+  el: '#app',
   render: h => h(App),
-  router: router
-}).$mount('#app')
+  router: router,
+  beforeCreate(){
+    Vue.prototype.$bus = this
+  }
+})
+
+
