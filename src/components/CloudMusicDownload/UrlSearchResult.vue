@@ -81,7 +81,7 @@
           :src="player">
       </iframe>
 
-      <p style="opacity: 0.5">若歌曲版权保护，无法在线试听</p>
+      <p style="opacity: 0.5">部分歌曲版权保护，无法在线试听</p>
 
       <!--评论-->
       <div class="comments">
