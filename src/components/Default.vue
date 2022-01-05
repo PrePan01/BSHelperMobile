@@ -9,6 +9,13 @@
       <el-dialog title="更新日志" :visible.sync="dialogTableVisible">
 
         <el-timeline>
+          <el-timeline-item timestamp="2022/1/5" placement="top">
+            <el-card class="updataCard">
+              <h3>新增</h3>
+              <p>在线试听</p>
+            </el-card>
+          </el-timeline-item>
+
           <el-timeline-item timestamp="2022/1/3" placement="top">
             <el-card class="updataCard">
               <h3>优化</h3>

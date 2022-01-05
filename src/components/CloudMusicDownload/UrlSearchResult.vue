@@ -70,6 +70,17 @@
         </a-drawer>
       </div>
 
+      <iframe
+          class="player"
+          frameborder="no"
+          border="0"
+          marginwidth="0"
+          marginheight="0"
+          width=300
+          height=86
+          :src="player">
+      </iframe>
+
       <!--评论-->
       <div class="comments">
         <p>热门评论</p>
@@ -98,6 +109,8 @@
         </a-list>
 
       </div>
+
+      <SimArtist class="simartist" v-if="false"></SimArtist>
     </div>
   </div>
 
@@ -106,9 +119,13 @@
 <script>
 import axios from "axios";
 import download from 'downloadjs'
+import SimArtist from "@/components/CloudMusicDownload/SimArtist";
 
 export default {
   name: "UrlSearchResult",
+  components: {
+    SimArtist
+  },
   data(){
     return{
       searchId: '', //搜索的Id
@@ -120,6 +137,7 @@ export default {
       artistsPic: '', //歌手图片
       artistsInfo: '',  //歌手信息
       lyrics: '', //歌词
+      player: '',
       isCommentsLoading: false, //热评加载状态
       hotComments: [ ], //热评结果
       visible: false,
@@ -149,7 +167,9 @@ export default {
         this.albumName = res.data.data.albumName
         this.artistsId = res.data.data.artistsId
         this.lyrics = res.data.data.lyrics
+        this.player = '//music.163.com/outchain/player?type=2&id=' + this.searchId + '&auto=0&height=66'
         //要等artistsId返回才能执行getArtist()方法
+        this.$bus.$emit('sendArtistId',this.artistsId)
         this.getArtist()
       })
     },
@@ -256,7 +276,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
   .leftContainer{
     color: black;
     margin-top: 30px;
@@ -305,7 +325,7 @@ export default {
   .comments p{
     font-size: 28px;
     font-weight: bold;
-    margin-top: 170px;
+    margin-top: 100px;
     margin-bottom: 20px;
     width: 112px;
     border-bottom: 2px solid rgb(221,0,27);
@@ -327,4 +347,17 @@ export default {
   .ant-list-item-meta-avatar{
     margin-top: 4px;
   }
+  .simartist{
+    position: absolute;
+    right: 100px;
+    top: 700px;
+    width: 16vw;
+  }
+  .player{
+    margin-left: -10px;
+    margin-top: 30px;
+    z-index: 1000;
+    box-shadow: 0 0 !important;
+  }
+
 </style>
