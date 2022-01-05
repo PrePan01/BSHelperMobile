@@ -81,6 +81,8 @@
           :src="player">
       </iframe>
 
+      <p style="opacity: 0.5">若歌曲版权保护，无法在线试听</p>
+
       <!--评论-->
       <div class="comments">
         <p>热门评论</p>
@@ -270,6 +272,9 @@ export default {
       if(newValue === ''){
         this.$bus.$emit('sendIsUrlSearchResultActive', false)
       }
+    },
+    JF3x(newValue){
+      console.log('@@@@@@@',newValue)
     }
   }
 
@@ -359,5 +364,6 @@ export default {
     z-index: 1000;
     box-shadow: 0 0 !important;
   }
+
 
 </style>

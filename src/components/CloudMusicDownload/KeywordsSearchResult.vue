@@ -20,7 +20,7 @@
 
             <div style="margin-top: 10px">
               <div id="keywordsD">
-                <img :src="item.al.picUrl" alt="暂无图片" id="keywordsPic">
+                <img :src="item.al.picUrl" alt="暂无封面" id="keywordsPic">
               </div>
             </div>
           </a-card>

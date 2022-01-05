@@ -13,6 +13,8 @@
             <el-card class="updataCard">
               <h3>新增</h3>
               <p>在线试听</p>
+              <h3>优化</h3>
+              <p>滚动条样式</p>
             </el-card>
           </el-timeline-item>
 

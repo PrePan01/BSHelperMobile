@@ -167,4 +167,28 @@ export default {
   .inputSwitchValue{
     margin-bottom: 20px;
   }
+
+::-webkit-scrollbar{
+  width: 6px;
+  height: 5px;
+  background-color: #ffffff;
+  display: block;
+}
+
+/*轨道*/
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0);
+  -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0);
+  border-radius: 10px;
+  background-color: #ffffff;
+}
+
+/*滑块*/
+::-webkit-scrollbar-thumb{
+  height: 10px;
+  border-radius: 6px;
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, .1);
+  -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, .1);
+  background-color: rgba(210,210,210, 1);
+}
 </style>
