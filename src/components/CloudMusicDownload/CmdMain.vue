@@ -36,7 +36,7 @@
           :visible="visible"
           :after-visible-change="afterVisibleChange"
           @close="onClose"
-          width="700px"
+          width="40vw"
       >
         <img src="https://s4.ax1x.com/2021/12/30/T2Vlyn.png" alt="" style="margin-bottom: 20px">
         <p>PC客户端分享</p>
@@ -54,6 +54,11 @@
           <i class="iconfont icon-sousuo"></i>
         </a-button>
       </a-input-search>
+
+      <a-tooltip placement="topLeft" title="歌名、歌手名" arrow-point-at-center>
+        <i class="iconfont icon-tishi" style="font-size: 24px;opacity: 0.7"></i>
+      </a-tooltip>
+
     </div>
 
     <!--关键词搜索结果-->
@@ -162,10 +167,14 @@ export default {
 </script>
 
 <style scoped>
-@import '//at.alicdn.com/t/font_3113095_ffolbjphywl.css';
+@import '//at.alicdn.com/t/font_3113095_4lfs3g2fqwv.css';
 
   .inputSwitchValue{
     margin-bottom: 20px;
+  }
+
+  .drawerPic{
+    width: 38vw;
   }
 
 ::-webkit-scrollbar{

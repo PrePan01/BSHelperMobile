@@ -5,7 +5,7 @@
       <a-list :grid="{ gutter: 16, xs: 1, sm: 2, md: 3, lg: 3, xl: 4, xxl: 4 }" :data-source="keyWordsResults">
 
         <a-list-item slot="renderItem" slot-scope="item">
-          <a-card style="padding-bottom: 0">
+          <a-card style="padding-bottom: 0;">
             <!--自定义标题-->
             <template slot="title">
               <span class="toDetailTitle">
@@ -78,7 +78,7 @@ export default {
 
 <style scoped>
   .keywordsSearchResults{
-    margin-top: 40px;
+    margin-top: 20px;
   }
   .toDetailTitle{
     display: inline-block;

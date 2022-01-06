@@ -15,6 +15,7 @@
               <p>在线试听</p>
               <h3>优化</h3>
               <p>滚动条样式</p>
+              <p>部分布局</p>
             </el-card>
           </el-timeline-item>
 

@@ -8,7 +8,20 @@
             <a-icon type="pie-chart" />
             <span>网易云音频下载</span>
           </a-menu-item>
-          <a-menu-item key="2" @click="mt">
+          <!--<a-menu-item key="2">
+            <a-icon type="pie-chart" />
+            <span>荒野乱斗国际服查询</span>
+          </a-menu-item>-->
+          <a-sub-menu key="sub1">
+            <span slot="title"><a-icon type="smile" /><span>荒野乱斗国际服查询</span></span>
+            <a-menu-item key="2" @click="toBSPersonalCard">
+              个人名片
+            </a-menu-item>
+            <a-menu-item key="3">
+              最近对战
+            </a-menu-item>
+          </a-sub-menu>
+          <a-menu-item key="4" @click="mt">
             <a-icon type="desktop" />
             <span>组队小助手（开发中）</span>
           </a-menu-item>
@@ -64,6 +77,7 @@ export default {
     };
   },
   methods: {
+    //路由跳转
     toDefault(){
       this.$router.push('/')
     },
@@ -73,6 +87,10 @@ export default {
     mt(){
       this.$router.push('/make-team')
     },
+    toBSPersonalCard(){
+      this.$router.push('/bsPersonalCard')
+    },
+
     changeLogoClass() {
       if(this.collapsed){
         this.logoClass = 'logoClassTrue'

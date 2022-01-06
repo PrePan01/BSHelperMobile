@@ -14,7 +14,7 @@
       />
     </div>
 
-    <p>{{playerInfo}}</p>
+    <h1>{{playName}}</h1>
     <!--个人数据卡片-->
     <a-card style="width: 70vw">
 
@@ -31,7 +31,8 @@ export default {
   data(){
     return{
       searchInput: '',  //标签搜索框
-      playerInfo: {}
+      playerInfo: {},
+      playName: ''
     }
   },
   methods: {
@@ -45,7 +46,9 @@ export default {
         methods: 'GET',
         url: '/playStatsApi/' + this.searchInput,
       }).then((res) => {
-        this.playerInfo = res
+        this.playName = res.data.name
+
+        console.log(this.playerInfo)
       })
     }
   }
