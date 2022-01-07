@@ -8,17 +8,13 @@
             <a-icon type="pie-chart" />
             <span>网易云音频下载</span>
           </a-menu-item>
-          <!--<a-menu-item key="2">
-            <a-icon type="pie-chart" />
-            <span>荒野乱斗国际服查询</span>
-          </a-menu-item>-->
           <a-sub-menu key="sub1">
             <span slot="title"><a-icon type="smile" /><span>荒野乱斗国际服查询</span></span>
             <a-menu-item key="2" @click="toBSPersonalCard">
               个人名片
             </a-menu-item>
             <a-menu-item key="3">
-              最近对战
+              最近对战（开发中）
             </a-menu-item>
           </a-sub-menu>
           <a-menu-item key="4" @click="mt">
@@ -34,8 +30,6 @@
         </a-layout-header>
         <a-layout-content style="margin: 0 16px">
           <a-breadcrumb style="margin: 16px 0">
-            <!--<a-breadcrumb-item>User</a-breadcrumb-item>
-            <a-breadcrumb-item>Bill</a-breadcrumb-item>-->
           </a-breadcrumb>
           <div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
             <router-view></router-view>
