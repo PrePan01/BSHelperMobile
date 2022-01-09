@@ -6,6 +6,7 @@ import CmdMain from "@/components/CloudMusicDownload/CmdMain";
 import BSPersonalCard from "@/components/BSEventsSearch/BSPersonalCard";
 
 export default new router({
+    mode: 'hash',
     routes: [
         {
             path:'',
