@@ -77,9 +77,11 @@
             <!--是否符合冠军挑战赛资格-->
             <a-col :span="6">
               <a-card :hoverable='true'>
-                <template slot="title" class="cardTitle">
-                  <!--<img src="~@/assets/icon_trophy_medium.png" alt="" style="width: 20px;">-->
-                  <span>是否符合冠军挑战赛资格</span>
+                <template slot="title">
+                  <div class="cardTitle">
+                    <img src="~@/assets/icon_championship.png" alt="" style="width: 20px;">
+                    <span>是否符合冠军挑战赛资格</span>
+                  </div>
                 </template>
                 <a-statistic
                     :value="isQualifiedFromChampionshipChallenge?'是':'否'"
@@ -166,9 +168,10 @@
             :columns="columns"
             :data-source="brawlers"
             :pagination="false"
+            :scroll="{ y: 800 }"
         >
           <span slot="id" slot-scope="id">
-            <img :src="require('../../assets/brawlers/'+ id +'.png')" alt="" width="40px">
+            <img :src="require('../../assets/brawlers/'+ id +'.png')" alt="" width="60px">
           </span>
         </a-table>
       </el-tab-pane>
@@ -206,25 +209,30 @@ export default {
           dataIndex: 'id',
           key: 'id',
           scopedSlots: { customRender: 'id' },
-          width: '40px'
+          width: '100px'
         },
         {
           title: '战力等级',
           dataIndex: 'power',
           key: 'power',
           sorter: (a, b) => a.power - b.power,
+          width: '120px'
         },
         {
           title: '荣誉等级',
           key: 'rank',
           dataIndex: 'rank',
           sorter: (a, b) => a.rank - b.rank,
+          width: '140px'
+
         },
         {
           title: '奖杯数',
           key: 'trophies',
           dataIndex: 'trophies',
           sorter: (a, b) => a.trophies - b.trophies,
+          width: '160px'
+
         },
         {
           title: '最高奖杯数',
@@ -271,6 +279,14 @@ export default {
 </script>
 
 <style>
+/*解决图片缩小变模糊*/
+img{
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -o-crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  -ms-interpolation-mode: nearest-neighbor;
+}
 /*数据卡片标题*/
 .cardTitle span{
   display: inline-block;
