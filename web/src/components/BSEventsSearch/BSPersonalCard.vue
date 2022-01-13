@@ -27,7 +27,7 @@
               <a-card :hoverable='true'>
                 <template slot="title">
                   <div class="cardTitle">
-                    <img src="~@/assets/icon_trophy_medium.png" alt="" style="width: 2vw;">
+                    <img src="~@/assets/icon_trophy_medium.png" alt="" style="height: 40px;">
                     <span>奖杯数</span>
                   </div>
                 </template>
@@ -36,8 +36,8 @@
                     :value-style="{ color: '#cf1322', fontSize: '40px' }"
                 >
                   <template #suffix>
-                    <a-icon :type="trophies < highestTrophies? 'arrow-down' : 'arrow-up'" style="font-size: 1.2em;"/>
-                    <span style="font-size: 1.2em">({{ highestTrophies - trophies  }})</span>
+                    <a-icon :type="trophies < highestTrophies? 'arrow-down' : 'arrow-up'" style="font-size: 1.4em;"/>
+                    <span style="font-size: 1.4em">({{ highestTrophies - trophies  }})</span>
                   </template>
                 </a-statistic>
               </a-card>
@@ -47,7 +47,7 @@
               <a-card :hoverable='true'>
                 <template slot="title">
                   <div class="cardTitle">
-                    <img src="~@/assets/icon_trophy_medium.png" alt="" style="width: 2vw;">
+                    <img src="~@/assets/icon_trophy_medium.png" alt="" style="height: 40px;">
                     <span>最高奖杯数</span>
                   </div>
                 </template>
@@ -63,7 +63,7 @@
               <a-card :hoverable='true'>
                 <template slot="title">
                   <div class="cardTitle">
-                    <img src="~@/assets/icon_player_level.png" alt="" style="width: 1.5vw;">
+                    <img src="~@/assets/icon_player_level.png" alt="" style="height: 40px;">
                     <span>等级</span>
                   </div>
                 </template>
@@ -79,7 +79,7 @@
               <a-card :hoverable='true'>
                 <template slot="title">
                   <div class="cardTitle">
-                    <img src="~@/assets/icon_championship.png" alt="" style="width: 20px;">
+                    <img src="~@/assets/icon_championship.png" alt="" style="height: 40px;">
                     <span>是否符合冠军挑战赛资格</span>
                   </div>
                 </template>
@@ -98,7 +98,7 @@
               <a-card :hoverable='true'>
                 <template slot="title">
                   <div class="cardTitle">
-                    <img src="~@/assets/icon_friends.png" alt="" style="width: 2.2vw;">
+                    <img src="~@/assets/icon_friends.png" alt="" style="height: 40px;">
                     <span>3V3胜场</span>
                   </div>
                 </template>
@@ -114,7 +114,7 @@
               <a-card :hoverable='true'>
                 <template slot="title">
                   <div class="cardTitle">
-                    <img src="~@/assets/Vector Smart Object-7.png" alt="" style="width: 1.5vw;">
+                    <img src="~@/assets/Vector Smart Object-7.png" alt="" style="height: 40px;">
                     <span>单鸡胜场</span>
                   </div>
                 </template>
@@ -130,7 +130,7 @@
               <a-card :hoverable='true'>
                 <template slot="title">
                   <div class="cardTitle">
-                    <img src="~@/assets/icon_showdownplus.png" alt="" style="width: 1.5vw;">
+                    <img src="~@/assets/icon_showdownplus.png" alt="" style="height: 40px;">
                     <span>双鸡胜场</span>
                   </div>
                 </template>
@@ -148,7 +148,7 @@
               <a-card :hoverable='true'>
                 <template slot="title">
                   <div class="cardTitle">
-                    <img src="~@/assets/icon_club_league.png" alt=" "  style="width: 2vw;">
+                    <img src="~@/assets/icon_club_league.png" alt=" "  style="height: 40px;">
                     <span>战队</span>
                   </div>
                 </template>
@@ -209,7 +209,7 @@ export default {
           dataIndex: 'id',
           key: 'id',
           scopedSlots: { customRender: 'id' },
-          width: '100px'
+          width: '100px',
         },
         {
           title: '战力等级',
@@ -291,9 +291,8 @@ img{
 .cardTitle span{
   display: inline-block;
   vertical-align: middle;
-  margin-left: 5px;
+  margin-left: 10px;
   font-family: '黑体',serif;
-  font-size: 1.2em;
-
+  font-size: 1.4em;
 }
 </style>
