@@ -14,122 +14,166 @@
       />
     </div>
     <!--玩家昵称-->
-    <h1 style="font-size: 30px;padding: 20px 0">{{playName}}</h1>
-    <!--个人数据卡片-->
-    <div style="background: #ECECEC; padding: 10px" v-if="this.playName">
-      <a-row :gutter="10">
-        <a-col :span="6" >
-          <a-card :hoverable='true'>
-            <template slot="title" class="cardTitle">
-              <img src="~@/assets/icon_trophy_medium.png" alt="" style="width: 20px;">
-              <span>奖杯数</span>
-            </template>
-            <a-statistic
-                :value="trophies"
-                :value-style="{ color: '#cf1322', fontSize: '40px' }"
-            >
-              <template #prefix>
-                <a-icon :type="trophies > highestTrophies? 'arrow-up': 'arrow-down'" style="font-size: 0.5em;"/>
-              </template>
-            </a-statistic>
-          </a-card>
-        </a-col>
-        <a-col :span="6">
-          <a-card>
-            <template slot="title" class="cardTitle">
-              <img src="~@/assets/icon_trophy_medium.png" alt="" style="width: 20px;">
-              <span>最高奖杯数</span>
-            </template>
-            <a-statistic
-                :value="highestTrophies"
-                :value-style="{ color: '#cf1322', fontSize: '40px' }"
-            >
-            </a-statistic>
-          </a-card>
-        </a-col>
-        <a-col :span="6">
-          <a-card>
-            <template slot="title" class="cardTitle">
-              <!--<img src="~@/assets/icon_trophy_medium.png" alt="" style="width: 20px;">-->
-              <span>等级</span>
-            </template>
-            <a-statistic
-                :value="expLevel"
-                :value-style="{ color: '#cf1322', fontSize: '40px' }"
-            >
-            </a-statistic>
-          </a-card>
-        </a-col>
-        <a-col :span="6">
-          <a-card>
-            <template slot="title" class="cardTitle">
-              <!--<img src="~@/assets/icon_trophy_medium.png" alt="" style="width: 20px;">-->
-              <span>是否符合冠军挑战赛资格</span>
-            </template>
-            <a-statistic
-                :value="isQualifiedFromChampionshipChallenge?'是':'否'"
-                :value-style="{ color: '#cf1322', fontSize: '40px' }"
-            >
-            </a-statistic>
-          </a-card>
-        </a-col>
-      </a-row>
-      <a-row :gutter="10" style="margin-top: 10px">
-        <a-col :span="8">
-          <a-card>
-            <template slot="title" class="cardTitle">
-              <!--<img src="~@/assets/icon_trophy_medium.png" alt="" style="width: 20px;">-->
-              <span>3V3胜场</span>
-            </template>
-            <a-statistic
-                :value="threeVsthreeVictories"
-                :value-style="{ color: '#cf1322', fontSize: '40px' }"
-            >
-            </a-statistic>
-          </a-card>
-        </a-col>
-        <a-col :span="8">
-          <a-card>
-            <template slot="title" class="cardTitle">
-              <!--<img src="~@/assets/icon_trophy_medium.png" alt="" style="width: 20px;">-->
-              <span>单鸡胜场</span>
-            </template>
-            <a-statistic
-                :value="soloVictories"
-                :value-style="{ color: '#cf1322', fontSize: '40px' }"
-            >
-            </a-statistic>
-          </a-card>
-        </a-col>
-        <a-col :span="8">
-          <a-card>
-            <template slot="title" class="cardTitle">
-              <!--<img src="~@/assets/icon_trophy_medium.png" alt="" style="width: 20px;">-->
-              <span>双鸡胜场</span>
-            </template>
-            <a-statistic
-                :value="duoVictories"
-                :value-style="{ color: '#cf1322', fontSize: '40px' }"
-            >
-            </a-statistic>
-          </a-card>
-        </a-col>
-      </a-row>
-      <a-row :gutter="10" style="margin-top: 10px">
-        <a-col :span="24">
-          <a-card>
-            <template slot="title" class="cardTitle">
-              <span>战队</span>
-            </template>
-            <a-statistic
-                :value="club"
-                :value-style="{ color: '#cf1322', fontSize: '40px' }"
-            >
-            </a-statistic>
-          </a-card>
-        </a-col>
-      </a-row>
-    </div>
+    <h1 style="font-size: 35px;margin: 20px 0 10px 0">{{playName}}</h1>
+    <!--数据表格-->
+    <el-tabs v-if="this.playName" >
+      <el-tab-pane label="个人数据">
+        <!--个人数据卡片-->
+        <div style="background: #ECECEC; padding: 10px">
+          <!--第一行-->
+          <a-row :gutter="10">
+            <!--奖杯数-->
+            <a-col :span="6" >
+              <a-card :hoverable='true'>
+                <template slot="title">
+                  <div class="cardTitle">
+                    <img src="~@/assets/icon_trophy_medium.png" alt="" style="width: 2vw;">
+                    <span>奖杯数</span>
+                  </div>
+                </template>
+                <a-statistic
+                    :value="trophies"
+                    :value-style="{ color: '#cf1322', fontSize: '40px' }"
+                >
+                  <template #suffix>
+                    <a-icon :type="trophies < highestTrophies? 'arrow-down' : 'arrow-up'" style="font-size: 1.2em;"/>
+                    <span style="font-size: 1.2em">({{ highestTrophies - trophies  }})</span>
+                  </template>
+                </a-statistic>
+              </a-card>
+            </a-col>
+            <!--最高奖杯数-->
+            <a-col :span="6">
+              <a-card :hoverable='true'>
+                <template slot="title">
+                  <div class="cardTitle">
+                    <img src="~@/assets/icon_trophy_medium.png" alt="" style="width: 2vw;">
+                    <span>最高奖杯数</span>
+                  </div>
+                </template>
+                <a-statistic
+                    :value="highestTrophies"
+                    :value-style="{ color: '#cf1322', fontSize: '40px' }"
+                >
+                </a-statistic>
+              </a-card>
+            </a-col>
+            <!--等级-->
+            <a-col :span="6">
+              <a-card :hoverable='true'>
+                <template slot="title">
+                  <div class="cardTitle">
+                    <img src="~@/assets/icon_player_level.png" alt="" style="width: 1.5vw;">
+                    <span>等级</span>
+                  </div>
+                </template>
+                <a-statistic
+                    :value="expLevel"
+                    :value-style="{ color: '#cf1322', fontSize: '40px' }"
+                >
+                </a-statistic>
+              </a-card>
+            </a-col>
+            <!--是否符合冠军挑战赛资格-->
+            <a-col :span="6">
+              <a-card :hoverable='true'>
+                <template slot="title" class="cardTitle">
+                  <!--<img src="~@/assets/icon_trophy_medium.png" alt="" style="width: 20px;">-->
+                  <span>是否符合冠军挑战赛资格</span>
+                </template>
+                <a-statistic
+                    :value="isQualifiedFromChampionshipChallenge?'是':'否'"
+                    :value-style="{ color: '#cf1322', fontSize: '40px' }"
+                >
+                </a-statistic>
+              </a-card>
+            </a-col>
+          </a-row>
+          <!--第二行-->
+          <a-row :gutter="10" style="margin-top: 10px">
+            <!--3v3胜场-->
+            <a-col :span="8">
+              <a-card :hoverable='true'>
+                <template slot="title">
+                  <div class="cardTitle">
+                    <img src="~@/assets/icon_friends.png" alt="" style="width: 2.2vw;">
+                    <span>3V3胜场</span>
+                  </div>
+                </template>
+                <a-statistic
+                    :value="threeVsthreeVictories"
+                    :value-style="{ color: '#cf1322', fontSize: '40px' }"
+                >
+                </a-statistic>
+              </a-card>
+            </a-col>
+            <!--单鸡胜场-->
+            <a-col :span="8">
+              <a-card :hoverable='true'>
+                <template slot="title">
+                  <div class="cardTitle">
+                    <img src="~@/assets/Vector Smart Object-7.png" alt="" style="width: 1.5vw;">
+                    <span>单鸡胜场</span>
+                  </div>
+                </template>
+                <a-statistic
+                    :value="soloVictories"
+                    :value-style="{ color: '#cf1322', fontSize: '40px' }"
+                >
+                </a-statistic>
+              </a-card>
+            </a-col>
+            <!--双鸡胜场-->
+            <a-col :span="8">
+              <a-card :hoverable='true'>
+                <template slot="title">
+                  <div class="cardTitle">
+                    <img src="~@/assets/icon_showdownplus.png" alt="" style="width: 1.5vw;">
+                    <span>双鸡胜场</span>
+                  </div>
+                </template>
+                <a-statistic
+                    :value="duoVictories"
+                    :value-style="{ color: '#cf1322', fontSize: '40px' }"
+                >
+                </a-statistic>
+              </a-card>
+            </a-col>
+          </a-row>
+          <!--第三行-->
+          <a-row :gutter="10" style="margin-top: 10px">
+            <a-col :span="24">
+              <a-card :hoverable='true'>
+                <template slot="title">
+                  <div class="cardTitle">
+                    <img src="~@/assets/icon_club_league.png" alt=" "  style="width: 2vw;">
+                    <span>战队</span>
+                  </div>
+                </template>
+                <a-statistic
+                    :value="club+' ('+clubTag+')'"
+                    :value-style="{ color: '#cf1322', fontSize: '40px' }"
+                >
+                </a-statistic>
+              </a-card>
+            </a-col>
+          </a-row>
+        </div>
+      </el-tab-pane>
+      <el-tab-pane label="我的英雄">
+        <a-table
+            bordered
+            :columns="columns"
+            :data-source="brawlers"
+            :pagination="false"
+        >
+          <span slot="id" slot-scope="id">
+            <img :src="require('../../assets/brawlers/'+ id +'.png')" alt="" width="40px">
+          </span>
+        </a-table>
+      </el-tab-pane>
+    </el-tabs>
+
 
 
   </div>
@@ -153,7 +197,42 @@ export default {
       threeVsthreeVictories: '',
       soloVictories: '',
       duoVictories: '',
-      club: ''
+      club: '', //战队名
+      clubTag: '',  //战队标签
+      brawlers: [],  //我的所有英雄
+      columns: [
+        {
+          title: '英雄',
+          dataIndex: 'id',
+          key: 'id',
+          scopedSlots: { customRender: 'id' },
+          width: '40px'
+        },
+        {
+          title: '战力等级',
+          dataIndex: 'power',
+          key: 'power',
+          sorter: (a, b) => a.power - b.power,
+        },
+        {
+          title: '荣誉等级',
+          key: 'rank',
+          dataIndex: 'rank',
+          sorter: (a, b) => a.rank - b.rank,
+        },
+        {
+          title: '奖杯数',
+          key: 'trophies',
+          dataIndex: 'trophies',
+          sorter: (a, b) => a.trophies - b.trophies,
+        },
+        {
+          title: '最高奖杯数',
+          key: 'highestTrophies',
+          dataIndex: 'highestTrophies',
+          sorter: (a, b) => a.highestTrophies - b.highestTrophies,
+        },
+      ],
     }
   },
   methods: {
@@ -172,7 +251,7 @@ export default {
           methods: 'GET',
           url: '/playStatsApi/' + this.searchInput,
         }).then((res) => {
-          this.playName = res.data.name
+          this.playName = '@' + res.data.name
           this.trophies = res.data.trophies
           this.highestTrophies = res.data.highestTrophies
           this.expLevel = res.data.expLevel
@@ -181,6 +260,8 @@ export default {
           this.soloVictories = res.data.soloVictories
           this.duoVictories = res.data.duoVictories
           this.club = res.data.club.name
+          this.clubTag = res.data.club.tag
+          this.brawlers = res.data.brawlers
           this.loading = false
         })
       }
@@ -191,10 +272,12 @@ export default {
 
 <style>
 /*数据卡片标题*/
-.cardTitle{
-  padding: 5px 0;
-}
 .cardTitle span{
-  font-size: 30px !important;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 5px;
+  font-family: '黑体',serif;
+  font-size: 1.2em;
+
 }
 </style>
