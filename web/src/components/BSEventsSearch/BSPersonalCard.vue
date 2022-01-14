@@ -9,7 +9,7 @@
           size="large"
           @search="onSearch"
           v-model="searchInput"
-          style="width: 20vw;"
+          style="width: 50vw;"
           @keyup="upperCase"
       />
     </div>
@@ -98,7 +98,7 @@
               <a-card :hoverable='true'>
                 <template slot="title">
                   <div class="cardTitle">
-                    <img src="~@/assets/icon_friends.png" alt="" style="height: 40px;">
+                    <img src="~@/assets/3vs3.png" alt="" style="height: 40px;">
                     <span>3V3胜场</span>
                   </div>
                 </template>
@@ -173,6 +173,18 @@
           <span slot="id" slot-scope="id">
             <img :src="require('../../assets/brawlers/'+ id +'.png')" alt="" width="60px">
           </span>
+          <span slot="starPower1" slot-scope="starPower1">
+            <img :src="require('../../assets/starPowersAndGadgets/'+ starPower1 +'.png')" alt="" width="40px">
+          </span>
+          <span slot="starPower2" slot-scope="starPower2">
+            <img :src="require('../../assets/starPowersAndGadgets/'+ starPower2 +'.png')" alt="" width="40px">
+          </span>
+          <span slot="gadgets1" slot-scope="gadgets1">
+            <img :src="require('../../assets/starPowersAndGadgets/'+ gadgets1 +'.png')" alt="" width="40px">
+          </span>
+          <span slot="gadgets2" slot-scope="gadgets2">
+            <img :src="require('../../assets/starPowersAndGadgets/'+ gadgets2 +'.png')" alt="" width="40px">
+          </span>
         </a-table>
       </el-tab-pane>
     </el-tabs>
@@ -239,6 +251,47 @@ export default {
           key: 'highestTrophies',
           dataIndex: 'highestTrophies',
           sorter: (a, b) => a.highestTrophies - b.highestTrophies,
+          width: '160px'
+        },
+        {
+          title: '我的星辉之力',
+          children: [
+            {
+              title: '星辉一',
+              dataIndex: 'starPowers[0].id',
+              key: 'starPower1',
+              width: 100,
+              scopedSlots: { customRender: 'starPower1' },
+            },
+            {
+              title: '星辉二',
+              dataIndex: 'starPowers[1].id',
+              key: 'starPower1',
+              width: 100,
+              scopedSlots: { customRender: 'starPower2' },
+
+            },
+          ],
+        },
+        {
+          title: '我的武装配件',
+          children: [
+            {
+              title: '配件一',
+              dataIndex: 'gadgets[0].id',
+              key: 'gadgets1',
+              width: 100,
+              scopedSlots: { customRender: 'gadgets1' },
+            },
+            {
+              title: '配件二',
+              dataIndex: 'gadgets[1].id',
+              key: 'gadgets2',
+              width: 100,
+              scopedSlots: { customRender: 'gadgets2' },
+
+            },
+          ],
         },
       ],
     }
