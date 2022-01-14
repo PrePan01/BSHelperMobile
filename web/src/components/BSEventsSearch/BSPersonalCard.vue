@@ -163,29 +163,65 @@
         </div>
       </el-tab-pane>
       <el-tab-pane label="我的英雄">
-        <a-table
-            bordered
-            :columns="columns"
-            :data-source="brawlers"
-            :pagination="false"
-            :scroll="{ y: 800 }"
-        >
-          <span slot="id" slot-scope="id">
-            <img :src="require('../../assets/brawlers/'+ id +'.png')" alt="" width="60px">
-          </span>
-          <span slot="starPower1" slot-scope="starPower1">
-            <img :src="require('../../assets/starPowersAndGadgets/'+ starPower1 +'.png')" alt="" width="40px">
-          </span>
-          <span slot="starPower2" slot-scope="starPower2">
-            <img :src="require('../../assets/starPowersAndGadgets/'+ starPower2 +'.png')" alt="" width="40px">
-          </span>
-          <span slot="gadgets1" slot-scope="gadgets1">
-            <img :src="require('../../assets/starPowersAndGadgets/'+ gadgets1 +'.png')" alt="" width="40px">
-          </span>
-          <span slot="gadgets2" slot-scope="gadgets2">
-            <img :src="require('../../assets/starPowersAndGadgets/'+ gadgets2 +'.png')" alt="" width="40px">
-          </span>
-        </a-table>
+        <el-table :data="[brawlers, myStarPowers, myGadgets]" height="850" border style="width: 100%">
+          <el-table-column
+              label="英雄"
+              width="120">
+              <template slot-scope="scope">
+                <img :src="require('../../assets/brawlers/'+ scope.row.id +'.png')" alt="" width="60px">
+              </template>
+          </el-table-column>
+          <el-table-column
+              prop="power"
+              label="战力等级"
+              sortable
+              width="140">
+          </el-table-column>
+          <el-table-column
+              prop="rank"
+              label="荣誉等级"
+              sortable
+              width="140">
+          </el-table-column>
+          <el-table-column
+              prop="trophies"
+              label="奖杯数"
+              sortable
+              width="160">
+          </el-table-column>
+          <el-table-column
+              prop="highestTrophies"
+              label="最高奖杯数"
+              sortable
+              width="160">
+          </el-table-column>
+          <el-table-column label="我的星辉之力">
+            <el-table-column
+                label="星辉一"
+                width="120">
+                <template slot-scope="scope">
+                  <span>{{scope.row}}</span>
+                </template>
+            </el-table-column>
+            <el-table-column
+                prop="starPowers[1].id"
+                label="星辉二"
+                width="120">
+            </el-table-column>
+          </el-table-column>
+          <el-table-column label="我的武装配件">
+            <el-table-column
+                prop="gadgets[0].id"
+                label="配件一"
+                width="120">
+            </el-table-column>
+            <el-table-column
+                prop="gadgets[1].id"
+                label="配件二"
+                width="120">
+            </el-table-column>
+          </el-table-column>
+        </el-table>
       </el-tab-pane>
     </el-tabs>
 
@@ -215,85 +251,6 @@ export default {
       club: '', //战队名
       clubTag: '',  //战队标签
       brawlers: [],  //我的所有英雄
-      columns: [
-        {
-          title: '英雄',
-          dataIndex: 'id',
-          key: 'id',
-          scopedSlots: { customRender: 'id' },
-          width: '100px',
-        },
-        {
-          title: '战力等级',
-          dataIndex: 'power',
-          key: 'power',
-          sorter: (a, b) => a.power - b.power,
-          width: '120px'
-        },
-        {
-          title: '荣誉等级',
-          key: 'rank',
-          dataIndex: 'rank',
-          sorter: (a, b) => a.rank - b.rank,
-          width: '140px'
-
-        },
-        {
-          title: '奖杯数',
-          key: 'trophies',
-          dataIndex: 'trophies',
-          sorter: (a, b) => a.trophies - b.trophies,
-          width: '160px'
-
-        },
-        {
-          title: '最高奖杯数',
-          key: 'highestTrophies',
-          dataIndex: 'highestTrophies',
-          sorter: (a, b) => a.highestTrophies - b.highestTrophies,
-          width: '160px'
-        },
-        {
-          title: '我的星辉之力',
-          children: [
-            {
-              title: '星辉一',
-              dataIndex: 'starPowers[0].id',
-              key: 'starPower1',
-              width: 100,
-              scopedSlots: { customRender: 'starPower1' },
-            },
-            {
-              title: '星辉二',
-              dataIndex: 'starPowers[1].id',
-              key: 'starPower1',
-              width: 100,
-              scopedSlots: { customRender: 'starPower2' },
-
-            },
-          ],
-        },
-        {
-          title: '我的武装配件',
-          children: [
-            {
-              title: '配件一',
-              dataIndex: 'gadgets[0].id',
-              key: 'gadgets1',
-              width: 100,
-              scopedSlots: { customRender: 'gadgets1' },
-            },
-            {
-              title: '配件二',
-              dataIndex: 'gadgets[1].id',
-              key: 'gadgets2',
-              width: 100,
-              scopedSlots: { customRender: 'gadgets2' },
-
-            },
-          ],
-        },
-      ],
     }
   },
   methods: {
