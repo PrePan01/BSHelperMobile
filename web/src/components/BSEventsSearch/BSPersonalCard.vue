@@ -17,6 +17,7 @@
     <h1 style="font-size: 35px;margin: 20px 0 10px 0">{{playName}}</h1>
     <!--数据表格-->
     <el-tabs v-if="this.playName" >
+      <!--个人数据选项卡-->
       <el-tab-pane label="个人数据">
         <!--个人数据卡片-->
         <div style="background: #ECECEC; padding: 10px">
@@ -162,11 +163,13 @@
           </a-row>
         </div>
       </el-tab-pane>
+
       <el-tab-pane label="我的英雄">
-        <el-table :data="[brawlers, myStarPowers, myGadgets]" height="850" border style="width: 100%">
+        <el-table :data="brawlers" height="850" border style="width: 100%">
           <el-table-column
               label="英雄"
-              width="120">
+              width="120"
+              align="center">
               <template slot-scope="scope">
                 <img :src="require('../../assets/brawlers/'+ scope.row.id +'.png')" alt="" width="60px">
               </template>
@@ -175,50 +178,72 @@
               prop="power"
               label="战力等级"
               sortable
-              width="140">
+              width="140"
+              align="center">
           </el-table-column>
           <el-table-column
               prop="rank"
               label="荣誉等级"
               sortable
-              width="140">
+              width="140"
+              align="center">
           </el-table-column>
           <el-table-column
               prop="trophies"
               label="奖杯数"
               sortable
-              width="160">
+              width="160"
+              align="center">
           </el-table-column>
           <el-table-column
               prop="highestTrophies"
               label="最高奖杯数"
               sortable
-              width="160">
+              width="160"
+              align="center">
           </el-table-column>
           <el-table-column label="我的星辉之力">
             <el-table-column
                 label="星辉一"
-                width="120">
+                width="120"
+                align="center">
                 <template slot-scope="scope">
-                  <span>{{scope.row}}</span>
+                  <span v-for="(item,index) in scope.row.starPowers.slice(0,1)" :key="index">
+                    <img :src="require('../../assets/starPowersAndGadgets/'+ item.id +'.png')" alt="" width="40px">
+                  </span>
                 </template>
             </el-table-column>
             <el-table-column
-                prop="starPowers[1].id"
                 label="星辉二"
-                width="120">
+                width="120"
+                align="center">
+              <template slot-scope="scope">
+                  <span v-for="(item,index) in scope.row.starPowers.slice(1,2)" :key="index">
+                    <img :src="require('../../assets/starPowersAndGadgets/'+ item.id +'.png')" alt="" width="40px">
+                  </span>
+              </template>
             </el-table-column>
           </el-table-column>
           <el-table-column label="我的武装配件">
             <el-table-column
-                prop="gadgets[0].id"
                 label="配件一"
-                width="120">
+                width="120"
+                align="center">
+              <template slot-scope="scope">
+                  <span v-for="(item,index) in scope.row.gadgets.slice(0,1)" :key="index">
+                    <img :src="require('../../assets/starPowersAndGadgets/'+ item.id +'.png')" alt="" width="40px">
+                  </span>
+              </template>
             </el-table-column>
             <el-table-column
-                prop="gadgets[1].id"
                 label="配件二"
-                width="120">
+                width="120"
+                align="center">
+              <template slot-scope="scope">
+                  <span v-for="(item,index) in scope.row.gadgets.slice(1,2)" :key="index">
+                    <img :src="require('../../assets/starPowersAndGadgets/'+ item.id +'.png')" alt="" width="40px">
+                  </span>
+              </template>
             </el-table-column>
           </el-table-column>
         </el-table>
