@@ -164,49 +164,65 @@
         </div>
       </el-tab-pane>
 
+      <!--我的英雄选项卡-->
       <el-tab-pane label="我的英雄">
         <el-table :data="brawlers" height="850" border style="width: 100%">
+          <!--英雄头像列-->
           <el-table-column
               label="英雄"
-              width="120"
-              align="center">
+              width="100"
+              align="center"
+              label-class-name="tableLabel">
               <template slot-scope="scope">
                 <img :src="require('../../assets/brawlers/'+ scope.row.id +'.png')" alt="" width="60px">
               </template>
           </el-table-column>
+          <!--战力等级列-->
           <el-table-column
               prop="power"
               label="战力等级"
               sortable
-              width="140"
-              align="center">
+              width="120"
+              align="center"
+              class-name="powerCol"
+              label-class-name="tableLabel">
           </el-table-column>
+          <!--荣誉等级列-->
           <el-table-column
               prop="rank"
               label="荣誉等级"
               sortable
-              width="140"
-              align="center">
+              width="120"
+              align="center"
+              class-name="powerCol"
+              label-class-name="tableLabel">
           </el-table-column>
+          <!--奖杯数列-->
           <el-table-column
               prop="trophies"
               label="奖杯数"
               sortable
               width="160"
-              align="center">
+              align="center"
+              class-name="powerCol"
+              label-class-name="tableLabel">
           </el-table-column>
+          <!--最高奖杯数列-->
           <el-table-column
               prop="highestTrophies"
               label="最高奖杯数"
               sortable
               width="160"
-              align="center">
+              align="center"
+              class-name="powerCol"
+              label-class-name="tableLabel">
           </el-table-column>
-          <el-table-column label="我的星辉之力">
+          <el-table-column label="我的星辉之力" align="center" label-class-name="tableLabel">
             <el-table-column
                 label="星辉一"
-                width="120"
-                align="center">
+                width="110"
+                align="center"
+                label-class-name="tableLabel">
                 <template slot-scope="scope">
                   <span v-for="(item,index) in scope.row.starPowers.slice(0,1)" :key="index">
                     <img :src="require('../../assets/starPowersAndGadgets/'+ item.id +'.png')" alt="" width="40px">
@@ -215,8 +231,9 @@
             </el-table-column>
             <el-table-column
                 label="星辉二"
-                width="120"
-                align="center">
+                width="110"
+                align="center"
+                label-class-name="tableLabel">
               <template slot-scope="scope">
                   <span v-for="(item,index) in scope.row.starPowers.slice(1,2)" :key="index">
                     <img :src="require('../../assets/starPowersAndGadgets/'+ item.id +'.png')" alt="" width="40px">
@@ -224,11 +241,12 @@
               </template>
             </el-table-column>
           </el-table-column>
-          <el-table-column label="我的武装配件">
+          <el-table-column label="我的武装配件" align="center" label-class-name="tableLabel">
             <el-table-column
                 label="配件一"
-                width="120"
-                align="center">
+                width="110"
+                align="center"
+                label-class-name="tableLabel">
               <template slot-scope="scope">
                   <span v-for="(item,index) in scope.row.gadgets.slice(0,1)" :key="index">
                     <img :src="require('../../assets/starPowersAndGadgets/'+ item.id +'.png')" alt="" width="40px">
@@ -237,11 +255,36 @@
             </el-table-column>
             <el-table-column
                 label="配件二"
-                width="120"
-                align="center">
+                width="110"
+                align="center"
+                label-class-name="tableLabel">
               <template slot-scope="scope">
                   <span v-for="(item,index) in scope.row.gadgets.slice(1,2)" :key="index">
                     <img :src="require('../../assets/starPowersAndGadgets/'+ item.id +'.png')" alt="" width="40px">
+                  </span>
+              </template>
+            </el-table-column>
+          </el-table-column>
+          <el-table-column label="我的装备" align="center" label-class-name="tableLabel">
+            <el-table-column
+                label="装备一"
+                width="110"
+                align="center"
+                label-class-name="tableLabel">
+              <template slot-scope="scope">
+                  <span v-for="(item,index) in scope.row.gears.slice(0,1)" :key="index">
+                    <img :src="require('../../assets/gears/'+ item.name + item.level +'.png')" alt="" width="40px">
+                  </span>
+              </template>
+            </el-table-column>
+            <el-table-column
+                label="装备二"
+                width="110"
+                align="center"
+                label-class-name="tableLabel">
+              <template slot-scope="scope">
+                  <span v-for="(item,index) in scope.row.gears.slice(1,2)" :key="index">
+                    <img :src="require('../../assets/gears/'+ item.name + item.level +'.png')" alt="" width="40px">
                   </span>
               </template>
             </el-table-column>
@@ -329,5 +372,12 @@ img{
   margin-left: 10px;
   font-family: '黑体',serif;
   font-size: 1.4em;
+}
+.powerCol{
+  font-size: 18px;
+}
+.tableLabel{
+  color: rgb(0,21,41);
+  font-size: 16px;
 }
 </style>
