@@ -81,7 +81,7 @@
                 <template slot="title">
                   <div class="cardTitle">
                     <img src="~@/assets/icon_championship.png" alt="" style="height: 40px;">
-                    <span>是否符合冠军挑战赛资格</span>
+                    <span>冠军挑战赛资格</span>
                   </div>
                 </template>
                 <a-statistic
@@ -174,7 +174,7 @@
               align="center"
               label-class-name="tableLabel">
               <template slot-scope="scope">
-                <img :src="require('../../assets/brawlers/'+ scope.row.id +'.png')" alt="" width="60px">
+                <img :src="require('../../assets/brawlers/'+ scope.row.id +'.png')" alt="" width="70px">
               </template>
           </el-table-column>
           <!--战力等级列-->
@@ -270,7 +270,14 @@
                 label="装备一"
                 width="110"
                 align="center"
-                label-class-name="tableLabel">
+                label-class-name="tableLabel"
+                :filters="[
+                    {text: '迅捷', value: 'SPEED'},
+                    {text: '恢复', value: 'HEALTH'},
+                    {text: '强攻', value: 'DAMAGE'},
+                    {text: '韧性', value: 'RESISTANCE'},
+                    {text: '护盾', value: 'SHIELD'}]"
+                :filter-method="filterGears1">
               <template slot-scope="scope">
                   <span v-for="(item,index) in scope.row.gears.slice(0,1)" :key="index">
                     <img :src="require('../../assets/gears/'+ item.name + item.level +'.png')" alt="" width="40px">
@@ -281,7 +288,14 @@
                 label="装备二"
                 width="110"
                 align="center"
-                label-class-name="tableLabel">
+                label-class-name="tableLabel"
+                :filters="[
+                    {text: '迅捷', value: 'SPEED'},
+                    {text: '恢复', value: 'HEALTH'},
+                    {text: '强攻', value: 'DAMAGE'},
+                    {text: '韧性', value: 'RESISTANCE'},
+                    {text: '护盾', value: 'SHIELD'}]"
+                :filter-method="filterGears2">
               <template slot-scope="scope">
                   <span v-for="(item,index) in scope.row.gears.slice(1,2)" :key="index">
                     <img :src="require('../../assets/gears/'+ item.name + item.level +'.png')" alt="" width="40px">
@@ -351,6 +365,16 @@ export default {
           this.loading = false
         })
       }
+    },
+    filterGears1(value, row){
+      if(row.gears.slice(0,1)[0] !== undefined){
+        return row.gears.slice(0,1)[0].name === value
+      }
+    },
+    filterGears2(value, row){
+      if(row.gears.slice(1,2)[0] !== undefined){
+        return row.gears.slice(1,2)[0].name === value
+      }
     }
   }
 }
@@ -375,6 +399,7 @@ img{
 }
 .powerCol{
   font-size: 18px;
+  font-weight: bold;
 }
 .tableLabel{
   color: rgb(0,21,41);
