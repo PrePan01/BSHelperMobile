@@ -280,7 +280,7 @@
                 :filter-method="filterGears1">
               <template slot-scope="scope">
                   <span v-for="(item,index) in scope.row.gears.slice(0,1)" :key="index">
-                    <img :src="require('../../assets/gears/'+ item.name + item.level +'.png')" alt="" width="40px">
+                    <img :src="require('../../assets/gears/'+ item.name + item.level +'.png')" alt="" width="50px">
                   </span>
               </template>
             </el-table-column>
@@ -298,7 +298,7 @@
                 :filter-method="filterGears2">
               <template slot-scope="scope">
                   <span v-for="(item,index) in scope.row.gears.slice(1,2)" :key="index">
-                    <img :src="require('../../assets/gears/'+ item.name + item.level +'.png')" alt="" width="40px">
+                    <img :src="require('../../assets/gears/'+ item.name + item.level +'.png')" alt="" width="50px">
                   </span>
               </template>
             </el-table-column>
