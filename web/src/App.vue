@@ -13,8 +13,8 @@
             <a-menu-item key="2" @click="toBSPersonalCard">
               个人名片
             </a-menu-item>
-            <a-menu-item key="3">
-              最近对战（开发中）
+            <a-menu-item key="3" @click="toRecentEvents">
+              最近对战
             </a-menu-item>
           </a-sub-menu>
           <a-menu-item key="4" @click="mt">
@@ -84,7 +84,9 @@ export default {
     toBSPersonalCard(){
       this.$router.push('/bsPersonalCard')
     },
-
+    toRecentEvents(){
+      this.$router.push('/recentEvents')
+    },
     changeLogoClass() {
       if(this.collapsed){
         this.logoClass = 'logoClassTrue'

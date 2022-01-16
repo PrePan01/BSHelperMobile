@@ -4,6 +4,7 @@ import MakeTeam from "@/components/MakeTeam";
 import Default from "@/components/Default";
 import CmdMain from "@/components/CloudMusicDownload/CmdMain";
 import BSPersonalCard from "@/components/BSEventsSearch/BSPersonalCard";
+import RecentEvents from "@/components/BSEventsSearch/RecentEvents";
 
 export default new router({
     routes: [
@@ -23,6 +24,9 @@ export default new router({
             path: '/bsPersonalCard',
             component: BSPersonalCard
         },
-
+        {
+            path: '/recentEvents',
+            component: RecentEvents
+        },
     ]
 })
