@@ -30,25 +30,29 @@
       </div>
 
       <div v-if="myName !== ''">
-        <!--卡片-->
-        <a-card style="width: 100%;margin-top: 20px;">
+        <a-collapse style="margin-top: 20px" :bordered="false" @change="summary()">
+          <a-collapse-panel header="总览" :forceRender="true">
+            <!--卡片-->
+            <a-card style="width: 100%;margin-top: 20px;">
 
-          <div slot="title" style="font-size: 24px">
-            最近25场(只统计3v3)
-          </div>
+              <div slot="title" style="font-size: 24px">
+                最近25场(只统计3v3)
+              </div>
 
-          <a-row>
-            <a-col :span="12">
-              <a-statistic title="获胜" :value="victoryNum" style="margin-bottom: 10px" />
-              <a-statistic title="战败" :value="defeatNum" style="margin-bottom: 10px" />
-            </a-col>
-            <a-col :span="12">
-              <a-statistic title="平局" :value="drawNum" style="margin-bottom: 10px" />
-              <a-statistic title="我的MVP" :value="myMVP" style="" />
-            </a-col>
-          </a-row>
+              <a-row>
+                <a-col :span="12">
+                  <a-statistic title="获胜" :value="victoryNum" style="margin-bottom: 10px" />
+                  <a-statistic title="战败" :value="defeatNum" style="margin-bottom: 10px" />
+                </a-col>
+                <a-col :span="12">
+                  <a-statistic title="平局" :value="drawNum" style="margin-bottom: 10px" />
+                  <a-statistic title="我的MVP" :value="myMVP" style="" />
+                </a-col>
+              </a-row>
 
-        </a-card>
+            </a-card>
+          </a-collapse-panel>
+        </a-collapse>
 
         <!--表格-->
         <el-table
@@ -301,8 +305,8 @@ export default {
         }).then((res) => {
           this.myName = res.data.name
           this.summary()
+          this.loading = false
         })
-        this.loading = false
       }
     },
     upperCase(){
@@ -340,21 +344,20 @@ export default {
       var draw = 0
       var myMVP = 0
       for(let i in this.battlelogs){
-        if('starplayer' in this.battlelogs[i].battle){
-          if(this.battlelogs[i].battle.starPlayer.name === this.myName)
-            myMVP++
+        if('starPlayer' in this.battlelogs[i].battle){
+          if(this.battlelogs[i].battle.starPlayer !== null){
+            if(this.battlelogs[i].battle.starPlayer.name === this.myName)
+              myMVP++
+          }
         }
         if(this.battlelogs[i].battle.result === 'victory') {
           victory++
-          console.log('v')
         }
         else if(this.battlelogs[i].battle.result === 'defeat') {
           defeat++
-          console.log('de')
         }
         else if(this.battlelogs[i].battle.result === 'draw') {
           draw++
-          console.log('d')
         }
       }
       this.victoryNum = victory

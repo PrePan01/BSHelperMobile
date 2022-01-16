@@ -119,7 +119,7 @@ export default {
   }
   .Suggestion{
     position: fixed;
-    right: 40px;
+    left: 10px;
     bottom: 90px;
   }
   .ant-back-top{

@@ -1,7 +1,7 @@
 <template>
   <div>
     <a-config-provider :auto-insert-space-in-button="false">
-      <a-button @click="info" type="primary">
+      <a-button @click="info" type="link">
         建议
       </a-button>
     </a-config-provider>
