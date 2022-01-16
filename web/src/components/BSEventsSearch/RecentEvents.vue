@@ -29,7 +29,7 @@
         />
       </div>
 
-      <div v-if="myName !== ''">
+      <div>
         <a-collapse style="margin-top: 20px" :bordered="false" @change="summary()">
           <a-collapse-panel header="总览" :forceRender="true">
             <!--卡片-->
@@ -40,14 +40,22 @@
               </div>
 
               <a-row>
-                <a-col :span="12">
+                <a-col :span="6">
                   <a-statistic title="获胜" :value="victoryNum" style="margin-bottom: 10px" />
-                  <a-statistic title="战败" :value="defeatNum" style="margin-bottom: 10px" />
+                  <a-statistic title="战败" :value="defeatNum" style="" />
                 </a-col>
-                <a-col :span="12">
+                <a-col :span="6">
                   <a-statistic title="平局" :value="drawNum" style="margin-bottom: 10px" />
                   <a-statistic title="我的MVP" :value="myMVP" style="" />
                 </a-col>
+                <a-col :span="6">
+                  <a-statistic title="胜率" :value="isNaN(winRate)? '暂无数据': winRate" style="margin-bottom: 10px" :precision="2" suffix="%"/>
+                  <a-statistic title="MVP率" :value="isNaN(MVPRate)? '暂无数据': MVPRate" style="" :precision="2" suffix="%"/>
+                </a-col>
+                <a-col :span="2">
+                  <a-statistic title="总体评价" :value="myLevel" style="margin-bottom: 10px" valueStyle="fontSize: 50px; color: #ee3f4d" />
+                </a-col>
+
               </a-row>
 
             </a-card>
@@ -66,12 +74,15 @@
               align="center"
               :formatter="dateFormatter"
               width="100"
+              label-class-name="tableCol"
           >
           </el-table-column>
 
           <el-table-column
               label="模式"
-              align="center">
+              align="center"
+              label-class-name="tableCol"
+          >
             <template slot-scope="scope">
               <img :src="require('../../assets/gameModes/'+ scope.row.battle.mode +'.png')" alt="" width="50px">
             </template>
@@ -81,6 +92,7 @@
               label="比赛类型"
               width="100"
               align="center"
+              label-class-name="tableCol"
               :filters="[{ text: '排位', value: 'ranked' }, { text: '挑战', value: 'challenge' }, { text: '战队联赛', value: 'teamRanked' }]"
               :filter-method="filterBattleType">>
             <template slot-scope="scope">
@@ -92,6 +104,7 @@
               label="比赛结果"
               width="100"
               align="center"
+              label-class-name="tableCol"
               :filters="[{ text: '获胜', value: 'victory' }, { text: '战败', value: 'defeat' }, { text: '平局', value: 'draw' }]"
               :filter-method="filterBattleResult">
             <template slot-scope="scope">
@@ -106,7 +119,9 @@
           <el-table-column
               label="奖杯变化"
               width="80"
-              align="center">
+              align="center"
+              label-class-name="tableCol"
+          >
             <template slot-scope="scope">
               {{ scope.row.battle.trophyChange >0? '+' + scope.row.battle.trophyChange: scope.row.battle.trophyChange}}
             </template>
@@ -115,7 +130,9 @@
           <el-table-column
               label="比赛时长"
               width="100"
-              align="center">
+              align="center"
+              label-class-name="tableCol"
+          >
             <template slot-scope="scope">
               {{ scope.row.battle.duration === undefined? '暂无数据' : scope.row.battle.duration > 60? Math.floor(scope.row.battle.duration / 60) + '分' + (scope.row.battle.duration % 60) + '秒' : scope.row.battle.duration + '秒' }}
             </template>
@@ -125,15 +142,17 @@
               prop="battle.starPlayer.name"
               label="MVP"
               width="140"
-              align="center">
+              align="center"
+              label-class-name="tableCol"
+          >
           </el-table-column>
 
-          <el-table-column label="对战阵容" align="center">
+          <el-table-column label="对战阵容" align="center" label-class-name="tableCol">
             <el-table-column label="" align="center" width="420">
               <template slot-scope="scope" v-if="'teams' in scope.row.battle">
               <span v-for="(item, index) in scope.row.battle.teams[0]" :key="index" v-show="scope.row.battle.teams.length === 2">
-                <div style="display: inline-block;text-align: center;width: 120px">
-                  <img :src="require('../../assets/brawlers/'+ item.brawler.id +'.png')" alt="" width="60px">
+                <div style="display: inline-block;text-align: center;width: 120px;margin-top: 10px">
+                  <img :src="require('../../assets/brawlers/'+ item.brawler.id +'.png')" alt="" width="65px">
                   <br>
                   <div style="width: 120px;margin: 0 auto;white-space: nowrap">{{ item.name }}</div>
                   <div style="font-size: 16px; margin-top: -5px">Lv.{{ item.brawler.power }}</div>
@@ -145,8 +164,8 @@
             <el-table-column label="" align="center" width="420">
               <template slot-scope="scope" v-if="'teams' in scope.row.battle">
               <span v-for="(item, index) in scope.row.battle.teams[1]" :key="index" v-show="scope.row.battle.teams.length === 2">
-                <div style="display: inline-block;text-align: center;width: 120px">
-                  <img :src="require('../../assets/brawlers/'+ item.brawler.id +'.png')" alt="" width="60px">
+                <div style="display: inline-block;text-align: center;width: 120px;margin-top: 10px">
+                  <img :src="require('../../assets/brawlers/'+ item.brawler.id +'.png')" alt="" width="65px">
                   <br>
                   <div style="width: 120px;margin: 0 auto;white-space: nowrap">{{ item.name }}</div>
                   <div style="font-size: 16px; margin-top: -5px">Lv.{{ item.brawler.power }}</div>
@@ -179,111 +198,10 @@ export default {
       defeatNum: 0,
       drawNum: 0,
       myMVP: 0,
-      battlelogs: [{
-        "battleTime": "20220116T084430.000Z",
-        "event": {
-          "id": 15000013,
-          "mode": "soloShowdown",
-          "map": "Skull Creek"
-        },
-        "battle": {
-          "mode": "soloShowdown",
-          "type": "ranked",
-          "rank": 1,
-          "trophyChange": 10,
-          "players": [{
-            "tag": "#LLQ0U8PR",
-            "name": "PLS☆PrePan",
-            "brawler": {
-              "id": 16000048,
-              "name": "GROM",
-              "power": 8,
-              "trophies": 135
-            }
-          }, {
-            "tag": "#PQ0J00229",
-            "name": "Ultimate 5412",
-            "brawler": {
-              "id": 16000026,
-              "name": "BIBI",
-              "power": 1,
-              "trophies": 172
-            }
-          }, {
-            "tag": "#20RLQ2Q08",
-            "name": "TB|DarK",
-            "brawler": {
-              "id": 16000048,
-              "name": "GROM",
-              "power": 9,
-              "trophies": 157
-            }
-          }, {
-            "tag": "#9YPR2LRQU",
-            "name": "Ahroldjohnrie",
-            "brawler": {
-              "id": 16000048,
-              "name": "GROM",
-              "power": 2,
-              "trophies": 147
-            }
-          }, {
-            "tag": "#YYLRJCC99",
-            "name": "8-bit-TV",
-            "brawler": {
-              "id": 16000005,
-              "name": "SPIKE",
-              "power": 5,
-              "trophies": 180
-            }
-          }, {
-            "tag": "#PVQ0V89PC",
-            "name": "牛B",
-            "brawler": {
-              "id": 16000048,
-              "name": "GROM",
-              "power": 2,
-              "trophies": 161
-            }
-          }, {
-            "tag": "#Y8CQYQUC8",
-            "name": "TOXICxBAROOD",
-            "brawler": {
-              "id": 16000048,
-              "name": "GROM",
-              "power": 5,
-              "trophies": 154
-            }
-          }, {
-            "tag": "#JGQYRR9J",
-            "name": "jubjub",
-            "brawler": {
-              "id": 16000005,
-              "name": "SPIKE",
-              "power": 5,
-              "trophies": 152
-            }
-          }, {
-            "tag": "#8V92Y2UUU",
-            "name": "Botol Kecap",
-            "brawler": {
-              "id": 16000032,
-              "name": "MAX",
-              "power": 6,
-              "trophies": 162
-            }
-          }, {
-            "tag": "#G02PYLV9",
-            "name": "nglok",
-            "brawler": {
-              "id": 16000052,
-              "name": "MEG",
-              "power": 5,
-              "trophies": 164
-            }
-          }]
-        }
-      }]
+      myLevel: '',
+      winRate: 0,
+      MVPRate: 0,
+      battlelogs: []
     }
   },
   methods: {
@@ -304,7 +222,10 @@ export default {
           url: '/playStatsApi/' + this.searchInput,
         }).then((res) => {
           this.myName = res.data.name
-          this.summary()
+          if(this.myName === undefined) alert('未找到玩家')
+          else{
+            this.summary()
+          }
           this.loading = false
         })
       }
@@ -364,11 +285,26 @@ export default {
       this.defeatNum = defeat
       this.drawNum = draw
       this.myMVP = myMVP
+      this.winRate = victory / (victory + defeat + draw) *100
+      this.MVPRate = myMVP / victory *100
+      if(this.winRate <= 20.0) this.myLevel = 'G'
+      else if(this.winRate > 20.0 && this.winRate <= 25.0) this.myLevel = 'F'
+      else if(this.winRate > 25.0 && this.winRate <= 30.0) this.myLevel = 'E'
+      else if(this.winRate > 30.0 && this.winRate <= 35.0) this.myLevel = 'D'
+      else if(this.winRate > 35.0 && this.winRate <= 40.0) this.myLevel = 'C'
+      else if(this.winRate > 40.0 && this.winRate <= 45.0) this.myLevel = 'D'
+      else if(this.winRate > 45.0 && this.winRate <= 50.0) this.myLevel = 'A'
+      else if(this.winRate > 50.0 && this.winRate <= 60.0) this.myLevel = 'A+'
+      else if(this.winRate > 60.0 && this.winRate <= 70.0) this.myLevel = 'S'
+      else if(this.winRate > 70.0 && this.winRate <= 80.0) this.myLevel = 'SS'
+      else if(this.winRate > 80.0) this.myLevel = 'SSS'
     }
   }
 }
 </script>
 
-<style scoped>
-
+<style>
+.tableCol{
+  color: black;
+}
 </style>

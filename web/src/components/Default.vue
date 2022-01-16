@@ -11,6 +11,8 @@
         <el-timeline>
           <el-timeline-item timestamp="2022/1/16" placement="top">
             <el-card class="updataCard">
+              <h3>新增</h3>
+              <p>【重大更新】最近对战</p>
               <h3>优化</h3>
               <p>我的英雄表格</p>
             </el-card>
