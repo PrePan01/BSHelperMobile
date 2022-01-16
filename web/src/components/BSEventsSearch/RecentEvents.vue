@@ -154,7 +154,7 @@
                 <div style="display: inline-block;text-align: center;width: 120px;margin-top: 10px">
                   <img :src="require('../../assets/brawlers/'+ item.brawler.id +'.png')" alt="" width="65px">
                   <br>
-                  <div style="width: 120px;margin: 0 auto;white-space: nowrap">{{ item.name }}</div>
+                  <div style="width: 120px;margin: 0 auto;white-space: nowrap" :class="{teamId: item.name === myName}">{{ item.name }}</div>
                   <div style="font-size: 16px; margin-top: -5px">Lv.{{ item.brawler.power }}</div>
                 </div>
               </span>
@@ -167,7 +167,7 @@
                 <div style="display: inline-block;text-align: center;width: 120px;margin-top: 10px">
                   <img :src="require('../../assets/brawlers/'+ item.brawler.id +'.png')" alt="" width="65px">
                   <br>
-                  <div style="width: 120px;margin: 0 auto;white-space: nowrap">{{ item.name }}</div>
+                  <div style="width: 120px;margin: 0 auto;white-space: nowrap" :class="{teamId: item.name === myName}">{{ item.name }}</div>
                   <div style="font-size: 16px; margin-top: -5px">Lv.{{ item.brawler.power }}</div>
                 </div>
               </span>
@@ -306,5 +306,10 @@ export default {
 <style>
 .tableCol{
   color: black;
+}
+.teamId{
+  font-weight: bold;
+  color: black;
+
 }
 </style>
