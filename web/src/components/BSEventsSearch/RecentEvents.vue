@@ -33,7 +33,7 @@
         <a-collapse style="margin-top: 20px" :bordered="false" @change="summary()">
           <a-collapse-panel header="总览" :forceRender="true">
             <!--卡片-->
-            <a-card style="width: 100%;margin-top: 20px;">
+            <a-card style="width: 100%">
 
               <div slot="title" style="font-size: 24px">
                 最近25场(只统计3v3)
