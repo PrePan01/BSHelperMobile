@@ -1,4 +1,4 @@
-<template>
+  <template>
   <div>
     <!--标题-->
     <div>
@@ -66,6 +66,7 @@
         <el-table
             :data="battlelogs"
             border
+            height="90vh"
             style="width: 100%; margin-top: 20px">
 
           <el-table-column
@@ -118,7 +119,7 @@
 
           <el-table-column
               label="奖杯变化"
-              width="80"
+              width="50"
               align="center"
               label-class-name="tableCol"
           >
@@ -149,28 +150,76 @@
 
           <el-table-column label="对战阵容" align="center" label-class-name="tableCol">
             <el-table-column label="" align="center" width="420">
-              <template slot-scope="scope" v-if="'teams' in scope.row.battle">
-              <span v-for="(item, index) in scope.row.battle.teams[0]" :key="index" v-show="scope.row.battle.teams.length === 2">
-                <div style="display: inline-block;text-align: center;width: 120px;margin-top: 10px">
-                  <img :src="require('../../assets/brawlers/'+ item.brawler.id +'.png')" alt="" width="65px">
-                  <br>
-                  <div style="width: 120px;margin: 0 auto;white-space: nowrap" :class="{teamId: item.name === myName}">{{ item.name }}</div>
-                  <div style="font-size: 16px; margin-top: -5px">Lv.{{ item.brawler.power }}</div>
-                </div>
-              </span>
+              <template slot-scope="scope">
+                <!--3V3阵容-->
+                <template v-if="'teams' in scope.row.battle">
+                <span v-for="(item, index) in scope.row.battle.teams[0]" :key="index" v-show="scope.row.battle.teams.length === 2">
+                  <div style="display: inline-block;text-align: center;width: 120px;margin-top: 10px">
+                    <img :src="require('../../assets/brawlers/'+ item.brawler.id +'.png')" alt="" width="65px">
+                    <br>
+                    <div>
+                      <el-tag size="small" effect="plain" class="power" type="info">Lv.{{ item.brawler.power }}</el-tag>
+                    </div>
+                    <div style="width: 120px;margin: 0 auto;white-space: nowrap" :class="{teamId: item.name === myName}">{{ item.name }}</div>
+                  </div>
+                </span>
+                </template>
+                <!--车轮战阵容-->
+                <template v-if="scope.row.battle.mode === 'duels'">
+                  <div
+                      style="display: inline-block;text-align: center;width: 120px;margin-top: 10px"
+                      v-for="(picItem,index) in scope.row.battle.players[0].brawlers"
+                      :key="index"
+                  >
+                    <img
+                        style="width: 65px"
+                        :src="require('../../assets/brawlers/'+ picItem.id +'.png')"
+                        alt=""
+                        width="65px"
+                    >
+                    <div>
+                      <el-tag size="small" effect="plain" class="power" type="info">Lv.{{ picItem.power }}</el-tag>
+                    </div>
+                  </div>
+                  <div style="" :class="{teamId: scope.row.battle.players[0].name === myName}">{{ scope.row.battle.players[0].name }}</div>
+                </template>
               </template>
             </el-table-column>
 
             <el-table-column label="" align="center" width="420">
-              <template slot-scope="scope" v-if="'teams' in scope.row.battle">
-              <span v-for="(item, index) in scope.row.battle.teams[1]" :key="index" v-show="scope.row.battle.teams.length === 2">
-                <div style="display: inline-block;text-align: center;width: 120px;margin-top: 10px">
-                  <img :src="require('../../assets/brawlers/'+ item.brawler.id +'.png')" alt="" width="65px">
-                  <br>
-                  <div style="width: 120px;margin: 0 auto;white-space: nowrap" :class="{teamId: item.name === myName}">{{ item.name }}</div>
-                  <div style="font-size: 16px; margin-top: -5px">Lv.{{ item.brawler.power }}</div>
-                </div>
-              </span>
+              <template slot-scope="scope">
+                <!--3V3阵容-->
+                <template v-if="'teams' in scope.row.battle">
+                <span v-for="(item, index) in scope.row.battle.teams[1]" :key="index" v-show="scope.row.battle.teams.length === 2">
+                  <div style="display: inline-block;text-align: center;width: 120px;margin-top: 10px">
+                    <img :src="require('../../assets/brawlers/'+ item.brawler.id +'.png')" alt="" width="65px">
+                    <br>
+                    <div>
+                      <el-tag size="small" effect="plain" class="power" type="info">Lv.{{ item.brawler.power }}</el-tag>
+                    </div>
+                    <div style="width: 120px;margin: 0 auto;white-space: nowrap" :class="{teamId: item.name === myName}">{{ item.name }}</div>
+                  </div>
+                </span>
+                </template>
+                <!--车轮战阵容-->
+                <template v-if="scope.row.battle.mode === 'duels'">
+                  <div
+                      style="display: inline-block;text-align: center;width: 120px;margin-top: 10px"
+                      v-for="(picItem,index) in scope.row.battle.players[1].brawlers"
+                      :key="index"
+                  >
+                    <img
+                        style="width: 65px"
+                        :src="require('../../assets/brawlers/'+ picItem.id +'.png')"
+                        alt=""
+                        width="65px"
+                    >
+                    <div>
+                      <el-tag size="small" effect="plain" class="power" type="info">Lv.{{ picItem.power }}</el-tag>
+                    </div>
+                  </div>
+                  <div style="" :class="{teamId: scope.row.battle.players[1].name === myName}">{{ scope.row.battle.players[1].name }}</div>
+                </template>
               </template>
             </el-table-column>
           </el-table-column>
@@ -310,6 +359,12 @@ export default {
 .teamId{
   font-weight: bold;
   color: black;
-
+}
+.power{
+  font-size: 15px;
+  /*border: 1px solid black;*/
+  /*width: 40px;*/
+  margin: 5px auto 2px auto;
+  /*border-radius: 5px*/
 }
 </style>

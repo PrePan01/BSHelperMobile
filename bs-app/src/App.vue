@@ -1253,9 +1253,9 @@ export default {
         this.res = res
       })
     }*/
+    //个人信息数据
     search(){
       this.$bus.$emit('PersonalData',this.res)
-      console.log('@@@ emit')
     }
   },
 }
