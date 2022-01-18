@@ -43,12 +43,15 @@
     <div class="backTop">
       <a-back-top />
     </div>
+
+    <Footer></Footer>
   </div>
 
 </template>
 
 <script>
 import Suggestion from "@/components/Suggestion";
+import Footer from "@/components/Footer";
 
 //百度统计
 var _hmt = _hmt || [];
@@ -62,7 +65,7 @@ var _hmt = _hmt || [];
 export default {
   name: 'App',
   components: {
-    Suggestion
+    Suggestion, Footer
   },
   data() {
     return {

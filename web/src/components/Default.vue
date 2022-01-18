@@ -9,11 +9,23 @@
       <el-dialog title="更新日志" :visible.sync="dialogTableVisible">
 
         <el-timeline>
+          <el-timeline-item timestamp="2022/1/19" placement="top">
+            <el-card class="updataCard">
+              <h3>新增</h3>
+              <p>最近对战——总览缩略图</p>
+              <p>最近对战——奖杯曲线</p>
+              <p>最近对战——地图列</p>
+              <h3>优化</h3>
+              <p>地图列部分地图翻译</p>
+            </el-card>
+          </el-timeline-item>
+
+
           <el-timeline-item timestamp="2022/1/18" placement="top">
             <el-card class="updataCard">
               <h3>优化</h3>
-              <p>最近对战中车轮擂台赛的显示</p>
-              <p>最近对战部分界面</p>
+              <p>最近对战——车轮擂台赛显示</p>
+              <p>最近对战——英雄等级显示</p>
             </el-card>
           </el-timeline-item>
 
