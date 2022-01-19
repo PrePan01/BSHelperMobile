@@ -14,6 +14,10 @@
             style="width: 50vw;"
             @keyup="upperCase"
         />
+        <span style="font-size: 20px;margin-left: 20px" v-if="recentSearch !== '' && searchInput === ''">
+          <span>你是否想查询：</span>
+          <a @click="searchRecent(recentSearch)">#{{ recentSearch }}</a>
+        </span>
       </div>
       <!--玩家昵称-->
       <h1 style="font-size: 35px;margin: 20px 0 10px 0">{{playName}}</h1>
@@ -401,7 +405,8 @@ export default {
       maxTrophy: 0,
       maxTrophyName: '',
       //荣誉奖牌
-      rank: [0,0,0,0,0,0,0,0]
+      rank: [0,0,0,0,0,0,0,0],
+      recentSearch: ''
     }
   },
   methods: {
@@ -416,6 +421,7 @@ export default {
       }
       else{
         this.loading = true
+        localStorage.setItem('recentSearch', this.searchInput)
         axios({
           methods: 'GET',
           url: '/playStatsApi/' + this.searchInput,
@@ -684,8 +690,15 @@ export default {
         },
       });
       column.render();
+    },
+    searchRecent(recentSearch){
+      this.searchInput = recentSearch
+      this.onSearch()
     }
   },
+  mounted(){
+    this.recentSearch = localStorage.getItem('recentSearch')
+  }
 }
 </script>
 

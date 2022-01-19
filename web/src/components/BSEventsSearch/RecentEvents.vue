@@ -27,6 +27,10 @@
             style="width: 50vw;"
             @keyup="upperCase"
         />
+        <span style="font-size: 20px;margin-left: 20px" v-if="recentSearch !== '' && searchInput === ''">
+          <span>你是否想查询：</span>
+          <a @click="searchRecent(recentSearch)">#{{ recentSearch }}</a>
+        </span>
       </div>
 
       <div>
@@ -277,15 +281,19 @@ export default {
       winRate: 0,
       MVPRate: 0,
       myTrophies: 0,
-      battlelogs: []
+      battlelogs: [],
+      recentSearch: ''
     }
   },
   methods: {
     onSearch() {
       if (this.searchInput === '') {
         alert('请输入标签')
-      } else {
+      }
+      else {
         this.loading = true
+        localStorage.setItem('recentSearch', this.searchInput)
+
         axios({
           methods: 'GET',
           url: '/playStatsApi/' + 'v1/battlelog/' + this.searchInput,
@@ -396,6 +404,7 @@ export default {
       else if (en === 'Some Assembly Required') return '等待组装'
       else return en
     },
+    // 杯数曲线
     drawPointChangeLine() {
       let p = 0
       let data = [0]
@@ -442,7 +451,15 @@ export default {
         tinyLine.render()
         console.log('else')
       }
+    },
+    // 最近搜索超链接
+    searchRecent(recentSearch){
+      this.searchInput = recentSearch
+      this.onSearch()
     }
+  },
+  mounted(){
+    this.recentSearch = localStorage.getItem('recentSearch')
   }
 }
 </script>
