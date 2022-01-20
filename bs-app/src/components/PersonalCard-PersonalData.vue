@@ -2,7 +2,8 @@
   <div>
     <van-list>
       <!--id-->
-      <van-divider :style="{color: 'rgb(26,82,197)', fontWeight: 'bold', marginTop: '4vh', fontSize: '2.3em'}">{{ personalData.name }}</van-divider>
+      <van-divider :style="{color: 'rgb(26,82,197)', fontWeight: 'bold', marginTop: '4vh', fontSize: '2em'}">{{ personalData.name }}</van-divider>
+      <h3 style="text-align: center;color: rgb(26,82,197); font-size: 1.5em;margin-top: -5px">({{ personalData.tag }})</h3>
       <!--分栏-->
       <van-row>
         <!--左边列-->
@@ -109,6 +110,7 @@
         </a-statistic>
       </van-cell>
     </van-list>
+    <div style="height: 10vh"></div>
   </div>
 </template>
 
@@ -118,18 +120,12 @@ export default {
   data(){
     return{
       personalData: {},
-      playName: '',
-      trophies: '',
-      highestTrophies: ''
     }
   },
   mounted(){
     //接收个人信息数据
     this.$bus.$on('PersonalData', (data) => {
       this.personalData = data
-      this.playName = '@' + data.name
-      this.trophies = data.trophies
-      this.highestTrophies = data.highestTrophies
     })
   }
 }
