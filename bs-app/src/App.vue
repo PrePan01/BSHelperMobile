@@ -30,7 +30,7 @@ export default {
     return {
       tabberActive: 0, //激活的标签页
       searchValue: '', //搜索框
-      res: {
+      personalData: {
         "tag": "#LLQ0U8PR",
         "name": "PLS☆PrePan",
         "nameColor": "0xffff9727",
@@ -1250,12 +1250,12 @@ export default {
         methods: 'GET',
         url: 'https://cr.is-a.dev/LLQ0U8PR',
       }).then((res) => {
-        this.res = res
+        this.personalData = res
       })
     }*/
     //个人信息数据
     search(){
-      this.$bus.$emit('PersonalData',this.res)
+      this.$bus.$emit('PersonalData',this.personalData)
     }
   },
 }
