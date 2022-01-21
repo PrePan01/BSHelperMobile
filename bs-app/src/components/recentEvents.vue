@@ -72,7 +72,7 @@
         <template slot="title">
           <img :src="require('../assets/gameModes/'+ item.battle.mode +'.png')" alt=""  style="margin-right: 5vw; width: 8vw;">
           <!--3v3-->
-          <span v-if="'teams' in item.battle">
+          <span v-if="'teams' in item.battle && item.battle.teams.length === 2">
             <span v-for="(picItem, index) in item.battle.teams[0]" :key="index + '0'">
               <img v-if="picItem.name === myName" :src="require('../assets/brawlers/'+ picItem.brawler.id +'.png')" alt="" width="30vw">
             </span>
@@ -90,13 +90,13 @@
             </span>
           </span>
           <!--soloSD-->
-          <span v-if="item.event.mode === 'soloShowdown'">
+          <span v-if="item.event.mode === 'soloShowdown' || item.battle.mode === 'soloShowdown'">
             <span v-for="(playersItem, index) in item.battle.players" :key="index + '4'">
               <img v-if="playersItem.name === myName" :src="require('../assets/brawlers/'+ playersItem.brawler.id +'.png')" alt="" width="30vw">
             </span>
           </span>
           <!--duoSD-->
-          <span v-if="item.event.mode === 'duoShowdown'">
+          <span v-if="item.event.mode === 'duoShowdown' || item.battle.mode === 'duoShowdown'">
             <span v-for="(teamsItem, index) in item.battle.teams" :key="index + '5'">
               <img v-if="teamsItem[0].name === myName" :src="require('../assets/brawlers/'+ teamsItem[0].brawler.id +'.png')" alt="" width="30vw">
               <img v-if="teamsItem[1].name === myName" :src="require('../assets/brawlers/'+ teamsItem[1].brawler.id +'.png')" alt="" width="30vw">
@@ -169,6 +169,16 @@
             </a-descriptions-item>
           </a-descriptions>
         </div>
+        <div v-if="item.event.mode === undefined && (item.battle.mode === 'soloShowdown' || item.battle.mode === 'duoShowdown')">
+          <a-descriptions title="对战详情">
+            <a-descriptions-item label="比赛时间">
+              {{ item.battleTime | dateFormatter }}
+            </a-descriptions-item>
+            <a-descriptions-item label="类型">
+              社区地图
+            </a-descriptions-item>
+          </a-descriptions>
+        </div>
         <div v-if="item.event.mode === 'duels'">
           <van-row>
             <van-col span="10">
@@ -221,7 +231,7 @@ export default {
   name: "recentEvents",
   data(){
     return{
-      battleLogs: [],
+      battleLogs:[],
       victoryNum: 0,
       defeatNum: 0,
       drawNum: 0,
@@ -301,7 +311,6 @@ export default {
       this.battleLogs = data
       this.summary()
     })
-    console.log('mounted')
   }
 }
 </script>
