@@ -68,36 +68,36 @@
 
     <!--收缩列表-->
     <van-collapse v-model="activeNames">
-      <van-collapse-item v-show="checkboxValue === 'all'? true: item.battle.result === checkboxValue" v-for="(item) in battleLogs" :key="item.battleTime" :name="item.battleTime">
+      <van-collapse-item v-show="checkboxValue === 'all'? true: item.battle.result === checkboxValue" v-for="(item,index) in battleLogs" :key="index" :name="item.battleTime">
         <template slot="title">
           <img :src="require('../assets/gameModes/'+ item.battle.mode +'.png')" alt=""  style="margin-right: 5vw; width: 8vw;">
           <!--3v3-->
           <span v-if="'teams' in item.battle">
-            <span v-for="(picItem, index) in item.battle.teams[0]" :key="index">
+            <span v-for="(picItem, index) in item.battle.teams[0]" :key="index + '0'">
               <img v-if="picItem.name === myName" :src="require('../assets/brawlers/'+ picItem.brawler.id +'.png')" alt="" width="30vw">
             </span>
-            <span v-for="(picItem, index) in item.battle.teams[1]" :key="index">
+            <span v-for="(picItem, index) in item.battle.teams[1]" :key="index + '1'">
               <img v-if="picItem.name === myName" :src="require('../assets/brawlers/'+ picItem.brawler.id +'.png')" alt="" width="30vw">
             </span>
           </span>
           <!--duels-->
           <span v-if="item.event.mode === 'duels'">
-            <span v-for="(picItem, index) in item.battle.players[0].brawlers" :key="index">
+            <span v-for="(picItem, index) in item.battle.players[0].brawlers" :key="index + '2'">
               <img v-if="item.battle.players[0].name === myName" :src="require('../assets/brawlers/'+ picItem.id +'.png')" alt="" width="30vw">
             </span>
-            <span v-for="(picItem, index) in item.battle.players[1].brawlers" :key="index">
+            <span v-for="(picItem, index) in item.battle.players[1].brawlers" :key="index+ '3'">
               <img v-if="item.battle.players[1].name === myName" :src="require('../assets/brawlers/'+ picItem.id +'.png')" alt="" width="30vw">
             </span>
           </span>
           <!--soloSD-->
           <span v-if="item.event.mode === 'soloShowdown'">
-            <span v-for="(playersItem, index) in item.battle.players" :key="index">
+            <span v-for="(playersItem, index) in item.battle.players" :key="index + '4'">
               <img v-if="playersItem.name === myName" :src="require('../assets/brawlers/'+ playersItem.brawler.id +'.png')" alt="" width="30vw">
             </span>
           </span>
           <!--duoSD-->
           <span v-if="item.event.mode === 'duoShowdown'">
-            <span v-for="(teamsItem, index) in item.battle.teams" :key="index">
+            <span v-for="(teamsItem, index) in item.battle.teams" :key="index + '5'">
               <img v-if="teamsItem[0].name === myName" :src="require('../assets/brawlers/'+ teamsItem[0].brawler.id +'.png')" alt="" width="30vw">
               <img v-if="teamsItem[1].name === myName" :src="require('../assets/brawlers/'+ teamsItem[1].brawler.id +'.png')" alt="" width="30vw">
             </span>
@@ -301,6 +301,7 @@ export default {
       this.battleLogs = data
       this.summary()
     })
+    console.log('mounted')
   }
 }
 </script>

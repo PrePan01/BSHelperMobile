@@ -53,18 +53,17 @@ export default {
         url: 'https://cr.is-a.dev/' + this.searchValue,
       }).then((res) => {
         this.personalData = res.data
-        this.$bus.$emit('PersonalData',this.personalData)
-        this.$bus.$emit('myName',this.personalData.name)
-        this.$bus.$emit('PersonalBrawlers',this.personalData.brawlers)
-      })
-
-      axios({
-        methods: 'GET',
-        url: 'https://cr.is-a.dev/v1/battlelog/' + this.searchValue,
-      }).then((res) => {
-        this.battleLogs = res.data.items
-        this.$bus.$emit('BattleLogs',this.battleLogs)
-        this.showOverlay = false
+        this.$bus.$emit('PersonalData',res.data)
+        this.$bus.$emit('PersonalBrawlers',res.data.brawlers)
+        axios({
+          methods: 'GET',
+          url: 'https://cr.is-a.dev/v1/battlelog/' + this.searchValue,
+        }).then((res) => {
+          this.battleLogs = res.data.items
+          this.$bus.$emit('myName',this.personalData.name)
+          this.$bus.$emit('BattleLogs',this.battleLogs)
+          this.showOverlay = false
+        })
       })
     },
     //个人信息数据
