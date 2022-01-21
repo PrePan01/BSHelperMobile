@@ -1,6 +1,6 @@
 <template>
   <div>
-    <van-tabs v-model="tabsActive">
+    <van-tabs v-model="tabsActive" :lazy-render=false >
       <van-tab title="个人数据">
         <PersonalCard_PersonalData></PersonalCard_PersonalData>
       </van-tab>

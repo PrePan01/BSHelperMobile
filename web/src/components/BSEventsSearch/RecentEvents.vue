@@ -27,7 +27,7 @@
             style="width: 50vw;"
             @keyup="upperCase"
         />
-        <span style="font-size: 20px;margin-left: 20px" v-if="recentSearch !== '' && searchInput === ''">
+        <span style="font-size: 20px;margin-left: 20px" v-if="recentSearch !== null && searchInput === ''">
           <span>你是否想查询：</span>
           <a @click="searchRecent(recentSearch)">#{{ recentSearch }}</a>
         </span>

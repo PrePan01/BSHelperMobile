@@ -1,12 +1,22 @@
 <template>
   <div>
+    <!--排序-->
+    <van-dropdown-menu v-if="personalBrawlers.length !== 0">
+      <van-dropdown-item v-model="dropdownValue" :options="dropdownOption" @change="dropdownValue === 1?arrSortByKey(['id', true]) :arrSortByKey(dropdownValue)"/>
+    </van-dropdown-menu>
+
     <van-collapse v-model="activeNames">
       <van-collapse-item v-for="(item,index) in personalBrawlers" :key="index" :name="index">
         <!--标题-->
         <template #title>
           <div>
-            <img :src="require('../assets/brawlers/'+ item.id +'.png')" alt="" width="50vh">
-            {{ item.name }}
+            <img :src="require('../assets/brawlers/'+ item.id +'.png')" alt="" width="50vh" style="margin-right: 3vw">
+            <a-tag color="green">
+             Lv.{{item.power}}
+            </a-tag>
+            <a-tag color="orange">
+              {{ item.trophies }}
+            </a-tag>
           </div>
         </template>
         <!--内容-->
@@ -61,21 +71,42 @@
     <div style="height: 10vh"></div>
   </div>
 </template>
-
+*
 <script>
 export default {
   name: "PresonalCard-MyRoles",
   data(){
     return{
       activeNames: [''],
-      personalBrawlers: []
+      personalBrawlers: [],
+      dropdownValue: 1,
+      dropdownOption: [
+        { text: '默认排序', value: 1 },
+        { text: '按杯数升序', value: ['trophies', true] },
+        { text: '按杯数降序', value: ['trophies', false] },
+        { text: '按战力等级升序', value: ['power', true] },
+        { text: '按战力等级降序', value: ['power', false] },
+      ],
+    }
+  },
+  methods: {
+    arrSortByKey([key, order]) {
+      return this.personalBrawlers.sort(function (a, b) {
+        let value1 = a[key], value2 = b[key]
+        if (order) {  //true升序
+          return value1 - value2
+        } else  {     //false降序
+          return value2 - value1
+        }
+      })
     }
   },
   mounted() {
     this.$bus.$on('PersonalBrawlers',(data) => {
       this.personalBrawlers = data
     })
-  }
+  },
+
 }
 </script>
 
