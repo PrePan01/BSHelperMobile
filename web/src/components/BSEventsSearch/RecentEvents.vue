@@ -111,9 +111,6 @@
               label-class-name="tableCol"
               :formatter="mapFormatter"
           >
-            <!--<template slot-scope="scope">
-              {{ scope.row.event.map }}
-            </template>-->
           </el-table-column>
 
           <el-table-column
@@ -181,16 +178,18 @@
               <template slot-scope="scope">
                 <!--3V3阵容-->
                 <template v-if="'teams' in scope.row.battle">
-                <span v-for="(item, index) in scope.row.battle.teams[0]" :key="index" v-show="scope.row.battle.teams.length === 2">
-                  <div style="display: inline-block;text-align: center;width: 120px;margin-top: 10px">
-                    <img :src="require('../../assets/brawlers/'+ item.brawler.id +'.png')" alt="" width="65px">
-                    <br>
-                    <div>
-                      <el-tag size="small" effect="plain" class="power" type="info">Lv.{{ item.brawler.power }}</el-tag>
+                  <span v-for="(item, index) in scope.row.battle.teams[0]" :key="index" v-show="scope.row.battle.teams.length === 2">
+                    <div style="display: inline-block;text-align: center;width: 120px;margin-top: 10px">
+                      <img :src="require('../../assets/brawlers/'+ item.brawler.id +'.png')" alt="" width="65px">
+                      <br>
+                      <div>
+                        <el-tag size="small" effect="plain" class="power" type="info">Lv.{{ item.brawler.power }}</el-tag>
+                      </div>
+                      <div style="width: 120px;margin: 0 auto;white-space: nowrap" :class="{teamId: item.name === myName}">
+                        {{ item.name }}
+                      </div>
                     </div>
-                    <div style="width: 120px;margin: 0 auto;white-space: nowrap" :class="{teamId: item.name === myName}">{{ item.name }}</div>
-                  </div>
-                </span>
+                  </span>
                 </template>
                 <!--车轮战阵容-->
                 <template v-if="scope.row.battle.mode === 'duels'">
