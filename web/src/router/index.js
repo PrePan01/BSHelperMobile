@@ -5,6 +5,7 @@ import Default from "@/components/Default";
 import CmdMain from "@/components/CloudMusicDownload/CmdMain";
 import BSPersonalCard from "@/components/BSEventsSearch/BSPersonalCard";
 import RecentEvents from "@/components/BSEventsSearch/RecentEvents";
+import Download from "@/components/BSEventsSearch/Download";
 
 export default new router({
     routes: [
@@ -27,6 +28,10 @@ export default new router({
         {
             path: '/recentEvents',
             component: RecentEvents
+        },
+        {
+            path: '/bsDownload',
+            component: Download
         },
     ]
 })
