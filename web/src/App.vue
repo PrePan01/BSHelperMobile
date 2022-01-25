@@ -12,7 +12,10 @@
             <a-menu-item key="2" @click="toRecentEvents">
               最近对战
             </a-menu-item>
-            <a-menu-item key="3" @click="toDownload">
+            <a-menu-item key="3" @click="toClubSearch">
+              战队查询
+            </a-menu-item>
+            <a-menu-item key="4" @click="toDownload">
               下载
             </a-menu-item>
           </a-sub-menu>
@@ -95,6 +98,9 @@ export default {
     },
     toRecentEvents(){
       this.$router.push('/recentEvents')
+    },
+    toClubSearch(){
+      this.$router.push('/clubSearch')
     },
     toDownload(){
       this.$router.push('/bsDownload')

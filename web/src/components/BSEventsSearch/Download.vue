@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <div class="downNow">
+      <!--下载卡片-->
       <div class="downCard">
         <img src="~@/assets/android.svg" alt="" style="width: 200px;margin-left: 60px">
         <div class="downCardRight">
@@ -12,6 +13,7 @@
           </h3>
         </div>
       </div>
+      <!--历史版本-->
       <a-collapse accordion>
         <a-collapse-panel key="1" header="历史版本">
           <p>暂无</p>

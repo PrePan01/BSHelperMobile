@@ -6,6 +6,7 @@ import CmdMain from "@/components/CloudMusicDownload/CmdMain";
 import BSPersonalCard from "@/components/BSEventsSearch/BSPersonalCard";
 import RecentEvents from "@/components/BSEventsSearch/RecentEvents";
 import Download from "@/components/BSEventsSearch/Download";
+import ClubSearch from "@/components/BSEventsSearch/ClubSearch";
 
 export default new router({
     routes: [
@@ -32,6 +33,10 @@ export default new router({
         {
             path: '/bsDownload',
             component: Download
+        },
+        {
+            path: '/clubSearch',
+            component: ClubSearch
         },
     ]
 })
