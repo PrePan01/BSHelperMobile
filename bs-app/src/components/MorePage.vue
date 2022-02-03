@@ -1,47 +1,74 @@
 <template>
   <div class="mainContainer">
-    <a-card class="card joinUsCard" @click="toJoinUs">
+    <a-card class="card joinUsCard" @click="$router.push('/joinUs')">
       <img src="../assets/club_icon.png" alt="" class="clubIcon">
       <h2>加入我们</h2>
     </a-card>
 
+    <a-card class="card" @click="$router.push('/clubSearch')">
+      <div style="padding-bottom: 5px">
+        <i class="iconfont icon-sousuo1 cardIcon"></i>
+      </div>
+      <h2>战队查询</h2>
+    </a-card>
+
     <a-card class="card" @click="toWeb">
-      <div style="padding-bottom: 8px">
-        <i class="iconfont icon-fangwenguanwang" style="font-size: 17vw; color: cornflowerblue; font-weight: bold;"></i>
+      <div style="padding-bottom: 5px">
+        <i class="iconfont icon-fangwenguanwang cardIcon"></i>
       </div>
       <h2>前往官网</h2>
     </a-card>
+
+    <van-cell-group style="border: 1px solid rgb(245,246,247);">
+      <van-cell title="查看版本" is-link size="large" @click="$toast('当前版本：0.3 Beta5');"/>
+      <van-cell title="问题反馈" is-link size="large" @click="popUpShow = true"/>
+      <van-cell title="更新日志" is-link size="large" @click="toUpdateInfo"/>
+    </van-cell-group>
+
+    <van-popup v-model="popUpShow" position="bottom">
+      <iframe src='https://www.wjx.cn/vj/QPaihGI.aspx?width=760&source=iframe&s=t' width='100%' height='330' frameborder='0' style='overflow:auto' scrolling="no"></iframe>
+    </van-popup>
+
+    <div style="height: 10vh">
+
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: "MorePage",
+  data(){
+    return{
+      popUpShow: false
+    }
+  },
   methods: {
-    toJoinUs(){
-      this.$router.push('/joinUs')
-    },
     toWeb(){
       window.open('http://prepan.top/')
+    },
+    toUpdateInfo(){
+      this.$router.push('/updateInfo')
     }
   }
 }
 </script>
 
 <style scoped>
-@import "//at.alicdn.com/t/font_3113095_9pnbf7aak8l.css";
+@import "https://at.alicdn.com/t/font_3113095_b2o4zd16cko.css";
 .mainContainer{
   width: 90vw;
-  margin: 15vh auto 0 auto;
+  margin: 3vh auto 0 auto;
 }
 .card{
+  height: 25vh;
   width: 90vw;
-  margin-bottom: 10vh;
+  margin-bottom: 4vh;
   text-align: center;
   box-shadow: 0 0 5px 1px rgba(232,232,232,0.8);
 }
 .joinUsCard img{
-  width: 15vw;
+  width: 14vw;
   margin-bottom: 20px;
   margin-top: 20px;
 }
@@ -50,5 +77,10 @@ export default {
   font-weight: bold;
   font-size: 2em;
 }
-
+.cardIcon{
+  text-shadow: 0 3px 5px lightgray;
+  font-size: 17vw;
+  color: rgba(15,91,228,0.8);
+  font-weight: bold;
+}
 </style>

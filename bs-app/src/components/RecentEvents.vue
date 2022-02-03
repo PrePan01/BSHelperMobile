@@ -66,11 +66,16 @@
       </div>
     </van-action-sheet>
 
+    <van-notice-bar mode="closeable" color="#1989fa" background="#ecf9ff">
+      <div @click="toMapTrans">地图名称未翻译完全，点击贡献翻译。</div>
+    </van-notice-bar>
+
     <!--收缩列表-->
     <van-collapse v-model="activeNames">
       <van-collapse-item v-show="checkboxValue === 'all'? true: item.battle.result === checkboxValue" v-for="(item,index) in battleLogs" :key="index" :name="item.battleTime">
         <template slot="title">
-          <img :src="require('../assets/gameModes/'+ item.battle.mode +'.png')" alt=""  style="margin-right: 5vw; width: 8vw;">
+          <img :src="require('../assets/gameModes/'+ item.battle.mode +'.png')" alt=""  style="margin-right: 1vw; width: 8vw;">
+          <span style="display:inline-block; width: 25vw">{{item.event.map | mapTranslate}}</span>
           <!--3v3-->
           <span v-if="'teams' in item.battle && item.battle.teams.length === 2">
             <span v-for="(picItem, index) in item.battle.teams[0]" :key="index + '0'">
@@ -102,7 +107,8 @@
               <img v-if="teamsItem[1].name === myName" :src="require('../assets/brawlers/'+ teamsItem[1].brawler.id +'.png')" alt="" width="30vw">
             </span>
           </span>
-          <!--胜负-->
+
+          <!--胜负标签-->
           <span style="float: right">
             <a-tag :color="item.battle.result === undefined? 'purple': item.battle.result === 'victory'? 'green': item.battle.result === 'defeat'? 'red': 'blue'">
               {{ item.battle.result === undefined? '第' + item.battle.rank + '名': item.battle.result === 'victory'? '获胜': item.battle.result === 'defeat'? '战败': '平局'}}
@@ -283,9 +289,12 @@ export default {
       else if (this.winRate > 70.0 && this.winRate <= 80.0) this.myLevel = 'SS'
       else if (this.winRate > 80.0) this.myLevel = 'SSS'
     },
+    toMapTrans(){
+      this.$router.push('/mapTranslate')
+    }
   },
   filters: {
-    //时间转换
+    //时间转换过滤器
     dateFormatter(data) {
       var utcDate = data
       var year = utcDate.slice(0, 4)
@@ -301,6 +310,28 @@ export default {
       timestamp = timestamp + 8 * 60 * 60;
       // var beijing_datetime = new Date(parseInt(timestamp) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
       return moment(timestamp * 1000).format("YYYY-MM-DD HH:mm:ss");
+    },
+    //地图翻译过滤器
+    mapTranslate(data){
+      var en = data
+      // 足球
+      if (en === 'Triple Dribble') return '三重威胁'
+      else if (en === 'Firm Grip') return '牢牢把握'
+      else if (en === 'Binary Coding') return '二进制'
+      else if (en === 'Sticky Notes') return '便利贴'
+      else if (en === 'Turtle Shell') return '坚硬龟壳'
+      else if (en === 'Retina') return '视网膜'
+      else if (en === 'Sneaky Fields') return '绿荫球场'
+      else if (en === 'Sunny Soccer') return '阳光球场'
+      else if (en === 'Super Stadium') return '超级体育场'
+      else if (en === 'Backyard Bowl') return '后院球场'
+      else if (en === 'Pinball Dreams') return '梦幻弹珠'
+      else if (en === 'Pinhole Punt') return '精准射门'
+      else if (en === 'Field Goal') return '绿茵交锋'
+      else if (en === 'Center Stage') return '中心舞台'
+      // 机甲
+      else if (en === 'Some Assembly Required') return '等待组装'
+      else return en
     }
   },
   mounted() {

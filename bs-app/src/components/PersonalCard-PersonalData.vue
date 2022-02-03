@@ -98,7 +98,7 @@
       </van-row>
       <!--战队-->
       <van-cell>
-        <a-statistic style="margin-top: 1vh" :value="personalData.club.name+'('+personalData.club.tag+')'" valueStyle="color: rgb(35,143,242);font-weight: bold;font-size: 1.8em">
+        <a-statistic style="margin-top: 1vh" :value="personalData.club.name === undefined? '未加入战队': personalData.club.name+'('+personalData.club.tag+')'" valueStyle="color: rgb(35,143,242);font-weight: bold;font-size: 1.8em">
           <template slot="title">
             <div>
               <img src="~@/assets/icon_club_league.png" alt=""

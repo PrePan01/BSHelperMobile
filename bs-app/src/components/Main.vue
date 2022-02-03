@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Starter class="starter" v-show="showStarter"></Starter>
     <div v-show="tabberActive !== 2">
       <!--搜索框-->
       <van-search
@@ -37,11 +38,12 @@ import axios from 'axios'
 import PersonalCard from '@/components/PersonalCard'
 import RecentEvents from "@/components/RecentEvents";
 import MorePage from "@/components/MorePage";
+import Starter from "@/components/Starter";
 
 export default {
   name: 'Main',
   components: {
-    PersonalCard,RecentEvents,MorePage
+    PersonalCard, RecentEvents, MorePage, Starter
   },
   data() {
     return {
@@ -50,21 +52,22 @@ export default {
       personalData: {},
       battleLogs: [],
       showOverlay: false,
-      historySearch:''
+      historySearch:'',
+      showStarter: true
     }
   },
   methods: {
     sendSearch() {
       axios({
         methods: 'GET',
-        url: '/playStatsApi/' + this.searchValue,
+        url: 'https://cr.is-a.dev/' + this.searchValue,
       }).then((res) => {
         this.personalData = res.data
         this.$bus.$emit('PersonalData',res.data)
         this.$bus.$emit('PersonalBrawlers',res.data.brawlers)
         axios({
           methods: 'GET',
-          url: '/playStatsApi/v1/battlelog/' + this.searchValue,
+          url: 'https://cr.is-a.dev/v1/battlelog/' + this.searchValue,
         }).then((res) => {
           this.battleLogs = res.data.items
           this.$bus.$emit('myName',this.personalData.name)
@@ -87,6 +90,17 @@ export default {
   },
   mounted(){
     this.historySearch = localStorage.getItem('historySearch')
+    this.$bus.$on('tabberActive', (data) => {
+      this.tabberActive = data
+    })
+    this.$bus.$on('showStarter', (data) => {
+      this.showStarter = data
+    })
+    this.$bus.$on('onSearch', (data) => {
+      this.searchValue = data
+      this.showOverlay = true
+      this.sendSearch()
+    })
   }
 }
 </script>
@@ -97,5 +111,12 @@ export default {
   align-items: center;
   justify-content: center;
   height: 100%;
+}
+.starter{
+  z-index: 65535;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-color: #fff;
 }
 </style>

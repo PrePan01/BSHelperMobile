@@ -2,7 +2,7 @@ module.exports = {
     publicPath:'./',
 	outputDir: 'dist',
 	assetsDir: 'static',
-	devServer: {
+	/*devServer: {
 		proxy: {
 			"/playStatsApi": {
 				changeOrigin: true,
@@ -12,5 +12,5 @@ module.exports = {
 				}
 			}
 		}
-	}
+	}*/
 }

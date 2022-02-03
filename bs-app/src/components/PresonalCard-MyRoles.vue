@@ -36,9 +36,6 @@
                 <a-descriptions-item label="最高奖杯">
                   {{ item.highestTrophies }}
                 </a-descriptions-item>
-                <a-descriptions-item label="最高奖杯">
-                  {{ item.highestTrophies }}
-                </a-descriptions-item>
               </a-descriptions>
             </van-col>
             <van-col span="12">
