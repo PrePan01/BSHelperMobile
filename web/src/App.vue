@@ -13,7 +13,7 @@
               最近对战
             </a-menu-item>
             <a-menu-item key="3" @click="toClubSearch">
-              战队查询
+              战队查询(开发中)
             </a-menu-item>
             <a-menu-item key="4" @click="toDownload">
               下载

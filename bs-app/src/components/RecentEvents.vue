@@ -228,7 +228,7 @@
 import moment from "moment"
 
 export default {
-  name: "recentEvents",
+  name: "RecentEvents",
   data(){
     return{
       battleLogs:[],
