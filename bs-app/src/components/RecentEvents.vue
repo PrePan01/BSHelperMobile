@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div style="height: 1vh"></div>
     <a-card v-if="battleLogs !== []" style="width: 95vw; margin: 0 auto; padding: -5px">
       <template slot="title">
         <div style="vertical-align: middle;font-size: 1.25em">最近25场（只统计3V3）</div>
@@ -49,7 +50,9 @@
     </a-card>
 
     <!--筛选-->
-    <van-button plain hairline block type="info" color="rgb(26,82,197)" v-if="battleLogs !== []" @click="sheetShow = true" size="mini" style="width: 95vw;margin: 10px auto">筛选</van-button>
+    <van-button plain hairline block type="info" color="rgb(26,82,197)" v-if="battleLogs !== []" @click="sheetShow = true" size="mini" style="width: 95vw;margin: 10px auto">
+      {{ checkboxValue === 'all'? '全部': checkboxValue === 'victory'? '仅看获胜': '仅看战败' }}
+    </van-button>
     <van-action-sheet v-model="sheetShow" title="筛选">
       <div style="height: 10vh;display: flex;flex-direction: column;align-items: center;justify-content: center">
         <a-radio-group v-model="checkboxValue">
@@ -74,10 +77,11 @@
     <van-collapse v-model="activeNames">
       <van-collapse-item v-show="checkboxValue === 'all'? true: item.battle.result === checkboxValue" v-for="(item,index) in battleLogs" :key="index" :name="item.battleTime">
         <template slot="title">
-          <img :src="require('../assets/gameModes/'+ item.battle.mode +'.png')" alt=""  style="margin-right: 1vw; width: 8vw;">
-          <span style="display:inline-block; width: 25vw">{{item.event.map | mapTranslate}}</span>
-          <!--3v3-->
-          <span v-if="'teams' in item.battle && item.battle.teams.length === 2">
+          <div style="display: flex; align-items: center">
+            <img :src="require('../assets/gameModes/'+ item.battle.mode +'.png')" alt=""  style="margin-right: 1vw; width: 8vw;">
+            <span style="display:inline-block; width: 25vw">{{item.event.map | mapTranslate}}</span>
+            <!--3v3-->
+            <span v-if="'teams' in item.battle && item.battle.teams.length === 2">
             <span v-for="(picItem, index) in item.battle.teams[0]" :key="index + '0'">
               <img v-if="picItem.name === myName" :src="require('../assets/brawlers/'+ picItem.brawler.id +'.png')" alt="" width="30vw">
             </span>
@@ -85,8 +89,8 @@
               <img v-if="picItem.name === myName" :src="require('../assets/brawlers/'+ picItem.brawler.id +'.png')" alt="" width="30vw">
             </span>
           </span>
-          <!--duels-->
-          <span v-if="item.event.mode === 'duels'">
+            <!--duels-->
+            <span v-if="item.event.mode === 'duels'">
             <span v-for="(picItem, index) in item.battle.players[0].brawlers" :key="index + '2'">
               <img v-if="item.battle.players[0].name === myName" :src="require('../assets/brawlers/'+ picItem.id +'.png')" alt="" width="30vw">
             </span>
@@ -94,26 +98,27 @@
               <img v-if="item.battle.players[1].name === myName" :src="require('../assets/brawlers/'+ picItem.id +'.png')" alt="" width="30vw">
             </span>
           </span>
-          <!--soloSD-->
-          <span v-if="item.event.mode === 'soloShowdown' || item.battle.mode === 'soloShowdown'">
+            <!--soloSD-->
+            <span v-if="item.event.mode === 'soloShowdown' || item.battle.mode === 'soloShowdown'">
             <span v-for="(playersItem, index) in item.battle.players" :key="index + '4'">
               <img v-if="playersItem.name === myName" :src="require('../assets/brawlers/'+ playersItem.brawler.id +'.png')" alt="" width="30vw">
             </span>
           </span>
-          <!--duoSD-->
-          <span v-if="item.event.mode === 'duoShowdown' || item.battle.mode === 'duoShowdown'">
+            <!--duoSD-->
+            <span v-if="item.event.mode === 'duoShowdown' || item.battle.mode === 'duoShowdown'">
             <span v-for="(teamsItem, index) in item.battle.teams" :key="index + '5'">
               <img v-if="teamsItem[0].name === myName" :src="require('../assets/brawlers/'+ teamsItem[0].brawler.id +'.png')" alt="" width="30vw">
               <img v-if="teamsItem[1].name === myName" :src="require('../assets/brawlers/'+ teamsItem[1].brawler.id +'.png')" alt="" width="30vw">
             </span>
           </span>
 
-          <!--胜负标签-->
-          <span style="float: right">
+            <!--胜负标签-->
+            <span style="margin-left: auto">
             <a-tag :color="item.battle.result === undefined? 'purple': item.battle.result === 'victory'? 'green': item.battle.result === 'defeat'? 'red': 'blue'">
               {{ item.battle.result === undefined? '第' + item.battle.rank + '名': item.battle.result === 'victory'? '获胜': item.battle.result === 'defeat'? '战败': '平局'}}
             </a-tag>
           </span>
+          </div>
         </template>
 
         <!--详情-->
@@ -314,6 +319,7 @@ export default {
     //地图翻译过滤器
     mapTranslate(data){
       var en = data
+      if(en === null) return '未知地图'
       // 足球
       if (en === 'Triple Dribble') return '三重威胁'
       else if (en === 'Firm Grip') return '牢牢把握'
@@ -329,6 +335,7 @@ export default {
       else if (en === 'Pinhole Punt') return '精准射门'
       else if (en === 'Field Goal') return '绿茵交锋'
       else if (en === 'Center Stage') return '中心舞台'
+      else if (en === 'Center Field') return '中心球场'
       // 机甲
       else if (en === 'Some Assembly Required') return '等待组装'
       else return en

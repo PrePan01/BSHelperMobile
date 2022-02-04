@@ -20,9 +20,9 @@
     </a-card>
 
     <van-cell-group style="border: 1px solid rgb(245,246,247);">
-      <van-cell title="查看版本" is-link size="large" @click="$toast('当前版本：0.3 Beta5');"/>
+      <van-cell title="查看版本" is-link size="large" @click="$toast('当前版本：0.4 beta1');"/>
       <van-cell title="问题反馈" is-link size="large" @click="popUpShow = true"/>
-      <van-cell title="更新日志" is-link size="large" @click="toUpdateInfo"/>
+      <van-cell title="检查更新" is-link size="large" @click="toUpdateInfo"/>
     </van-cell-group>
 
     <van-popup v-model="popUpShow" position="bottom">

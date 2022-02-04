@@ -1,6 +1,6 @@
 <template>
   <div>
-    <van-tabs v-model="tabsActive" :lazy-render=false >
+    <van-tabs color="#3976E3" v-model="tabsActive" :lazy-render=false animated>
       <van-tab title="个人数据">
         <PersonalCard_PersonalData></PersonalCard_PersonalData>
       </van-tab>

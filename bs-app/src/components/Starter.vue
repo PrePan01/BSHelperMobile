@@ -1,8 +1,13 @@
 <template>
   <div class="mainContainer">
-    <i class="iconfont icon-gongju-" style="font-size: 30vw; color: rgb(2,82,205)" ></i>
+    <div style="text-align: center;">
+      <i class="iconfont icon-gongju-" style="font-size: 30vw;color: rgb(2,82,205)" ></i>
+      <h1 class="title">战绩小助手</h1>
+      <h3 class="title">（国际服）</h3>
+    </div>
     <div></div>
     <div>
+      <!--搜索框-->
       <a-input-search
           class="input"
           placeholder="请输入玩家标签(无需#)"
@@ -59,5 +64,10 @@ export default {
 }
 .input{
   width: 80vw;
+}
+.title{
+  color: rgb(2,82,205);
+  font-weight: bold;
+  font-family: 黑体,serif;
 }
 </style>

@@ -5,15 +5,17 @@
       <!--搜索框-->
       <van-search
           v-model="searchValue"
-          shape="round"
-          placeholder="请输入玩家标签(无需#)"
+          placeholder="请输入玩家标签 (无需#)"
           input-align="center"
           @search="search"
+          background="#3976E3"
+          clear-trigger="always"
+
       />
       <!--历史搜索-->
-      <p style="text-align: center"  v-if="historySearch !== null && searchValue === ''">你是否想要搜索：
+      <div style="text-align: center"  v-if="historySearch !== null && searchValue === ''">你是否想要搜索：
         <span @click="searchHistory" style="color: lightblue">{{ historySearch }}</span>
-      </p>
+      </div>
     </div>
     <!--加载遮罩-->
     <van-overlay :show="showOverlay" z-index="100">
@@ -116,7 +118,7 @@ export default {
   z-index: 65535;
   position: absolute;
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   background-color: #fff;
 }
 </style>

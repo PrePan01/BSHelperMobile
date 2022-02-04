@@ -4,6 +4,7 @@
       style="border: 1px solid rgb(235, 237, 240)"
       title="更新日志"
       @back="onClickLeft"
+      subTitle="当前版本：0.4 beta1"
     />
     <div class="mainContainer">
       <iframe src="https://www.wolai.com/dcq38esZ4mkBvuKPMnQMKz" frameborder="0" height="100%" width="100%"></iframe>
