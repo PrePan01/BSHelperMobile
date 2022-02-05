@@ -11,11 +11,13 @@
           <!--胜负缩略图-->
             <div style="width: 100px;float: left;">
               <div v-for="(item,index) in battleLogs" :key="index" :class="{
-              battlelogsIndex: true,
-              battlelogsIndexRed: item.battle.result === 'defeat',
-              battlelogsIndexBlue: 'rank' in item.battle,
-              battlelogsIndexGreen: item.battle.result === 'victory',
-              battlelogsIndexGrey: item.battle.result === 'draw'}">
+                battlelogsIndex: true,
+                battlelogsIndexRed: item.battle.result === 'defeat',
+                battlelogsIndexBlue: 'rank' in item.battle,
+                battlelogsIndexGreen: item.battle.result === 'victory',
+                battlelogsIndexGrey: item.battle.result === 'draw',
+                battlelogsIndexNull: !('result' in item.battle)
+              }">
               </div>
             </div>
         </van-col>
@@ -51,9 +53,9 @@
 
     <!--筛选-->
     <van-button plain hairline block type="info" color="rgb(26,82,197)" v-if="battleLogs !== []" @click="sheetShow = true" size="mini" style="width: 95vw;margin: 10px auto">
-      {{ checkboxValue === 'all'? '全部': checkboxValue === 'victory'? '仅看获胜': '仅看战败' }}
+      {{ checkboxValue | checkboxValue }}
     </van-button>
-    <van-action-sheet v-model="sheetShow" title="筛选">
+    <van-action-sheet v-model="sheetShow" title="筛选" :overlay="false" :lock-scroll="false">
       <div style="height: 10vh;display: flex;flex-direction: column;align-items: center;justify-content: center">
         <a-radio-group v-model="checkboxValue">
           <a-radio-button value="all">
@@ -65,81 +67,94 @@
           <a-radio-button value="defeat">
             仅看战败
           </a-radio-button>
+          <a-radio-button value="mvp">
+            仅看MVP
+          </a-radio-button>
         </a-radio-group>
       </div>
     </van-action-sheet>
 
+    <!--地图翻译-->
     <van-notice-bar mode="closeable" color="#1989fa" background="#ecf9ff">
       <div @click="toMapTrans">地图名称未翻译完全，点击贡献翻译。</div>
     </van-notice-bar>
 
-    <!--收缩列表-->
+    <!--战绩列表-->
     <van-collapse v-model="activeNames">
-      <van-collapse-item v-show="checkboxValue === 'all'? true: item.battle.result === checkboxValue" v-for="(item,index) in battleLogs" :key="index" :name="item.battleTime">
+      <van-collapse-item v-show="showEvents(item.battle)" v-for="(item,index) in battleLogs" :key="index" :name="item.battleTime">
+        <!--列表-->
         <template slot="title">
           <div style="display: flex; align-items: center">
             <img :src="require('../assets/gameModes/'+ item.battle.mode +'.png')" alt=""  style="margin-right: 1vw; width: 8vw;">
             <span style="display:inline-block; width: 25vw">{{item.event.map | mapTranslate}}</span>
             <!--3v3-->
             <span v-if="'teams' in item.battle && item.battle.teams.length === 2">
-            <span v-for="(picItem, index) in item.battle.teams[0]" :key="index + '0'">
-              <img v-if="picItem.name === myName" :src="require('../assets/brawlers/'+ picItem.brawler.id +'.png')" alt="" width="30vw">
+              <span v-for="(picItem, index) in item.battle.teams[0]" :key="index + '0'">
+                <img v-if="picItem.name === myName" :src="require('../assets/brawlers/'+ picItem.brawler.id +'.png')" alt="" width="30vw">
+              </span>
+              <span v-for="(picItem, index) in item.battle.teams[1]" :key="index + '1'">
+                <img v-if="picItem.name === myName" :src="require('../assets/brawlers/'+ picItem.brawler.id +'.png')" alt="" width="30vw">
+              </span>
             </span>
-            <span v-for="(picItem, index) in item.battle.teams[1]" :key="index + '1'">
-              <img v-if="picItem.name === myName" :src="require('../assets/brawlers/'+ picItem.brawler.id +'.png')" alt="" width="30vw">
-            </span>
-          </span>
             <!--duels-->
             <span v-if="item.event.mode === 'duels'">
-            <span v-for="(picItem, index) in item.battle.players[0].brawlers" :key="index + '2'">
-              <img v-if="item.battle.players[0].name === myName" :src="require('../assets/brawlers/'+ picItem.id +'.png')" alt="" width="30vw">
+              <span v-for="(picItem, index) in item.battle.players[0].brawlers" :key="index + '2'">
+                <img v-if="item.battle.players[0].name === myName" :src="require('../assets/brawlers/'+ picItem.id +'.png')" alt="" width="30vw" style="margin-right: 5px">
+              </span>
+              <span v-for="(picItem, index) in item.battle.players[1].brawlers" :key="index+ '3'">
+                <img v-if="item.battle.players[1].name === myName" :src="require('../assets/brawlers/'+ picItem.id +'.png')" alt="" width="30vw" style="margin-right: 5px">
+              </span>
             </span>
-            <span v-for="(picItem, index) in item.battle.players[1].brawlers" :key="index+ '3'">
-              <img v-if="item.battle.players[1].name === myName" :src="require('../assets/brawlers/'+ picItem.id +'.png')" alt="" width="30vw">
-            </span>
-          </span>
             <!--soloSD-->
             <span v-if="item.event.mode === 'soloShowdown' || item.battle.mode === 'soloShowdown'">
-            <span v-for="(playersItem, index) in item.battle.players" :key="index + '4'">
-              <img v-if="playersItem.name === myName" :src="require('../assets/brawlers/'+ playersItem.brawler.id +'.png')" alt="" width="30vw">
+              <span v-for="(playersItem, index) in item.battle.players" :key="index + '4'">
+                <img v-if="playersItem.name === myName" :src="require('../assets/brawlers/'+ playersItem.brawler.id +'.png')" alt="" width="30vw">
+              </span>
             </span>
-          </span>
             <!--duoSD-->
             <span v-if="item.event.mode === 'duoShowdown' || item.battle.mode === 'duoShowdown'">
-            <span v-for="(teamsItem, index) in item.battle.teams" :key="index + '5'">
-              <img v-if="teamsItem[0].name === myName" :src="require('../assets/brawlers/'+ teamsItem[0].brawler.id +'.png')" alt="" width="30vw">
-              <img v-if="teamsItem[1].name === myName" :src="require('../assets/brawlers/'+ teamsItem[1].brawler.id +'.png')" alt="" width="30vw">
+              <span v-for="(teamsItem, index) in item.battle.teams" :key="index + '5'">
+                <img v-if="teamsItem[0].name === myName" :src="require('../assets/brawlers/'+ teamsItem[0].brawler.id +'.png')" alt="" width="30vw">
+                <img v-if="teamsItem[1].name === myName" :src="require('../assets/brawlers/'+ teamsItem[1].brawler.id +'.png')" alt="" width="30vw">
+              </span>
             </span>
-          </span>
+            <!--机甲入侵-->
+            <span v-if="item.event.mode === 'roboRumble'">
+              <span v-for="(playersItem, index) in item.battle.players" :key="index">
+                <img v-if="playersItem.name === myName" :src="require('../assets/brawlers/'+ playersItem.brawler.id +'.png')" alt="" width="30vw">
+              </span>
+            </span>
 
             <!--胜负标签-->
             <span style="margin-left: auto">
-            <a-tag :color="item.battle.result === undefined? 'purple': item.battle.result === 'victory'? 'green': item.battle.result === 'defeat'? 'red': 'blue'">
+            <a-tag color="orange" v-if="isMyMvp(item.battle)">
+              MVP
+            </a-tag>
+            <a-tag v-show="item.battle.mode !== 'roboRumble'" :color="item.battle.result === undefined? 'purple': item.battle.result === 'victory'? 'green': item.battle.result === 'defeat'? 'red': 'blue'">
               {{ item.battle.result === undefined? '第' + item.battle.rank + '名': item.battle.result === 'victory'? '获胜': item.battle.result === 'defeat'? '战败': '平局'}}
             </a-tag>
           </span>
           </div>
         </template>
-
         <!--详情-->
         <div v-if="'teams' in item.battle && item.battle.teams.length === 2">
           <van-row>
             <van-col span="10">
               <a-descriptions title="对战详情">
                 <a-descriptions-item label="比赛时间">
-                  {{ item.battleTime | dateFormatter }}
+                  <b>{{ item.battleTime | dateFormatter }}</b>
                 </a-descriptions-item>
                 <a-descriptions-item label="类型">
-                  {{ item.battle.type === 'ranked'? '排位': item.battle.type === 'challenge'? '挑战': item.battle.type === 'teamRanked'? '战队联赛' : '其他' }}
+                  <b>{{ item.battle.type === 'ranked'? '排位': item.battle.type === 'challenge'? '挑战': item.battle.type === 'teamRanked'? '战队联赛' : '其他' }}</b>
                 </a-descriptions-item>
                 <a-descriptions-item label="时长">
-                  {{ item.battle.duration === undefined? '暂无数据' : item.battle.duration > 60? Math.floor(item.battle.duration / 60) + '分' + (item.battle.duration % 60) + '秒' : item.battle.duration + '秒' }}
+                  <b>{{ item.battle.duration === undefined? '暂无数据' : item.battle.duration > 60? Math.floor(item.battle.duration / 60) + '分' + (item.battle.duration % 60) + '秒' : item.battle.duration + '秒' }}</b>
                 </a-descriptions-item>
                 <a-descriptions-item label="杯数变化">
-                  {{ item.battle.trophyChange >0? '+'+item.battle.trophyChange: item.battle.trophyChange }}
+                  <b>{{ item.battle.trophyChange >0? '+'+item.battle.trophyChange: item.battle.trophyChange }}</b>
                 </a-descriptions-item>
                 <a-descriptions-item label="MVP">
-                  {{ 'starPlayer' in item.battle? item.battle.starPlayer !== null? item.battle.starPlayer.name: '暂无' : '暂无' }}
+                  <b>{{ 'starPlayer' in item.battle? item.battle.starPlayer !== null? item.battle.starPlayer.name: '暂无' : '暂无' }}</b>
                 </a-descriptions-item>
               </a-descriptions>
             </van-col>
@@ -190,6 +205,7 @@
             </a-descriptions-item>
           </a-descriptions>
         </div>
+        <!--车轮擂台赛-->
         <div v-if="item.event.mode === 'duels'">
           <van-row>
             <van-col span="10">
@@ -225,6 +241,27 @@
                   <van-tag plain type="primary">Lv.{{ item.power }}</van-tag>
                 </span>
                 <div style="font-size: 0.2em;color: black;margin: 0 auto" :class="{name: item.battle.players[1].name === myName}">{{item.battle.players[1].name}}</div>
+              </div>
+            </van-col>
+          </van-row>
+        </div>
+        <!--机甲入侵-->
+        <div v-if="item.event.mode === 'roboRumble'">
+          <van-row>
+            <van-col span="10">
+              <a-descriptions title="对战详情">
+                <a-descriptions-item label="比赛时间">
+                  <b>{{ item.battleTime | dateFormatter }}</b>
+                </a-descriptions-item>
+              </a-descriptions>
+            </van-col>
+            <van-col span="14">
+              <div style="text-align: center">
+                <span v-for="(item, index) in item.battle.players" :key="index" style="display: inline-block;text-align: center">
+                  <img :src="require('../assets/brawlers/'+ item.brawler.id +'.png')" alt="" style="width: 15vw;margin: 0vh 8px 0 0;display: block">
+                  <van-tag plain type="primary">Lv.{{ item.brawler.power }}</van-tag>
+                  <div style="width: 15vw;font-size: 0.2em;color: black;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" :class="{name: item.name === myName}">{{item.name}}</div>
+                </span>
               </div>
             </van-col>
           </van-row>
@@ -296,6 +333,33 @@ export default {
     },
     toMapTrans(){
       this.$router.push('/mapTranslate')
+    },
+    isMyMvp(data){
+      if('starPlayer' in data){
+        if(data.starPlayer !== null){
+          return data.starPlayer.name === this.myName;
+        }
+        else return false
+      }
+      else {
+        return false
+      }
+    },
+    showEvents(battle){
+      if(this.checkboxValue === 'all') return true
+      else{
+        if(this.checkboxValue === 'mvp'){
+          if('starPlayer' in battle){
+            if(battle.starPlayer !== null){
+              return battle.starPlayer.name === this.myName;
+            }
+          }
+        }
+        else{
+          return battle.result === this.checkboxValue
+        }
+      }
+
     }
   },
   filters: {
@@ -339,6 +403,18 @@ export default {
       // 机甲
       else if (en === 'Some Assembly Required') return '等待组装'
       else return en
+    },
+    checkboxValue(data){
+      switch (data){
+        case 'all':
+          return '全部'
+        case 'victory':
+          return '仅看获胜'
+        case 'defeat':
+          return '仅看战败'
+        case 'mvp':
+          return '仅看MVP'
+      }
     }
   },
   mounted() {
@@ -354,7 +430,7 @@ export default {
 </script>
 
 <style scoped>
-@import '//at.alicdn.com/t/font_3113095_d3gzdglor3c.css';
+@import 'https://at.alicdn.com/t/font_3113095_d3gzdglor3c.css';
 
 img{
   image-rendering: -moz-crisp-edges;
@@ -368,7 +444,6 @@ img{
   width: 10px;
   margin-right: 10px;
   display: inline-block;
-  /*border-right: 1px solid white;*/
 }
 .battlelogsIndexRed{
   background-color: rgb(245,108,108);
@@ -381,6 +456,9 @@ img{
 }
 .battlelogsIndexGrey{
   background-color: rgb(144,147,153);
+}
+.battlelogsIndexNull{
+  background-color: lightgray;
 }
 .name{
   font-weight: bold;

@@ -13,7 +13,7 @@
 
       />
       <!--历史搜索-->
-      <div style="text-align: center"  v-if="historySearch !== null && searchValue === ''">你是否想要搜索：
+      <div style="text-align: center;margin-top: 5px"  v-if="historySearch !== null && searchValue === ''">你是否想要搜索：
         <span @click="searchHistory" style="color: lightblue">{{ historySearch }}</span>
       </div>
     </div>

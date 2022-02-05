@@ -76,7 +76,7 @@
               <div v-if="item.gears.length !== 0">
                 <div style="color: black; margin-bottom: 0.5em">装备</div>
                 <span v-for="(picItem, index) in item.gears" :key="index">
-                <img :src="require('../assets/gears/'+ picItem.name + picItem.level +'.png')" alt="" width="30vh" style="margin-right: 15px">
+                <img :src="require('../assets/gears/'+ picItem.name + picItem.level +'.png')" alt="" width="35vh" style="margin-right: 15px">
                 </span>
               </div>
             </van-col>
