@@ -62,14 +62,14 @@ export default {
     sendSearch() {
       axios({
         methods: 'GET',
-        url: 'https://cr.is-a.dev/' + this.searchValue,
+        url: '/playStatsApi/' + this.searchValue,
       }).then((res) => {
         this.personalData = res.data
         this.$bus.$emit('PersonalData',res.data)
         this.$bus.$emit('PersonalBrawlers',res.data.brawlers)
         axios({
           methods: 'GET',
-          url: 'https://cr.is-a.dev/v1/battlelog/' + this.searchValue,
+          url: '/playStatsApi/v1/battlelog/' + this.searchValue,
         }).then((res) => {
           this.battleLogs = res.data.items
           this.$bus.$emit('myName',this.personalData.name)

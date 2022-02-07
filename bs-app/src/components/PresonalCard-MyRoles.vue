@@ -2,27 +2,53 @@
   <div>
     <!--排序-->
     <div style="margin: 8px 0 5px 0; text-align: center" v-if="personalBrawlers.length !== 0">
-      <a-select default-value = 1 style="width: 95%" @change="arrSortByKey">
-        <a-select-option value = 1>
-          默认排序
-        </a-select-option>
-        <a-select-option value = 2>
-          按杯数升序
-        </a-select-option>
-        <a-select-option value = 3>
-          按杯数降序
-        </a-select-option>
-        <a-select-option value = 4>
-          按战力等级升序
-        </a-select-option>
-        <a-select-option value = 5>
-          按战力等级降序
-        </a-select-option>
-      </a-select>
+      <van-row>
+        <van-col span="12">
+          <a-select default-value = 1 style="width: 95%" @change="arrSortByKey">
+            <a-select-option value = 1>
+              默认排序
+            </a-select-option>
+            <a-select-option value = 2>
+              按杯数升序
+            </a-select-option>
+            <a-select-option value = 3>
+              按杯数降序
+            </a-select-option>
+            <a-select-option value = 4>
+              按战力等级升序
+            </a-select-option>
+            <a-select-option value = 5>
+              按战力等级降序
+            </a-select-option>
+          </a-select>
+        </van-col>
+        <van-col span="12">
+          <a-select default-value = 'a' style="width: 95%" @change="arrSortByGears">
+            <a-select-option value = 'a'>
+              全部装备
+            </a-select-option>
+            <a-select-option value = 'b'>
+              迅捷
+            </a-select-option>
+            <a-select-option value = 'c'>
+              恢复
+            </a-select-option>
+            <a-select-option value = 'd'>
+              强攻
+            </a-select-option>
+            <a-select-option value = 'e'>
+              韧性
+            </a-select-option>
+            <a-select-option value = 'f'>
+              护盾
+            </a-select-option>
+          </a-select>
+        </van-col>
+      </van-row>
     </div>
 
     <van-collapse v-model="activeNames">
-      <van-collapse-item v-for="(item,index) in personalBrawlers" :key="index" :name="index">
+      <van-collapse-item v-for="(item,index) in personalBrawlers" :key="index" :name="index" v-show="selectGear(item)">
         <!--标题-->
         <template #title>
           <div style="display: flex; flex-direction: row; align-items: center;">
@@ -96,6 +122,7 @@ export default {
     return{
       activeNames: [''],
       personalBrawlers: [],
+      selectByGears: 'all'
     }
   },
   methods: {
@@ -130,6 +157,64 @@ export default {
           return value2 - value1
         }
       })
+    },
+    arrSortByGears(value){
+      if(value === 'a'){
+        this.selectByGears = 'all'
+      }
+      else if(value === 'b'){
+        this.selectByGears = 'SPEED'
+      }
+      else if(value === 'c'){
+        this.selectByGears = 'HEALTH'
+      }
+      else if(value === 'd'){
+        this.selectByGears = 'DAMAGE'
+      }
+      else if(value === 'e'){
+        this.selectByGears = 'RESISTANCE'
+      }
+      else if(value === 'f'){
+        this.selectByGears = 'SHIELD'
+      }
+    },
+    selectGear(item){
+      if(this.selectByGears === 'all'){
+        return true
+      }
+      else{
+        let name1, name2
+        if('gears' in item){
+          if(item.gears.length === 1){
+            name1 = item.gears[0].name
+            name2 = 'null'
+          }
+          else if(item.gears.length === 2){
+            name1 = item.gears[0].name
+            name2 = item.gears[1].name
+          }
+        }
+        else{
+          name1 = 'null'
+          name2 = 'null'
+        }
+        if(this.selectByGears === 'SPEED'){
+          return name1 === 'SPEED' || name2 === 'SPEED'
+        }
+        else if(this.selectByGears === 'HEALTH'){
+          return name1 === 'HEALTH' || name2 === 'HEALTH'
+        }
+        else if(this.selectByGears === 'DAMAGE'){
+          return name1 === 'DAMAGE' || name2 === 'DAMAGE'
+        }
+        else if(this.selectByGears === 'RESISTANCE'){
+          return name1 === 'RESISTANCE' || name2 === 'RESISTANCE'
+        }
+        else if(this.selectByGears === 'SHIELD'){
+          return name1 === 'SHIELD' || name2 === 'SHIELD'
+        }
+      }
+
     }
   },
   mounted() {
