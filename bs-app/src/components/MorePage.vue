@@ -1,8 +1,9 @@
 <template>
   <div class="mainContainer">
-    <a-card class="card joinUsCard" @click="$router.push('/joinUs')">
-      <img src="../assets/club_icon.png" alt="" class="clubIcon">
-      <h2>加入我们</h2>
+
+    <a-card class="card joinUsCard" @click="$router.push('/recordList')">
+      <i class="iconfont icon-paixingbang cardIcon"></i>
+      <h2>排行榜</h2>
     </a-card>
 
     <a-card class="card" @click="$router.push('/clubSearch')">
@@ -19,8 +20,12 @@
       <h2>前往官网</h2>
     </a-card>
 
+    <a-card class="card joinUsCard" @click="$router.push('/joinUs')">
+      <img src="../assets/club_icon.png" alt="" class="clubIcon">
+      <h2>加入我们</h2>
+    </a-card>
+
     <van-cell-group style="border: 1px solid rgb(245,246,247);">
-      <van-cell title="查看版本" is-link size="large" @click="$toast('当前版本：0.4 beta1');"/>
       <van-cell title="问题反馈" is-link size="large" @click="popUpShow = true"/>
       <van-cell title="检查更新" is-link size="large" @click="toUpdateInfo"/>
     </van-cell-group>
@@ -55,7 +60,7 @@ export default {
 </script>
 
 <style scoped>
-@import "https://at.alicdn.com/t/font_3113095_b2o4zd16cko.css";
+@import "https://at.alicdn.com/t/font_3113095_mbidod1e5qb.css";
 .mainContainer{
   width: 90vw;
   margin: 3vh auto 0 auto;
@@ -79,7 +84,7 @@ export default {
 }
 .cardIcon{
   text-shadow: 0 3px 5px lightgray;
-  font-size: 17vw;
+  font-size: 16vw;
   color: rgba(15,91,228,0.8);
   font-weight: bold;
 }

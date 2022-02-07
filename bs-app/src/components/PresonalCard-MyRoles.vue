@@ -3,7 +3,7 @@
     <!--排序-->
     <div style="margin: 8px 0 5px 0; text-align: center" v-if="personalBrawlers.length !== 0">
       <van-row>
-        <van-col span="12">
+        <van-col span="9">
           <a-select default-value = 1 style="width: 95%" @change="arrSortByKey">
             <a-select-option value = 1>
               默认排序
@@ -22,7 +22,7 @@
             </a-select-option>
           </a-select>
         </van-col>
-        <van-col span="12">
+        <van-col span="9">
           <a-select default-value = 'a' style="width: 95%" @change="arrSortByGears">
             <a-select-option value = 'a'>
               全部装备
@@ -43,6 +43,12 @@
               护盾
             </a-select-option>
           </a-select>
+        </van-col>
+        <van-col span="6">
+          <div class="brawlersNum">
+            <span style="border: 1px solid #d9d9d9;padding: 3px 5px;border-radius: 4px;color: rgb(57,118,227)">{{brawlsNum}}</span>
+            <span> / 54</span>
+          </div>
         </van-col>
       </van-row>
     </div>
@@ -65,7 +71,7 @@
           </div>
         </template>
         <!--内容-->
-        <div>
+        <div style="padding-left: 16px">
           <van-row>
             <van-col span="12">
               <a-descriptions>
@@ -122,7 +128,7 @@ export default {
     return{
       activeNames: [''],
       personalBrawlers: [],
-      selectByGears: 'all'
+      selectByGears: 'all',
     }
   },
   methods: {
@@ -183,36 +189,21 @@ export default {
         return true
       }
       else{
-        let name1, name2
-        if('gears' in item){
-          if(item.gears.length === 1){
-            name1 = item.gears[0].name
-            name2 = 'null'
-          }
-          else if(item.gears.length === 2){
-            name1 = item.gears[0].name
-            name2 = item.gears[1].name
-          }
+        let gears = item.gears
+        if(gears.length === 0){
+          return false
         }
         else{
-          name1 = 'null'
-          name2 = 'null'
+          for(let i in gears){
+            if(gears[i].name === this.selectByGears){
+              return true
+            }
+            if(i === gears.length && gears[i].name !== this.selectByGears){
+              return false
+            }
+          }
         }
-        if(this.selectByGears === 'SPEED'){
-          return name1 === 'SPEED' || name2 === 'SPEED'
-        }
-        else if(this.selectByGears === 'HEALTH'){
-          return name1 === 'HEALTH' || name2 === 'HEALTH'
-        }
-        else if(this.selectByGears === 'DAMAGE'){
-          return name1 === 'DAMAGE' || name2 === 'DAMAGE'
-        }
-        else if(this.selectByGears === 'RESISTANCE'){
-          return name1 === 'RESISTANCE' || name2 === 'RESISTANCE'
-        }
-        else if(this.selectByGears === 'SHIELD'){
-          return name1 === 'SHIELD' || name2 === 'SHIELD'
-        }
+
       }
 
     }
@@ -279,6 +270,45 @@ export default {
       else if(data === 'FANG') return '阿方'
       else if(data === 'NITA') return '妮塔'
     }
+  },
+  computed: {
+    brawlsNum: {
+      get(){
+        let arr = [0,0,0,0,0,0] //迅捷 恢复 强攻 韧性 护盾 所有 SPEED HEALTH DAMAGE RESISTANCE SHIELD
+        arr[5] = this.personalBrawlers.length
+        let brawlers = this.personalBrawlers
+        for(let i in brawlers){
+          for(let j in brawlers[i].gears){
+            let name = brawlers[i].gears[j].name
+            if(name === 'SPEED') arr[0]++
+            else if(name === 'HEALTH') arr[1]++
+            else if(name === 'DAMAGE') arr[2]++
+            else if(name === 'RESISTANCE') arr[3]++
+            else if(name === 'SHIELD') arr[4]++
+          }
+        }
+        if(this.selectByGears === 'all'){
+          return arr[5]
+        }
+        else if(this.selectByGears === 'SPEED'){
+          return arr[0]
+        }
+        else if(this.selectByGears === 'HEALTH'){
+          return arr[1]
+        }
+        else if(this.selectByGears === 'DAMAGE'){
+          return arr[2]
+        }
+        else if(this.selectByGears === 'RESISTANCE'){
+          return arr[3]
+        }
+        else if(this.selectByGears === 'SHIELD'){
+          return arr[4]
+        }
+        return 0
+      }
+
+    }
   }
 }
 </script>
@@ -293,5 +323,11 @@ img{
 }
 .van-cell{
   align-items: center
+}
+.brawlersNum{
+  font-size: 18px;
+  height: 32px;
+  line-height: 32px;
+  font-weight: bold;
 }
 </style>
