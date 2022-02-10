@@ -7,7 +7,7 @@
         @back="onClickLeft"
     />
     <!--导航条-->
-    <van-tabs v-model="active">
+    <van-tabs color="#3976E3" v-model="active">
       <van-tab title="英雄排行">
         <BrawlersRecord></BrawlersRecord>
       </van-tab>

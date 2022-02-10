@@ -13,13 +13,6 @@
       <h2>战队查询</h2>
     </a-card>
 
-    <a-card class="card" @click="toWeb">
-      <div style="padding-bottom: 5px">
-        <i class="iconfont icon-fangwenguanwang cardIcon"></i>
-      </div>
-      <h2>前往官网</h2>
-    </a-card>
-
     <a-card class="card joinUsCard" @click="$router.push('/joinUs')">
       <img src="../assets/club_icon.png" alt="" class="clubIcon">
       <h2>加入我们</h2>
@@ -27,7 +20,7 @@
 
     <van-cell-group style="border: 1px solid rgb(245,246,247);">
       <van-cell title="问题反馈" is-link size="large" @click="popUpShow = true"/>
-      <van-cell title="检查更新" is-link size="large" @click="toUpdateInfo"/>
+      <van-cell title="更新日志" is-link size="large" @click="toUpdateInfo"/>
     </van-cell-group>
 
     <van-popup v-model="popUpShow" position="bottom">

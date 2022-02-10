@@ -139,33 +139,37 @@
         <!--详情-->
         <!--3V3-->
         <div v-if="'teams' in item.battle && item.battle.teams.length === 2" style="text-align: center">
-        <div style="display: inline-block">
-          <div style="color: black;margin-bottom: 4px">
-          <span style="margin-right: 12vw">
-            <i style="font-weight: bold" class="iconfont icon-shijian"></i>
-            <span style="font-size: 16px;margin-left: 5px">{{ item.battleTime | dateFormatter }}</span>
-          </span>
-            <span>
-            <i style="font-size: 15px" class="iconfont icon-zbds_shalou"></i>
-            <span style="font-size: 16px;margin-left: 3px">{{ item.battle.duration === undefined? '暂无数据' : item.battle.duration > 60? Math.floor(item.battle.duration / 60) + '分' + (item.battle.duration % 60) + '秒' : item.battle.duration + '秒' }}</span>
-          </span>
-          </div>
-          <div style="color: black;line-height: 3vh;margin-bottom: 4px;font-size: 15px">
-            <div>
-              <span style="margin-right: 7vw"><b>类型：</b>{{ item.battle.type === 'ranked'? '排位': item.battle.type === 'challenge'? '挑战': item.battle.type === 'teamRanked'? '星光联赛' : '其他' }}</span>
-              <span style="margin-right: 7vw"><b>MVP：</b>{{ 'starPlayer' in item.battle? item.battle.starPlayer !== null? item.battle.starPlayer.name: '暂无' : '暂无' }}</span>
-              <span><b>奖杯：</b>{{ item.battle.trophyChange >0? '+'+item.battle.trophyChange: item.battle.trophyChange }}</span>
+          <div style="display: inline-block">
+            <div style="color: black;margin-bottom: 4px">
+              <span style="margin-right: 12vw">
+                <i style="font-weight: bold" class="iconfont icon-shijian"></i>
+                <span style="font-size: 16px;margin-left: 5px">{{ item.battleTime | dateFormatter }}</span>
+              </span>
+              <span>
+                <i style="font-size: 15px" class="iconfont icon-zbds_shalou"></i>
+                <span style="font-size: 16px;margin-left: 3px">{{ item.battle.duration === undefined? '暂无数据' : item.battle.duration > 60? Math.floor(item.battle.duration / 60) + '分' + (item.battle.duration % 60) + '秒' : item.battle.duration + '秒' }}</span>
+              </span>
+            </div>
+            <div style="color: black;line-height: 3vh;margin-bottom: 4px;font-size: 15px">
+              <div>
+                <span style="margin-right: 7vw"><b>类型：</b>{{ item.battle.type === 'ranked'? '排位': item.battle.type === 'challenge'? '挑战': item.battle.type === 'teamRanked'? '星光联赛' : '其他' }}</span>
+                <span class="mvpSpan"><b>MVP：</b>{{ 'starPlayer' in item.battle? item.battle.starPlayer !== null? item.battle.starPlayer.name: '暂无' : '暂无' }}</span>
+                <span><b>奖杯：</b>{{ item.battle.trophyChange >0? '+'+item.battle.trophyChange: item.battle.trophyChange }}</span>
+              </div>
             </div>
           </div>
-        </div>
-          <van-divider style="margin: 4px 0 10px 0"></van-divider>
+          <van-divider style="margin: 0 0 10px 0"></van-divider>
           <!--阵容-->
           <div style="display: inline-block; margin: 0 auto;">
             <div style="display: flex; margin: 0 auto;align-items: center">
               <div style="text-align: center;display: inline-block">
-                <div v-for="(item, index) in item.battle.teams[0]" :key="index" style="display: inline-block;text-align: center;margin: 0 3px">
+                <div
+                    v-for="(item, index) in item.battle.teams[0]"
+                    :key="index"
+                    style="display: inline-block;text-align: center;margin: 0 3px"
+                    @click="$bus.$emit('onSearch', item.tag.slice(1))">
                   <img :src="require('../assets/brawlers/'+ item.brawler.id +'.png')" alt="" style="width: 13vw;display: block">
-                  <van-tag plain type="primary">Lv.{{ item.brawler.power }}</van-tag>
+                  <van-tag plain type="primary" :color="item.brawler.power === 11? 'rgb(114,46,209)': item.brawler.power === 10? 'rgb(19,194,194)': 'rgb(82,196,26)'">Lv.{{ item.brawler.power }}</van-tag>
                   <div style="width: 13vw;font-size: 0.1em;color: black;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" :class="{name: item.name === myName}">{{item.name}}</div>
                 </div>
               </div>
@@ -173,9 +177,13 @@
                 <i style="font-size: 20px;padding: 0 1px" class="iconfont icon-duizhan2x"></i>
               </div>
               <div style="text-align: center;display: inline-block">
-                <span v-for="(item, index) in item.battle.teams[1]" :key="index" style="display: inline-block;text-align: center;margin: 0 3px">
+                <span
+                    v-for="(item, index) in item.battle.teams[1]"
+                    :key="index"
+                    style="display: inline-block;text-align: center;margin: 0 3px"
+                    @click="$bus.$emit('onSearch', item.tag.slice(1))">
                   <img :src="require('../assets/brawlers/'+ item.brawler.id +'.png')" alt="" style="width: 13vw;display: block">
-                  <van-tag plain type="primary">Lv.{{ item.brawler.power }}</van-tag>
+                  <van-tag plain type="primary" :color="item.brawler.power === 11? 'rgb(114,46,209)': item.brawler.power === 10? 'rgb(19,194,194)': 'rgb(82,196,26)'">Lv.{{ item.brawler.power }}</van-tag>
                   <div style="width: 13vw;font-size: 0.1em;color: black;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" :class="{name: item.name === myName}">{{item.name}}</div>
                 </span>
               </div>
@@ -184,7 +192,7 @@
         </div>
         <!--吃鸡-->
         <div v-if="item.event.mode === 'soloShowdown' || item.event.mode === 'duoShowdown'">
-          <a-descriptions title="对战详情">
+          <a-descriptions title="对战详情" style="margin-left: 20px">
             <a-descriptions-item label="比赛时间">
               {{ item.battleTime | dateFormatter }}
             </a-descriptions-item>
@@ -201,7 +209,7 @@
         </div>
         <!--社区图吃鸡-->
         <div v-if="item.event.mode === undefined && (item.battle.mode === 'soloShowdown' || item.battle.mode === 'duoShowdown')">
-          <a-descriptions title="对战详情">
+          <a-descriptions title="对战详情" style="margin-left: 20px">
             <a-descriptions-item label="比赛时间">
               {{ item.battleTime | dateFormatter }}
             </a-descriptions-item>
@@ -211,44 +219,42 @@
           </a-descriptions>
         </div>
         <!--车轮擂台赛-->
-        <div v-if="item.event.mode === 'duels'">
-          <van-row>
-            <van-col span="10">
-              <a-descriptions title="对战详情">
-                <a-descriptions-item label="比赛时间">
-                  {{ item.battleTime | dateFormatter }}
-                </a-descriptions-item>
-                <a-descriptions-item label="类型">
-                  {{ item.battle.type === 'ranked'? '排位': item.battle.type === 'challenge'? '挑战': item.battle.type === 'teamRanked'? '战队联赛' : '其他' }}
-                </a-descriptions-item>
-                <a-descriptions-item label="时长">
-                  {{ item.battle.duration === undefined? '暂无数据' : item.battle.duration > 60? Math.floor(item.battle.duration / 60) + '分' + (item.battle.duration % 60) + '秒' : item.battle.duration + '秒' }}
-                </a-descriptions-item>
-                <a-descriptions-item label="杯数变化">
-                  {{ item.battle.trophyChange >0? '+'+item.battle.trophyChange: item.battle.trophyChange === undefined? '暂无数据': item.battle.trophyChange }}
-                </a-descriptions-item>
-              </a-descriptions>
-            </van-col>
-            <van-col span="14">
-              <div style="text-align: center">
-                <span v-for="(item, index) in item.battle.players[0].brawlers" :key="index" style="display: inline-block;text-align: center;margin: 2vh 8px 0 0">
-                  <img :src="require('../assets/brawlers/'+ item.id +'.png')" alt="" style="width: 15vw;display: block">
-                  <van-tag plain type="primary">Lv.{{ item.power }}</van-tag>
+        <div v-if="item.event.mode === 'duels'" style="text-align: center">
+          <div style="display: inline-block">
+            <div style="color: black;margin-bottom: 4px">
+              <span style="margin-right: 12vw">
+                <i style="font-weight: bold" class="iconfont icon-shijian"></i>
+                <span style="font-size: 16px;margin-left: 5px">{{ item.battleTime | dateFormatter }}</span>
+              </span>
+              <span>
+                <i style="font-size: 15px" class="iconfont icon-zbds_shalou"></i>
+                <span style="font-size: 16px;margin-left: 3px">{{ item.battle.duration === undefined? '暂无数据' : item.battle.duration > 60? Math.floor(item.battle.duration / 60) + '分' + (item.battle.duration % 60) + '秒' : item.battle.duration + '秒' }}</span>
+              </span>
+            </div>
+          </div>
+          <van-divider style="margin: 0 0 10px 0"></van-divider>
+          <!--阵容-->
+          <div style="display: inline-block; margin: 0 auto;">
+            <div style="display: flex; margin: 0 auto;align-items: center">
+              <div style="text-align: center;display: inline-block">
+                <div v-for="(item, index) in item.battle.players[0].brawlers" :key="index" style="display: inline-block;text-align: center;margin: 0 3px">
+                  <img :src="require('../assets/brawlers/'+ item.id +'.png')" alt="" style="width: 13vw;display: block">
+                  <van-tag plain type="primary" :color="item.power === 11? 'rgb(114,46,209)': item.power === 10? 'rgb(19,194,194)': 'rgb(82,196,26)'">Lv.{{ item.power }}</van-tag>
+                </div>
+                <div style="font-size: 0.1em;color: black" :class="{name: item.battle.players[0].name === myName}">{{item.battle.players[0].name}}</div>
+              </div>
+              <div style="text-align: center;display: inline-block;">
+                <i style="font-size: 20px;padding: 0 1px" class="iconfont icon-duizhan2x"></i>
+              </div>
+              <div style="text-align: center;display: inline-block">
+                <span v-for="(item, index) in item.battle.players[1].brawlers" :key="index" style="display: inline-block;text-align: center;margin: 0 3px">
+                  <img :src="require('../assets/brawlers/'+ item.id +'.png')" alt="" style="width: 13vw;display: block">
+                  <van-tag plain type="primary" :color="item.power === 11? 'rgb(114,46,209)': item.power === 10? 'rgb(19,194,194)': 'rgb(82,196,26)'">Lv.{{ item.power }}</van-tag>
                 </span>
-                <div style="font-size: 0.2em;color: black;margin: 0 auto" :class="{name: item.battle.players[0].name === myName}">{{item.battle.players[0].name}}</div>
+                <div style="font-size: 0.1em;color: black" :class="{name: item.battle.players[1].name === myName}">{{item.battle.players[1].name}}</div>
               </div>
-              <div style="text-align: center">
-                <i class="iconfont icon-duizhan2x"></i>
-              </div>
-              <div style="text-align: center">
-                <span v-for="(item, index) in item.battle.players[1].brawlers" :key="index" style="display: inline-block;text-align: center;margin: 0.5vh 8px 0 0">
-                  <img :src="require('../assets/brawlers/'+ item.id +'.png')" alt="" style="width: 15vw;display: block">
-                  <van-tag plain type="primary">Lv.{{ item.power }}</van-tag>
-                </span>
-                <div style="font-size: 0.2em;color: black;margin: 0 auto" :class="{name: item.battle.players[1].name === myName}">{{item.battle.players[1].name}}</div>
-              </div>
-            </van-col>
-          </van-row>
+            </div>
+          </div>
         </div>
         <!--机甲入侵-->
         <div v-if="item.event.mode === 'roboRumble'">
@@ -470,5 +476,15 @@ img{
 }
 .van-collapse-item__content{
   padding: 12px 0 !important;
+}
+.mvpSpan{
+  margin-right: 7vw;
+  display: inline-block;
+  width: 30vw;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  word-break:keep-all;
+  vertical-align: top;
 }
 </style>
