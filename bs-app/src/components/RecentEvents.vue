@@ -89,11 +89,11 @@
             <span style="display:inline-block; width: 25vw">{{item.event.map | mapTranslate}}</span>
             <!--3v3-->
             <span v-if="'teams' in item.battle && item.battle.teams.length === 2">
-              <span v-for="(picItem, index) in item.battle.teams[0]" :key="index + '0'">
-                <img v-if="picItem.name === myName" :src="require('../assets/brawlers/'+ picItem.brawler.id +'.png')" alt="" width="30vw">
+              <span v-for="(item, index) in item.battle.teams[0]" :key="index + '0'">
+                <img v-if="item.name === myName" :src="require('../assets/brawlers/'+ item.brawler.id +'.png')" alt="" width="30vw">
               </span>
-              <span v-for="(picItem, index) in item.battle.teams[1]" :key="index + '1'">
-                <img v-if="picItem.name === myName" :src="require('../assets/brawlers/'+ picItem.brawler.id +'.png')" alt="" width="30vw">
+              <span v-for="(item, index) in item.battle.teams[1]" :key="index + '1'">
+                <img v-if="item.name === myName" :src="require('../assets/brawlers/'+ item.brawler.id +'.png')" alt="" width="30vw">
               </span>
             </span>
             <!--duels-->
@@ -125,14 +125,36 @@
               </span>
             </span>
 
-            <!--胜负标签-->
+            <!--最右侧标签-->
             <span style="margin-left: auto">
-            <a-tag color="orange" v-if="isMyMvp(item.battle)">
-              MVP
-            </a-tag>
-            <a-tag v-show="item.battle.mode !== 'roboRumble'" :color="item.battle.result === undefined? 'purple': item.battle.result === 'victory'? 'green': item.battle.result === 'defeat'? 'red': 'blue'">
-              {{ item.battle.result === undefined? '第' + item.battle.rank + '名': item.battle.result === 'victory'? '获胜': item.battle.result === 'defeat'? '战败': '平局'}}
-            </a-tag>
+              <a-tag color="pink" v-if="isMyMvp(item.battle)">
+                MVP
+              </a-tag>
+              <a-tag v-show="item.battle.mode !== 'roboRumble'" :color="item.battle.result === undefined? 'purple': item.battle.result === 'victory'? 'green': item.battle.result === 'defeat'? 'red': 'blue'">
+                {{ item.battle.result === undefined? '第' + item.battle.rank + '名': item.battle.result === 'victory'? '获胜': item.battle.result === 'defeat'? '战败': '平局'}}
+              </a-tag>
+              <!--杯数-->
+              <span v-if="'teams' in item.battle && item.battle.teams.length === 2">
+                <span v-for="(item, index) in item.battle.teams[0]" :key="index + '0'">
+                  <a-tag v-if="item.name === myName" color="rgb(250,187,31)">{{ item.brawler.trophies }}</a-tag>
+                </span>
+                <span v-for="(item, index) in item.battle.teams[1]" :key="index + '1'">
+                  <a-tag v-if="item.name === myName" color="rgb(250,187,31)">{{ item.brawler.trophies }}</a-tag>
+                </span>
+              </span>
+
+              <span v-if="item.event.mode === 'soloShowdown' || item.battle.mode === 'soloShowdown'">
+                <span v-for="(item, index) in item.battle.players" :key="index + '0'">
+                  <a-tag style="" v-if="item.name === myName" color="rgb(250,187,31)">{{ item.brawler.trophies }}</a-tag>
+                </span>
+              </span>
+
+              <span v-if="item.event.mode === 'duoShowdown' || item.battle.mode === 'duoShowdown'">
+                <span v-for="(teamsItem, index) in item.battle.teams" :key="index + '5'">
+                  <a-tag style="" v-if="teamsItem[0].name === myName" color="rgb(250,187,31)">{{ teamsItem[0].brawler.trophies }}</a-tag>
+                  <a-tag style="" v-if="teamsItem[1].name === myName" color="rgb(250,187,31)">{{ teamsItem[1].brawler.trophies }}</a-tag>
+                </span>
+              </span>
           </span>
           </div>
         </template>
@@ -171,6 +193,10 @@
                   <img :src="require('../assets/brawlers/'+ item.brawler.id +'.png')" alt="" style="width: 13vw;display: block">
                   <van-tag plain type="primary" :color="item.brawler.power === 11? 'rgb(114,46,209)': item.brawler.power === 10? 'rgb(19,194,194)': 'rgb(82,196,26)'">Lv.{{ item.brawler.power }}</van-tag>
                   <div style="width: 13vw;font-size: 0.1em;color: black;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" :class="{name: item.name === myName}">{{item.name}}</div>
+                  <div style="color: black;font-size: 0.1em;margin-top: -2px">
+                    <img style="vertical-align: middle" src="@/assets/icon_trophy_small.png" alt="" width="13px">
+                    <span style="vertical-align: middle">{{item.brawler.trophies}}</span>
+                  </div>
                 </div>
               </div>
               <div style="text-align: center;display: inline-block;">
@@ -185,6 +211,10 @@
                   <img :src="require('../assets/brawlers/'+ item.brawler.id +'.png')" alt="" style="width: 13vw;display: block">
                   <van-tag plain type="primary" :color="item.brawler.power === 11? 'rgb(114,46,209)': item.brawler.power === 10? 'rgb(19,194,194)': 'rgb(82,196,26)'">Lv.{{ item.brawler.power }}</van-tag>
                   <div style="width: 13vw;font-size: 0.1em;color: black;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" :class="{name: item.name === myName}">{{item.name}}</div>
+                  <div style="color: black;font-size: 0.1em;margin-top: -2px">
+                    <img style="vertical-align: middle" src="@/assets/icon_trophy_small.png" alt="" width="13px">
+                    <span style="vertical-align: middle">{{item.brawler.trophies}}</span>
+                  </div>
                 </span>
               </div>
             </div>
@@ -240,6 +270,10 @@
                 <div v-for="(item, index) in item.battle.players[0].brawlers" :key="index" style="display: inline-block;text-align: center;margin: 0 3px">
                   <img :src="require('../assets/brawlers/'+ item.id +'.png')" alt="" style="width: 13vw;display: block">
                   <van-tag plain type="primary" :color="item.power === 11? 'rgb(114,46,209)': item.power === 10? 'rgb(19,194,194)': 'rgb(82,196,26)'">Lv.{{ item.power }}</van-tag>
+                  <div style="color: black;font-size: 0.1em;margin-top: -2px">
+                    <img style="vertical-align: middle" src="@/assets/icon_trophy_small.png" alt="" width="13px">
+                    <span style="vertical-align: middle">{{item.trophies}}</span>
+                  </div>
                 </div>
                 <div style="font-size: 0.1em;color: black" :class="{name: item.battle.players[0].name === myName}">{{item.battle.players[0].name}}</div>
               </div>
@@ -250,6 +284,10 @@
                 <span v-for="(item, index) in item.battle.players[1].brawlers" :key="index" style="display: inline-block;text-align: center;margin: 0 3px">
                   <img :src="require('../assets/brawlers/'+ item.id +'.png')" alt="" style="width: 13vw;display: block">
                   <van-tag plain type="primary" :color="item.power === 11? 'rgb(114,46,209)': item.power === 10? 'rgb(19,194,194)': 'rgb(82,196,26)'">Lv.{{ item.power }}</van-tag>
+                  <div style="color: black;font-size: 0.1em;margin-top: -2px">
+                    <img style="vertical-align: middle" src="@/assets/icon_trophy_small.png" alt="" width="13px">
+                    <span style="vertical-align: middle">{{item.trophies}}</span>
+                  </div>
                 </span>
                 <div style="font-size: 0.1em;color: black" :class="{name: item.battle.players[1].name === myName}">{{item.battle.players[1].name}}</div>
               </div>

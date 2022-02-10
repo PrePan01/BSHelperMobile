@@ -15,8 +15,8 @@
             <a-menu-item key="3" @click="toClubSearch">
               战队查询(开发中)
             </a-menu-item>
-            <a-menu-item key="4" @click="toDownload">
-              下载
+            <a-menu-item key="4" @click="toMoblie">
+              移动版
             </a-menu-item>
           </a-sub-menu>
           <a-sub-menu key="sub2">
@@ -35,7 +35,7 @@
 
       <a-layout>
         <a-layout-header style="background: #fff; padding: 0">
-          <a-alert message="未适配移动端，建议使用PC访问" type="info" show-icon closable/>
+          <a-alert message="未适配移动端，建议使用PC访问，bs小助手移动版点击侧边导航访问" type="info" show-icon closable/>
         </a-layout-header>
         <a-layout-content style="margin: 0 16px">
           <a-breadcrumb style="margin: 16px 0">
@@ -102,8 +102,8 @@ export default {
     toClubSearch(){
       this.$router.push('/clubSearch')
     },
-    toDownload(){
-      this.$router.push('/bsDownload')
+    toMoblie(){
+      window.location.href="http://prepan.top/bs_m";
     },
     changeLogoClass() {
       if(this.collapsed){
