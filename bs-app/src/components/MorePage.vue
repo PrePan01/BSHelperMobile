@@ -6,10 +6,13 @@
       <h2>排行榜</h2>
     </a-card>
 
+    <a-card class="card joinUsCard" @click="$router.push('/events')">
+      <i class="iconfont icon-mingxinghuodong cardIcon"></i>
+      <h2>当前活动</h2>
+    </a-card>
+
     <a-card class="card" @click="$router.push('/clubSearch')">
-      <div style="padding-bottom: 5px">
-        <i class="iconfont icon-sousuo1 cardIcon"></i>
-      </div>
+      <i class="iconfont icon-sousuo1 cardIcon"></i>
       <h2>战队查询</h2>
     </a-card>
 
@@ -53,7 +56,7 @@ export default {
 </script>
 
 <style scoped>
-@import "https://at.alicdn.com/t/font_3113095_mbidod1e5qb.css";
+@import "https://at.alicdn.com/t/font_3113095_oiqkgv81nz.css";
 .mainContainer{
   width: 90vw;
   margin: 3vh auto 0 auto;
