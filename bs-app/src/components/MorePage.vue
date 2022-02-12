@@ -8,7 +8,7 @@
 
     <a-card class="card joinUsCard" @click="$router.push('/events')">
       <i class="iconfont icon-mingxinghuodong cardIcon"></i>
-      <h2>当前活动</h2>
+      <h2>天梯活动</h2>
     </a-card>
 
     <a-card class="card" @click="$router.push('/clubSearch')">

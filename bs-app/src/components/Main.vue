@@ -64,18 +64,24 @@ export default {
         methods: 'GET',
         url: '/playStatsApi/' + this.searchValue,
       }).then((res) => {
-        this.personalData = res.data
-        this.$bus.$emit('PersonalData',res.data)
-        this.$bus.$emit('PersonalBrawlers',res.data.brawlers)
-        axios({
-          methods: 'GET',
-          url: '/playStatsApi/v1/battlelog/' + this.searchValue,
-        }).then((res) => {
-          this.battleLogs = res.data.items
-          this.$bus.$emit('myName',this.personalData.name)
-          this.$bus.$emit('BattleLogs',this.battleLogs)
+        if(res.data.message === '404 Not Found'){
+          alert('未搜索到玩家')
           this.showOverlay = false
-        })
+        }
+        else{
+          this.personalData = res.data
+          this.$bus.$emit('PersonalData',res.data)
+          this.$bus.$emit('PersonalBrawlers',res.data.brawlers)
+          axios({
+            methods: 'GET',
+            url: '/playStatsApi/v1/battlelog/' + this.searchValue,
+          }).then((res) => {
+            this.battleLogs = res.data.items
+            this.$bus.$emit('myName',this.personalData.name)
+            this.$bus.$emit('BattleLogs',this.battleLogs)
+            this.showOverlay = false
+          })
+        }
       })
     },
     //个人信息数据

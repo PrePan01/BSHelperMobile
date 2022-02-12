@@ -85,6 +85,7 @@
         <!--列表-->
         <template slot="title">
           <div style="display: flex; align-items: center">
+
             <img :src="require('../assets/gameModes/'+ item.battle.mode +'.png')" alt=""  style="margin-right: 1vw; width: 8vw;">
             <span style="display:inline-block; width: 25vw">{{item.event.map | mapTranslate}}</span>
             <!--3v3-->
@@ -130,16 +131,13 @@
               <a-tag color="pink" v-if="isMyMvp(item.battle)">
                 MVP
               </a-tag>
-              <a-tag v-show="item.battle.mode !== 'roboRumble'" :color="item.battle.result === undefined? 'purple': item.battle.result === 'victory'? 'green': item.battle.result === 'defeat'? 'red': 'blue'">
-                {{ item.battle.result === undefined? '第' + item.battle.rank + '名': item.battle.result === 'victory'? '获胜': item.battle.result === 'defeat'? '战败': '平局'}}
-              </a-tag>
               <!--杯数-->
               <span v-if="'teams' in item.battle && item.battle.teams.length === 2">
                 <span v-for="(item, index) in item.battle.teams[0]" :key="index + '0'">
-                  <a-tag v-if="item.name === myName" color="rgb(250,187,31)">{{ item.brawler.trophies }}</a-tag>
+                  <a-tag v-if="item.name === myName" color="orange">{{ item.brawler.trophies }}</a-tag>
                 </span>
                 <span v-for="(item, index) in item.battle.teams[1]" :key="index + '1'">
-                  <a-tag v-if="item.name === myName" color="rgb(250,187,31)">{{ item.brawler.trophies }}</a-tag>
+                  <a-tag v-if="item.name === myName" color="orange">{{ item.brawler.trophies }}</a-tag>
                 </span>
               </span>
 
@@ -155,6 +153,10 @@
                   <a-tag style="" v-if="teamsItem[1].name === myName" color="rgb(250,187,31)">{{ teamsItem[1].brawler.trophies }}</a-tag>
                 </span>
               </span>
+
+              <a-tag v-show="item.battle.mode !== 'roboRumble'" :color="item.battle.result === undefined? 'purple': item.battle.result === 'victory'? 'green': item.battle.result === 'defeat'? 'red': 'blue'">
+              {{ item.battle.result === undefined? '第' + item.battle.rank + '名': item.battle.result === 'victory'? '获胜': item.battle.result === 'defeat'? '战败': '平局'}}
+              </a-tag>
           </span>
           </div>
         </template>

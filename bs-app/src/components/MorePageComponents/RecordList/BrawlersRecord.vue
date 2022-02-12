@@ -1,6 +1,12 @@
 <template>
   <div>
-    <!--选择英雄折叠面板-->
+    <!--加载遮罩-->
+    <van-overlay :show="showOverlay" z-index="100">
+      <div class="wrapper">
+        <van-loading color="#1989fa" />
+      </div>
+    </van-overlay>
+
     <div>
       <van-row>
         <van-col span="4" style="height: 87vh;overflow: scroll">
@@ -47,16 +53,19 @@ export default {
       brawlersRecordData: {},
       brawlersList: [],
       chooseBrawlerData: [],
-      brawlActiveIndex: 0
+      brawlActiveIndex: 0,
+      showOverlay: false
     }
   },
   methods: {
     getData(){
+      this.showOverlay = true
       axios({
         methods: 'GET',
         url: 'https://api.brawlapi.com/v1/records'
       }).then((res) => {
         this.brawlersRecordData = res
+        this.showOverlay = false
       })
     },
     createBrawlersList(){
@@ -87,6 +96,12 @@ export default {
 </script>
 
 <style scoped>
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
 .brawlActive{
   border-style: inset;
 }
