@@ -20,7 +20,7 @@
     </van-divider>
     <div v-for="(item) in activeEvents" :key="item.id" class="activeEvents">
       <!--宝石-->
-      <div class="eachEvents" v-if="item.slot.name === 'Gem Grab'">
+      <div class="eachEvents" v-if="item.slot.name === 'Gem Grab'" @click="$router.push({path: '/eventsdetails', query: {event: 'active', name: 'Gem Grab'}})">
         <div class="eventsCard">
           <div class="timeCard">
             <div style="color: white">
@@ -41,7 +41,7 @@
       </div>
 
       <!--足球-->
-      <div class="eachEvents" v-if="item.slot.name === 'Daily Events' && item.map.gameMode.name === 'Brawl Ball'">
+      <div class="eachEvents" v-if="item.slot.name === 'Daily Events' && item.map.gameMode.name === 'Brawl Ball'" @click="$router.push({path: '/eventsdetails', query: {event: 'active', name: 'Brawl Ball'}})">
         <div style="background-color: rgb(154,177,253);" class="eventsCard">
           <div class="timeCard">
             <div style="color: white">

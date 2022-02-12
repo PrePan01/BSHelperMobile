@@ -5,6 +5,7 @@ import ClubSearch from '@/components/MorePageComponents/ClubSearch'
 import UpdateInfo from '@/components/MorePageComponents/UpdateInfo'
 import RecordList from '@/components/MorePageComponents/RecordList'
 import Events from '@/components/MorePageComponents/Events'
+import EventsDetails from '@/components/MorePageComponents/EventsDetails'
 import Main from '@/components/Main'
 import MorePage from '@/components/MorePage'
 import MapTranslate from '@/components/MapTranslate'
@@ -42,6 +43,10 @@ export default new router({
         {
             path: '/events',
             component: Events
+        },
+        {
+            path: '/eventsdetails',
+            component: EventsDetails
         },
     ]
 })
