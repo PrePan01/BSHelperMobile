@@ -65,7 +65,7 @@
                 Lv.{{item.power}}
               </a-tag>
               <a-tag color="orange">
-                {{ item.trophies }}
+                {{ item.trophies+' / '+item.highestTrophies }}
               </a-tag>
             </span>
           </div>

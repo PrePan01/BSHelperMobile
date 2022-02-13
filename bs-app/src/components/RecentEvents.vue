@@ -131,6 +131,10 @@
               <a-tag color="pink" v-if="isMyMvp(item.battle)">
                 MVP
               </a-tag>
+
+              <a-tag v-show="item.battle.mode !== 'roboRumble'" :color="item.battle.result === undefined? 'purple': item.battle.result === 'victory'? 'green': item.battle.result === 'defeat'? 'red': 'blue'">
+              {{ item.battle.result === undefined? '第' + item.battle.rank + '名': item.battle.result === 'victory'? '获胜': item.battle.result === 'defeat'? '战败': '平局'}}
+              </a-tag>
               <!--杯数-->
               <span v-if="'teams' in item.battle && item.battle.teams.length === 2">
                 <span v-for="(item, index) in item.battle.teams[0]" :key="index + '0'">
@@ -153,10 +157,6 @@
                   <a-tag style="" v-if="teamsItem[1].name === myName" color="rgb(250,187,31)">{{ teamsItem[1].brawler.trophies }}</a-tag>
                 </span>
               </span>
-
-              <a-tag v-show="item.battle.mode !== 'roboRumble'" :color="item.battle.result === undefined? 'purple': item.battle.result === 'victory'? 'green': item.battle.result === 'defeat'? 'red': 'blue'">
-              {{ item.battle.result === undefined? '第' + item.battle.rank + '名': item.battle.result === 'victory'? '获胜': item.battle.result === 'defeat'? '战败': '平局'}}
-              </a-tag>
           </span>
           </div>
         </template>
