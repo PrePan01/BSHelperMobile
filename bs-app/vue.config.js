@@ -13,7 +13,7 @@ module.exports = {
 			},
 			"/brawlapi": {
 				changeOrigin: true,
-				target: 'https://api.brawlapi.com/',
+				target: 'https://api.brawlapi.com',
 				pathRewrite: {
 					'^/brawlapi': ''
 				}
