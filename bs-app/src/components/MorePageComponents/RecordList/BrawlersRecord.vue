@@ -44,7 +44,7 @@
 
 <script>
 import axios from 'axios'
-
+import { Notify } from 'vant';
 
 export default {
   name: "BrawlersRecord",
@@ -62,9 +62,13 @@ export default {
       this.showOverlay = true
       axios({
         methods: 'GET',
-        url: 'https://api.brawlapi.com/v1/records'
+        url: '/brawlapi/v1/records'
       }).then((res) => {
         this.brawlersRecordData = res
+        this.showOverlay = false
+      }).catch(err => {
+        console.log(err)
+        Notify({ type: 'danger', message: '数据请求异常，请稍后再试' });
         this.showOverlay = false
       })
     },

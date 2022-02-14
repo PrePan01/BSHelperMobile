@@ -14,14 +14,14 @@
         @back="onClickLeft"
     >
     </a-page-header>
-    <!--<a-popover>
+    <a-popover>
       <template slot="content">
-        <img :src="require('@/assets/maps/'+ mapName +'.png')" alt="" width="300px">
+        <img :src="require('@/assets/maps/'+ 'supercell-'+ mapName.toLowerCase().replace(/\s/g,'-') + '-thumb' +'.png')" alt="" width="300px">
       </template>
       <a-button style="position: absolute;z-index: 3;right: 20px;top: 18px">
         查看地图
       </a-button>
-    </a-popover>-->
+    </a-popover>
     <!--表格-->
     <a-table :columns="columns" :data-source="stats" :pagination="false" :scroll="{ y: '85vh' }">
       <span slot="brawler" slot-scope="brawler">
@@ -97,14 +97,22 @@ export default {
         methods: 'GET',
         url: 'https://api.brawlapi.com/v1/events'
       }).then((res) => {
-        // this.activeEvents = res.data.active
-        // this.upcomingEvents = res.data.upcoming
         if(this.event === 'active'){
           for(let i in res.data.active){
             if(res.data.active[i].map.gameMode.name === this.name){
               this.stats = res.data.active[i].map.stats
               this.teamStats = res.data.active[i].map.teamStats
               this.mapName = res.data.active[i].map.name
+              break
+            }
+          }
+        }
+        else{
+          for(let i in res.data.upcoming){
+            if(res.data.upcoming[i].map.gameMode.name === this.name){
+              this.stats = res.data.upcoming[i].map.stats
+              this.teamStats = res.data.upcoming[i].map.teamStats
+              this.mapName = res.data.upcoming[i].map.name
               break
             }
           }
@@ -135,7 +143,6 @@ export default {
     this.name = this.$route.query.name
     this.event = this.$route.query.event
     this.getData()
-
   }
 }
 </script>

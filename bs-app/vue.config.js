@@ -10,6 +10,13 @@ module.exports = {
 				pathRewrite: {
 					'^/playStatsApi': ''
 				}
+			},
+			"/brawlapi": {
+				changeOrigin: true,
+				target: 'https://api.brawlapi.com/',
+				pathRewrite: {
+					'^/brawlapi': ''
+				}
 			}
 		}
 	}

@@ -177,13 +177,11 @@
     <div v-for="(item) in upcomingEvents" :key="item.id" class="activeEvents">
 
       <!--宝石-->
-      <div class="eachEvents" v-if="item.slot.name === 'Gem Grab'">
+      <div class="eachEvents" v-if="item.slot.name === 'Gem Grab'" @click="$router.push({path: '/eventsdetails', query: {event: 'upcoming', name: 'Gem Grab'}})">
         <div class="eventsCard">
           <div class="timeCard">
             <div style="color: white">
-              <div style="float: right;margin-right: 10px">
-                开始时间：{{item.startTime | dateFormatter}}
-              </div>
+              <div style="float: right;margin-right: 10px">结束时间：{{item.endTime | dateFormatter}}</div>
             </div>
           </div>
           <div style="background-color: rgb(216,82,255)" class="eventsName">
@@ -200,11 +198,11 @@
       </div>
 
       <!--足球-->
-      <div class="eachEvents" v-if="item.slot.name === 'Daily Events' && item.map.gameMode.name === 'Brawl Ball'">
+      <div class="eachEvents" v-if="item.slot.name === 'Daily Events' && item.map.gameMode.name === 'Brawl Ball'" @click="$router.push({path: '/eventsdetails', query: {event: 'upcoming', name: 'Brawl Ball'}})">
         <div style="background-color: rgb(154,177,253);" class="eventsCard">
           <div class="timeCard">
             <div style="color: white">
-              <div style="float: right;margin-right: 10px">开始时间：{{item.startTime | dateFormatter}}</div>
+              <div style="float: right;margin-right: 10px">结束时间：{{item.endTime | dateFormatter}}</div>
             </div>
           </div>
           <div class="eventsName">
@@ -221,11 +219,11 @@
       </div>
 
       <!--热区-->
-      <div class="eachEvents" v-if="(item.slot.name === 'Team Events' || item.slot.name === 'Team Events 2') && item.map.gameMode.name === 'Hot Zone'" >
+      <div class="eachEvents" v-if="(item.slot.name === 'Team Events' || item.slot.name === 'Team Events 2') && item.map.gameMode.name === 'Hot Zone'" @click="$router.push({path: '/eventsdetails', query: {event: 'upcoming', name: 'Hot Zone'}})" >
         <div style="background-color: rgb(226,59,79);" class="eventsCard">
           <div class="timeCard">
             <div style="color: white">
-              <div style="float: right;margin-right: 10px">开始时间：{{item.startTime | dateFormatter}}</div>
+              <div style="float: right;margin-right: 10px">结束时间：{{item.endTime | dateFormatter}}</div>
             </div>
           </div>
           <div class="eventsName">
@@ -242,11 +240,11 @@
       </div>
 
       <!--赏金猎人-->
-      <div class="eachEvents" v-if="(item.slot.name === 'Team Events' || item.slot.name === 'Team Events 2') && item.map.gameMode.name === 'Bounty'">
+      <div class="eachEvents" v-if="(item.slot.name === 'Team Events' || item.slot.name === 'Team Events 2') && item.map.gameMode.name === 'Bounty'" @click="$router.push({path: '/eventsdetails', query: {event: 'upcoming', name: 'Bounty'}})">
         <div style="background-color: rgb(0,206,254);" class="eventsCard">
           <div class="timeCard">
             <div style="color: white">
-              <div style="float: right;margin-right: 10px">开始时间：{{item.startTime | dateFormatter}}</div>
+              <div style="float: right;margin-right: 10px">结束时间：{{item.endTime | dateFormatter}}</div>
             </div>
           </div>
           <div class="eventsName">
@@ -263,11 +261,11 @@
       </div>
 
       <!--机甲攻坚战-->
-      <div class="eachEvents" v-if="(item.slot.name === 'Team Events' || item.slot.name === 'Team Events 2') && item.map.gameMode.name === 'Siege'">
+      <div class="eachEvents" v-if="(item.slot.name === 'Team Events' || item.slot.name === 'Team Events 2') && item.map.gameMode.name === 'Siege'" @click="$router.push({path: '/eventsdetails', query: {event: 'upcoming', name: 'Siege'}})">
         <div style="background-color: rgb(239,78,49);" class="eventsCard">
           <div class="timeCard">
             <div style="color: white">
-              <div style="float: right;margin-right: 10px">开始时间：{{item.startTime | dateFormatter}}</div>
+              <div style="float: right;margin-right: 10px">结束时间：{{item.endTime | dateFormatter}}</div>
             </div>
           </div>
           <div class="eventsName">
@@ -284,11 +282,11 @@
       </div>
 
       <!--乱斗淘汰赛-->
-      <div class="eachEvents" v-if="(item.slot.name === 'Team Events' || item.slot.name === 'Team Events 2') && item.map.gameMode.name === 'Knockout'">
+      <div class="eachEvents" v-if="(item.slot.name === 'Team Events' || item.slot.name === 'Team Events 2') && item.map.gameMode.name === 'Knockout'" @click="$router.push({path: '/eventsdetails', query: {event: 'upcoming', name: 'Knockout'}})">
         <div style="background-color: rgb(247,131,28);" class="eventsCard">
           <div class="timeCard">
             <div style="color: white">
-              <div style="float: right;margin-right: 10px">开始时间：{{item.startTime | dateFormatter}}</div>
+              <div style="float: right;margin-right: 10px">结束时间：{{item.endTime | dateFormatter}}</div>
             </div>
           </div>
           <div class="eventsName">
@@ -305,11 +303,11 @@
       </div>
 
       <!--金库攻防-->
-      <div class="eachEvents" v-if="(item.slot.name === 'Team Events' || item.slot.name === 'Team Events 2') && item.map.gameMode.name === 'Heist'">
+      <div class="eachEvents" v-if="(item.slot.name === 'Team Events' || item.slot.name === 'Team Events 2') && item.map.gameMode.name === 'Heist'" @click="$router.push({path: '/eventsdetails', query: {event: 'upcoming', name: 'Heist'}})">
         <div style="background-color: rgb(247,131,28);" class="eventsCard">
           <div class="timeCard">
             <div style="color: white">
-              <div style="float: right;margin-right: 10px">开始时间：{{item.startTime | dateFormatter}}</div>
+              <div style="float: right;margin-right: 10px">结束时间：{{item.endTime | dateFormatter}}</div>
             </div>
           </div>
           <div class="eventsName">
@@ -325,6 +323,7 @@
         </div>
       </div>
 
+
     </div>
 
   </div>
@@ -333,6 +332,7 @@
 <script>
 import axios from 'axios'
 import moment from "moment"
+import { Notify } from 'vant';
 
 export default {
   name: "Events",
@@ -352,10 +352,14 @@ export default {
       this.showOverlay = true
       axios({
         methods: 'GET',
-        url: 'https://api.brawlapi.com/v1/events'
+        url: '/brawlapi/v1/events'
       }).then((res) => {
         this.activeEvents = res.data.active
         this.upcomingEvents = res.data.upcoming
+        this.showOverlay = false
+      }).catch(err => {
+        console.log(err)
+        Notify({ type: 'danger', message: '数据请求异常，请稍后再试' });
         this.showOverlay = false
       })
     }
