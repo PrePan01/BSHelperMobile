@@ -352,7 +352,7 @@ export default {
       this.showOverlay = true
       axios({
         methods: 'GET',
-        url: '/brawlapi/v1/events'
+        url: 'https://api.brawlapi.com/v1/events'
       }).then((res) => {
         this.activeEvents = res.data.active
         this.upcomingEvents = res.data.upcoming
