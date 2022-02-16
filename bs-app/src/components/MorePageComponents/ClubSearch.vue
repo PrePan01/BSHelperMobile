@@ -90,7 +90,7 @@ export default {
       this.showOverlay = true
       axios({
         methods: 'GET',
-        url: 'https://cr.is-a.dev/clubs/' + this.clubTag,
+        url: '/playStatsApi/clubs/' + this.clubTag,
       }).then((res) =>{
         this.clubData = res.data
         this.showOverlay = false
