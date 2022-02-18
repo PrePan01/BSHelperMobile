@@ -52,11 +52,12 @@
     </a-card>
 
     <div class="brawlerUse">
-      <div v-for="(key,value,index) in brawlUse" :key="index" class="brawlerUseItem">
-        <img :src="require('../assets/brawlers/'+ value +'.png')" alt="" style="width: 17vw">
-        <div style="color: black;font-size: 16px">{{key[0]}}</div>
-        <div style="color: black;font-size: 16px">{{key[1]}}</div>
-        <div style="color: black;font-size: 16px">{{key[2]}}</div>
+      <div v-for="(key,index) in brawlUseSorted" :key="index" class="brawlerUseItem">
+        <img :src="require('../assets/brawlers/'+ key +'.png')" alt="" style="width: 17vw">
+        <div style="color: black;font-size: 16px">{{brawlUse[key][0]+'次'}}</div>
+        <div style="font-size: 14px;margin-top: -5px">
+          <span style="color: rgb(82,196,26)">{{brawlUse[key][1]}}</span> / <span style="color: rgb(247,93,164)">{{brawlUse[key][2]}}</span>
+        </div>
       </div>
     </div>
 
@@ -350,7 +351,8 @@ export default {
       activeNames: [''],
       checkboxValue:'all',
       sheetShow:false,
-      brawlUse: {}
+      brawlUse: {},
+      brawlUseSorted: []
     }
   },
   methods: {
@@ -422,60 +424,62 @@ export default {
       }
 
     },
-    calBrawlersUse(){
+    calBrawlersUse() {
       let data = {}
       for (let item in this.battleLogs) {
         let battleLogsItem = this.battleLogs[item]
         //处理3V3
-        if('teams' in battleLogsItem.battle && battleLogsItem.battle.teams.length === 2){
+        if ('teams' in battleLogsItem.battle && battleLogsItem.battle.teams.length === 2) {
           let teams = battleLogsItem.battle.teams
-          for(let i in teams[0]){
-            if(teams[0][i].name === this.myName){
-              if(teams[0][i].brawler.id in data){
-                if(battleLogsItem.battle.result === 'victory'){
+          for (let i in teams[0]) {
+            if (teams[0][i].name === this.myName) {
+              if (teams[0][i].brawler.id in data) {
+                if (battleLogsItem.battle.result === 'victory') {
                   data[teams[0][i].brawler.id][0]++
                   data[teams[0][i].brawler.id][1]++
                 }
-                if(battleLogsItem.battle.result === 'defeat'){
+                if (battleLogsItem.battle.result === 'defeat') {
                   data[teams[0][i].brawler.id][0]++
                   data[teams[0][i].brawler.id][2]++
                 }
-              }
-              else{
-                if(battleLogsItem.battle.result === 'victory'){
-                  data[teams[0][i].brawler.id] = [1,1,0]
+              } else {
+                if (battleLogsItem.battle.result === 'victory') {
+                  data[teams[0][i].brawler.id] = [1, 1, 0]
                 }
-                if(battleLogsItem.battle.result === 'defeat'){
-                  data[teams[0][i].brawler.id] = [1,0,1]
+                if (battleLogsItem.battle.result === 'defeat') {
+                  data[teams[0][i].brawler.id] = [1, 0, 1]
                 }
               }
             }
           }
-          for(let i in teams[1]){
-            if(teams[1][i].name === this.myName){
-              if(teams[1][i].brawler.id in data){
-                if(battleLogsItem.battle.result === 'victory'){
+          for (let i in teams[1]) {
+            if (teams[1][i].name === this.myName) {
+              if (teams[1][i].brawler.id in data) {
+                if (battleLogsItem.battle.result === 'victory') {
                   data[teams[1][i].brawler.id][0]++
                   data[teams[1][i].brawler.id][1]++
                 }
-                if(battleLogsItem.battle.result === 'defeat'){
+                if (battleLogsItem.battle.result === 'defeat') {
                   data[teams[1][i].brawler.id][0]++
                   data[teams[1][i].brawler.id][2]++
                 }
-              }
-              else{
-                if(battleLogsItem.battle.result === 'victory'){
-                  data[teams[1][i].brawler.id] = [1,1,0]
+              } else {
+                if (battleLogsItem.battle.result === 'victory') {
+                  data[teams[1][i].brawler.id] = [1, 1, 0]
                 }
-                if(battleLogsItem.battle.result === 'defeat'){
-                  data[teams[1][i].brawler.id] = [1,0,1]
+                if (battleLogsItem.battle.result === 'defeat') {
+                  data[teams[1][i].brawler.id] = [1, 0, 1]
                 }
               }
             }
           }
         }
       }
+      var brawlUseSorted = Object.keys(data).sort((a,b)=>{
+        return data[b][0]-data[a][0];
+      });
       this.brawlUse = data
+      this.brawlUseSorted = brawlUseSorted
     }
   },
   filters: {
@@ -597,7 +601,6 @@ img{
   margin: 0 auto;
   padding-top: 1vh;
   display: flex;
-  justify-content: space-between;
   width: 95vw;
   overflow-x: scroll;
   overflow-y: hidden;
