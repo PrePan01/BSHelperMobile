@@ -54,7 +54,9 @@
     <div class="brawlerUse">
       <div v-for="(key,value,index) in brawlUse" :key="index" class="brawlerUseItem">
         <img :src="require('../assets/brawlers/'+ value +'.png')" alt="" style="width: 17vw">
-        <div style="color: black;font-size: 16px">{{key}}</div>
+        <div style="color: black;font-size: 16px">{{key[0]}}</div>
+        <div style="color: black;font-size: 16px">{{key[1]}}</div>
+        <div style="color: black;font-size: 16px">{{key[2]}}</div>
       </div>
     </div>
 
@@ -430,20 +432,44 @@ export default {
           for(let i in teams[0]){
             if(teams[0][i].name === this.myName){
               if(teams[0][i].brawler.id in data){
-                data[teams[0][i].brawler.id] ++
+                if(battleLogsItem.battle.result === 'victory'){
+                  data[teams[0][i].brawler.id][0]++
+                  data[teams[0][i].brawler.id][1]++
+                }
+                if(battleLogsItem.battle.result === 'defeat'){
+                  data[teams[0][i].brawler.id][0]++
+                  data[teams[0][i].brawler.id][2]++
+                }
               }
               else{
-                data[teams[0][i].brawler.id] = 1
+                if(battleLogsItem.battle.result === 'victory'){
+                  data[teams[0][i].brawler.id] = [1,1,0]
+                }
+                if(battleLogsItem.battle.result === 'defeat'){
+                  data[teams[0][i].brawler.id] = [1,0,1]
+                }
               }
             }
           }
           for(let i in teams[1]){
             if(teams[1][i].name === this.myName){
               if(teams[1][i].brawler.id in data){
-                data[teams[1][i].brawler.id] ++
+                if(battleLogsItem.battle.result === 'victory'){
+                  data[teams[1][i].brawler.id][0]++
+                  data[teams[1][i].brawler.id][1]++
+                }
+                if(battleLogsItem.battle.result === 'defeat'){
+                  data[teams[1][i].brawler.id][0]++
+                  data[teams[1][i].brawler.id][2]++
+                }
               }
               else{
-                data[teams[1][i].brawler.id] = 1
+                if(battleLogsItem.battle.result === 'victory'){
+                  data[teams[1][i].brawler.id] = [1,1,0]
+                }
+                if(battleLogsItem.battle.result === 'defeat'){
+                  data[teams[1][i].brawler.id] = [1,0,1]
+                }
               }
             }
           }
