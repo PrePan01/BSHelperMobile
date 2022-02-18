@@ -51,6 +51,13 @@
       </van-row>
     </a-card>
 
+    <div class="brawlerUse">
+      <div v-for="(key,value,index) in brawlUse" :key="index" class="brawlerUseItem">
+        <img :src="require('../assets/brawlers/'+ value +'.png')" alt="" style="width: 17vw">
+        <div style="color: black;font-size: 16px">{{key}}</div>
+      </div>
+    </div>
+
     <!--筛选-->
     <van-button plain hairline block type="info" color="rgb(26,82,197)" v-if="battleLogs !== []" @click="sheetShow = true" size="mini" style="width: 95vw;margin: 10px auto">
       {{ checkboxValue | checkboxValue }}
@@ -330,7 +337,7 @@ export default {
   name: "RecentEvents",
   data(){
     return{
-      battleLogs:[],
+      battleLogs: [],
       victoryNum: 0,
       defeatNum: 0,
       drawNum: 0,
@@ -340,7 +347,8 @@ export default {
       myName: '',
       activeNames: [''],
       checkboxValue:'all',
-      sheetShow:false
+      sheetShow:false,
+      brawlUse: {}
     }
   },
   methods: {
@@ -411,6 +419,37 @@ export default {
         }
       }
 
+    },
+    calBrawlersUse(){
+      let data = {}
+      for (let item in this.battleLogs) {
+        let battleLogsItem = this.battleLogs[item]
+        //处理3V3
+        if('teams' in battleLogsItem.battle && battleLogsItem.battle.teams.length === 2){
+          let teams = battleLogsItem.battle.teams
+          for(let i in teams[0]){
+            if(teams[0][i].name === this.myName){
+              if(teams[0][i].brawler.id in data){
+                data[teams[0][i].brawler.id] ++
+              }
+              else{
+                data[teams[0][i].brawler.id] = 1
+              }
+            }
+          }
+          for(let i in teams[1]){
+            if(teams[1][i].name === this.myName){
+              if(teams[1][i].brawler.id in data){
+                data[teams[1][i].brawler.id] ++
+              }
+              else{
+                data[teams[1][i].brawler.id] = 1
+              }
+            }
+          }
+        }
+      }
+      this.brawlUse = data
     }
   },
   filters: {
@@ -475,6 +514,7 @@ export default {
     this.$bus.$on('BattleLogs', (data) => {
       this.battleLogs = data
       this.summary()
+      this.calBrawlersUse()
     })
   }
 }
@@ -526,5 +566,20 @@ img{
   white-space:nowrap;
   word-break:keep-all;
   vertical-align: top;
+}
+.brawlerUse{
+  margin: 0 auto;
+  padding-top: 1vh;
+  display: flex;
+  justify-content: space-between;
+  width: 95vw;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+.brawlerUseItem{
+  margin-right: 10px;
+  text-align: center;
+  border: 1px solid rgb(232,232,232);
+  padding: 15px 10px 6px;
 }
 </style>
