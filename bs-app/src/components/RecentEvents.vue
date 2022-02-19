@@ -51,6 +51,14 @@
       </van-row>
     </a-card>
 
+    <!--0宝石，1足球，2赏金，3金库，4热区，5机甲，6淘汰赛，7单鸡，8双鸡，9车轮战-->
+    <div class="modeNum">
+      <div v-for="(item, index) in modeNum" :key="index" class="modeNumItem" v-show="item !== 0">
+        <img v-bind:src="require('../assets/gameModes/'+ index +'.png')" alt="" style="width: 17vw">
+        <div style="color: black;font-size: 16px">{{item+'次'}}</div>
+      </div>
+    </div>
+
     <div class="brawlerUse">
       <div v-for="(key,index) in brawlUseSorted" :key="index" class="brawlerUseItem">
         <img :src="require('../assets/brawlers/'+ key +'.png')" alt="" style="width: 17vw">
@@ -157,14 +165,14 @@
 
               <span v-if="item.event.mode === 'soloShowdown' || item.battle.mode === 'soloShowdown'">
                 <span v-for="(item, index) in item.battle.players" :key="index + '0'">
-                  <a-tag style="" v-if="item.name === myName" color="rgb(250,187,31)">{{ item.brawler.trophies }}</a-tag>
+                  <a-tag style="" v-if="item.name === myName" color="orange">{{ item.brawler.trophies }}</a-tag>
                 </span>
               </span>
 
               <span v-if="item.event.mode === 'duoShowdown' || item.battle.mode === 'duoShowdown'">
                 <span v-for="(teamsItem, index) in item.battle.teams" :key="index + '5'">
-                  <a-tag style="" v-if="teamsItem[0].name === myName" color="rgb(250,187,31)">{{ teamsItem[0].brawler.trophies }}</a-tag>
-                  <a-tag style="" v-if="teamsItem[1].name === myName" color="rgb(250,187,31)">{{ teamsItem[1].brawler.trophies }}</a-tag>
+                  <a-tag style="" v-if="teamsItem[0].name === myName" color="orange">{{ teamsItem[0].brawler.trophies }}</a-tag>
+                  <a-tag style="" v-if="teamsItem[1].name === myName" color="orange">{{ teamsItem[1].brawler.trophies }}</a-tag>
                 </span>
               </span>
           </span>
@@ -352,7 +360,8 @@ export default {
       checkboxValue:'all',
       sheetShow:false,
       brawlUse: {},
-      brawlUseSorted: []
+      brawlUseSorted: [],
+      modeNum: []
     }
   },
   methods: {
@@ -480,6 +489,45 @@ export default {
       });
       this.brawlUse = data
       this.brawlUseSorted = brawlUseSorted
+    },
+    calModeNum(){
+      //0宝石，1足球，2赏金，3金库，4热区，5机甲，6淘汰赛，7单鸡，8双鸡，9车轮战
+      let data = [0,0,0,0,0,0,0,0,0,0]
+      for(let item in this.battleLogs){
+        {
+          if(this.battleLogs[item].battle.mode === 'gemGrab'){
+            data[0]++
+          }
+          else if(this.battleLogs[item].battle.mode === 'brawlBall'){
+            data[1]++
+          }
+          else if(this.battleLogs[item].battle.mode === 'bounty'){
+            data[2]++
+          }
+          else if(this.battleLogs[item].battle.mode === 'heist'){
+            data[3]++
+          }
+          else if(this.battleLogs[item].battle.mode === 'hotZone'){
+            data[4]++
+          }
+          else if(this.battleLogs[item].battle.mode === 'siege'){
+            data[5]++
+          }
+          else if(this.battleLogs[item].battle.mode === 'knockout'){
+            data[6]++
+          }
+          else if(this.battleLogs[item].battle.mode === 'soloShowdown'){
+            data[7]++
+          }
+          else if(this.battleLogs[item].battle.mode === 'duoShowdown'){
+            data[8]++
+          }
+          else if(this.battleLogs[item].battle.mode === 'duels'){
+            data[9]++
+          }
+        }
+      }
+      this.modeNum = data
     }
   },
   filters: {
@@ -535,7 +583,7 @@ export default {
         case 'mvp':
           return '仅看MVP'
       }
-    }
+    },
   },
   mounted() {
     this.$bus.$on('myName', (data) => {
@@ -545,6 +593,7 @@ export default {
       this.battleLogs = data
       this.summary()
       this.calBrawlersUse()
+      this.calModeNum()
     })
   }
 }
@@ -605,7 +654,21 @@ img{
   overflow-x: scroll;
   overflow-y: hidden;
 }
+.modeNum{
+  margin: 0 auto;
+  padding-top: 1vh;
+  display: flex;
+  width: 95vw;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
 .brawlerUseItem{
+  margin-right: 10px;
+  text-align: center;
+  border: 1px solid rgb(232,232,232);
+  padding: 15px 10px 6px;
+}
+.modeNumItem{
   margin-right: 10px;
   text-align: center;
   border: 1px solid rgb(232,232,232);
