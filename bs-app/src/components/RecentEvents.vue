@@ -1,5 +1,6 @@
 <template>
   <div>
+    <a-back-top id="backTop" />
     <div style="height: 1vh"></div>
     <a-card v-if="battleLogs !== []" style="width: 95vw; margin: 0 auto; padding: -5px">
       <template slot="title">
@@ -51,23 +52,33 @@
       </van-row>
     </a-card>
 
-    <!--0宝石，1足球，2赏金，3金库，4热区，5机甲，6淘汰赛，7单鸡，8双鸡，9车轮战-->
-    <div class="modeNum">
-      <div v-for="(item, index) in modeNum" :key="index" class="modeNumItem" v-show="item !== 0">
-        <img v-bind:src="require('../assets/gameModes/'+ index +'.png')" alt="" style="width: 17vw">
-        <div style="color: black;font-size: 16px">{{item+'次'}}</div>
-      </div>
-    </div>
-
-    <div class="brawlerUse">
-      <div v-for="(key,index) in brawlUseSorted" :key="index" class="brawlerUseItem">
-        <img :src="require('../assets/brawlers/'+ key +'.png')" alt="" style="width: 17vw">
-        <div style="color: black;font-size: 16px">{{brawlUse[key][0]+'次'}}</div>
-        <div style="font-size: 14px;margin-top: -5px">
-          <span style="color: rgb(82,196,26)">{{brawlUse[key][1]}}</span> / <span style="color: rgb(247,93,164)">{{brawlUse[key][2]}}</span>
+    <van-row>
+      <van-col span="12">
+        <!--0宝石，1足球，2赏金，3金库，4热区，5机甲，6淘汰赛，7单鸡，8双鸡，9车轮战-->
+        <!--模式次数-->
+        <div class="modeNum">
+          <div v-for="(item, index) in modeNum" :key="index" class="modeNumItem" v-show="item[1] !== 0">
+            <img v-bind:src="require('../assets/gameModes/'+ item[0] +'.png')" alt="" style="width: 17vw">
+            <div style="color: black;font-size: 16px">{{item[1]+'次'}}</div>
+            <div style="font-size: 14px;margin-top: -5px" v-show="item[0] !== 7 && item[0] !== 8">
+              <span style="color: rgb(82,196,26)">{{item[2]}}</span> / <span style="color: rgb(247,93,164)">{{item[3]}}</span>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      </van-col>
+      <van-col span="12">
+        <!--英雄次数-->
+        <div class="brawlerUse">
+          <div v-for="(key,index) in brawlUseSorted" :key="index" class="brawlerUseItem">
+            <img :src="require('../assets/brawlers/'+ key +'.png')" alt="" style="width: 17vw">
+            <div style="color: black;font-size: 16px">{{brawlUse[key][0]+'次'}}</div>
+            <div style="font-size: 14px;margin-top: -5px">
+              <span style="color: rgb(82,196,26)">{{brawlUse[key][1]}}</span> / <span style="color: rgb(247,93,164)">{{brawlUse[key][2]}}</span>
+            </div>
+          </div>
+        </div>
+      </van-col>
+    </van-row>
 
     <!--筛选-->
     <van-button plain hairline block type="info" color="rgb(26,82,197)" v-if="battleLogs !== []" @click="sheetShow = true" size="mini" style="width: 95vw;margin: 10px auto">
@@ -492,41 +503,100 @@ export default {
     },
     calModeNum(){
       //0宝石，1足球，2赏金，3金库，4热区，5机甲，6淘汰赛，7单鸡，8双鸡，9车轮战
-      let data = [0,0,0,0,0,0,0,0,0,0]
+      //[序号，次数，胜场，负场]
+      let data = [[0,0,0,0],[1,0,0,0],[2,0,0,0],[3,0,0,0],[4,0,0,0],[5,0,0,0],[6,0,0,0],[7,0],[8,0],[9,0,0,0]]
       for(let item in this.battleLogs){
-        {
-          if(this.battleLogs[item].battle.mode === 'gemGrab'){
-            data[0]++
+        let battleItem = this.battleLogs[item].battle
+        if(battleItem.mode === 'gemGrab'){
+          if (battleItem.result === 'victory') {
+            data[0][1]++
+            data[0][2]++
           }
-          else if(this.battleLogs[item].battle.mode === 'brawlBall'){
-            data[1]++
+          if (battleItem.result === 'defeat') {
+            data[0][1]++
+            data[0][3]++
           }
-          else if(this.battleLogs[item].battle.mode === 'bounty'){
-            data[2]++
+        }
+        else if(battleItem.mode === 'brawlBall'){
+          if (battleItem.result === 'victory') {
+            data[1][1]++
+            data[1][2]++
           }
-          else if(this.battleLogs[item].battle.mode === 'heist'){
-            data[3]++
+          if (battleItem.result === 'defeat') {
+            data[1][1]++
+            data[1][3]++
           }
-          else if(this.battleLogs[item].battle.mode === 'hotZone'){
-            data[4]++
+        }
+        else if(battleItem.mode === 'bounty'){
+          if (battleItem.result === 'victory') {
+            data[2][1]++
+            data[2][2]++
           }
-          else if(this.battleLogs[item].battle.mode === 'siege'){
-            data[5]++
+          if (battleItem.result === 'defeat') {
+            data[2][1]++
+            data[2][3]++
           }
-          else if(this.battleLogs[item].battle.mode === 'knockout'){
-            data[6]++
+        }
+        else if(battleItem.mode === 'heist'){
+          if (battleItem.result === 'victory') {
+            data[3][1]++
+            data[3][2]++
           }
-          else if(this.battleLogs[item].battle.mode === 'soloShowdown'){
-            data[7]++
+          if (battleItem.result === 'defeat') {
+            data[3][1]++
+            data[3][3]++
           }
-          else if(this.battleLogs[item].battle.mode === 'duoShowdown'){
-            data[8]++
+        }
+        else if(battleItem.mode === 'hotZone'){
+          if (battleItem.result === 'victory') {
+            data[4][1]++
+            data[4][2]++
           }
-          else if(this.battleLogs[item].battle.mode === 'duels'){
-            data[9]++
+          if (battleItem.result === 'defeat') {
+            data[4][1]++
+            data[4][3]++
+          }
+        }
+        else if(battleItem.mode === 'siege'){
+          if (battleItem.result === 'victory') {
+            data[5][1]++
+            data[5][2]++
+          }
+          if (battleItem.result === 'defeat') {
+            data[5][1]++
+            data[5][3]++
+          }
+        }
+        else if(battleItem.mode === 'knockout'){
+          if (battleItem.result === 'victory') {
+            data[6][1]++
+            data[6][2]++
+          }
+          if (battleItem.result === 'defeat') {
+            data[6][1]++
+            data[6][3]++
+          }
+        }
+        else if(battleItem.mode === 'soloShowdown'){
+          data[7][1]++
+        }
+        else if(battleItem.mode === 'duoShowdown'){
+          data[8][1]++
+        }
+        else if(battleItem.mode === 'duels'){
+          if (battleItem.result === 'victory') {
+            data[9][1]++
+            data[9][2]++
+          }
+          if (battleItem.result === 'defeat') {
+            data[9][1]++
+            data[9][3]++
           }
         }
       }
+      data = data.sort(function(x, y){
+        return y[1] - x[1];
+      });
       this.modeNum = data
     }
   },
@@ -650,7 +720,7 @@ img{
   margin: 0 auto;
   padding-top: 1vh;
   display: flex;
-  width: 95vw;
+  width: 45vw;
   overflow-x: scroll;
   overflow-y: hidden;
 }
@@ -658,7 +728,7 @@ img{
   margin: 0 auto;
   padding-top: 1vh;
   display: flex;
-  width: 95vw;
+  width: 45vw;
   overflow-x: scroll;
   overflow-y: hidden;
 }
@@ -673,5 +743,8 @@ img{
   text-align: center;
   border: 1px solid rgb(232,232,232);
   padding: 15px 10px 6px;
+}
+#backTop{
+  bottom: 8vh;
 }
 </style>

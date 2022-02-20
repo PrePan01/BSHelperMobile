@@ -1,5 +1,6 @@
 <template>
   <div>
+    <a-back-top style="bottom: 8vh" v-if="tabsActive === 1"/>
     <van-tabs color="#3976E3" v-model="tabsActive" :lazy-render=false animated>
       <van-tab title="个人数据">
         <PersonalCard_PersonalData></PersonalCard_PersonalData>
