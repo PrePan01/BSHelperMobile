@@ -494,6 +494,53 @@ export default {
             }
           }
         }
+        //处理车轮战
+        if(battleLogsItem.battle.mode === 'duels'){
+          if(battleLogsItem.battle.players[0].name === this.myName){
+            for(let i in battleLogsItem.battle.players[0].brawlers){
+              let brawlersItem = battleLogsItem.battle.players[0].brawlers
+              if (brawlersItem[i].id in data) {
+                if (battleLogsItem.battle.result === 'victory') {
+                  data[brawlersItem[i].id][0]++
+                  data[brawlersItem[i].id][1]++
+                }
+                if (battleLogsItem.battle.result === 'defeat') {
+                  data[brawlersItem[i].id][0]++
+                  data[brawlersItem[i].id][2]++
+                }
+              } else {
+                if (battleLogsItem.battle.result === 'victory') {
+                  data[brawlersItem[i].id] = [1, 1, 0]
+                }
+                if (battleLogsItem.battle.result === 'defeat') {
+                  data[brawlersItem[i].id] = [1, 0, 1]
+                }
+              }
+            }
+          }
+          else if(battleLogsItem.battle.players[1].name === this.myName){
+            for(let i in battleLogsItem.battle.players[1].brawlers){
+              let brawlersItem = battleLogsItem.battle.players[1].brawlers
+              if (brawlersItem[i].id in data) {
+                if (battleLogsItem.battle.result === 'victory') {
+                  data[brawlersItem[i].id][0]++
+                  data[brawlersItem[i].id][1]++
+                }
+                if (battleLogsItem.battle.result === 'defeat') {
+                  data[brawlersItem[i].id][0]++
+                  data[brawlersItem[i].id][2]++
+                }
+              } else {
+                if (battleLogsItem.battle.result === 'victory') {
+                  data[brawlersItem[i].id] = [1, 1, 0]
+                }
+                if (battleLogsItem.battle.result === 'defeat') {
+                  data[brawlersItem[i].id] = [1, 0, 1]
+                }
+              }
+            }
+          }
+        }
       }
       var brawlUseSorted = Object.keys(data).sort((a,b)=>{
         return data[b][0]-data[a][0];

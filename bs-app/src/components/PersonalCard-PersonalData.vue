@@ -38,6 +38,44 @@
                 </div>
               </template>
             </a-statistic>
+            <!--单鸡胜场-->
+            <a-statistic style="margin-top: 3vh" :value="personalData.soloVictories" valueStyle="color: rgb(35,143,242);font-weight: bold;font-size: 2em">
+              <template slot="title">
+                <div>
+                  <img src="~@/assets/Vector Smart Object-7.png" alt=""
+                       style="height: 3vh;vertical-align: middle;margin-right: 2vw"
+                  >
+                  <span style="font-size: 1.5em;vertical-align: middle;color: black;">单鸡胜场</span>
+                </div>
+              </template>
+            </a-statistic>
+            <!--15胜挑战-->
+            <a-statistic style="margin-top: 3vh" :value="personalData.isQualifiedFromChampionshipChallenge === false? '×': '√'" valueStyle="color: rgb(35,143,242);font-weight: bold;font-size: 2em">
+              <template slot="title">
+                <div>
+                  <img src="~@/assets/icon_championship.png" alt=""
+                       style="height: 20px;vertical-align: middle;margin-right: 2vw"
+                  >
+                  <span style="font-size: 1.5em;vertical-align: middle;color: black;">15胜挑战</span>
+                </div>
+              </template>
+            </a-statistic>
+          </van-cell>
+        </van-col>
+        <!--右边列-->
+        <van-col span="12">
+          <van-cell>
+            <!--最高奖杯数-->
+            <a-statistic style="margin-top: 1vh" :value="personalData.highestTrophies" valueStyle="color: red;font-weight: bold;font-size: 2em">
+              <template slot="title">
+                <div>
+                  <img src="~@/assets/icon_trophy_medium.png" alt=""
+                       style="height: 3vh;vertical-align: middle;margin-right: 2vw"
+                  >
+                  <span style="font-size: 1.5em;vertical-align: middle;color: black;">最高奖杯数</span>
+                </div>
+              </template>
+            </a-statistic>
             <!--3v3胜场-->
             <a-statistic style="margin-top: 3vh" :value="personalData['3vs3Victories']" valueStyle="color: rgb(35,143,242);font-weight: bold;font-size: 2em">
               <template slot="title">
@@ -60,75 +98,37 @@
                 </div>
               </template>
             </a-statistic>
-          </van-cell>
-        </van-col>
-        <!--右边列-->
-        <van-col span="12">
-          <van-cell>
-            <!--最高奖杯数-->
-            <a-statistic style="margin-top: 1vh" :value="personalData.highestTrophies" valueStyle="color: red;font-weight: bold;font-size: 2em">
-              <template slot="title">
-                <div>
-                  <img src="~@/assets/icon_trophy_medium.png" alt=""
-                       style="height: 3vh;vertical-align: middle;margin-right: 2vw"
-                  >
-                  <span style="font-size: 1.5em;vertical-align: middle;color: black;">最高奖杯数</span>
-                </div>
-              </template>
-            </a-statistic>
-            <!--冠军挑战赛-->
-            <a-statistic style="margin-top: 3vh" :value="personalData.isQualifiedFromChampionshipChallenge === false? '×': '√'" valueStyle="color: rgb(35,143,242);font-weight: bold;font-size: 2em">
-              <template slot="title">
-                <div>
-                  <img src="~@/assets/icon_championship.png" alt=""
-                       style="height: 3vh;vertical-align: middle;margin-right: 2vw"
-                  >
-                  <span style="font-size: 1.5em;vertical-align: middle;color: black;">冠军挑战赛</span>
-                </div>
-              </template>
-            </a-statistic>
-            <!--单鸡胜场-->
-            <a-statistic style="margin-top: 3vh" :value="personalData.soloVictories" valueStyle="color: rgb(35,143,242);font-weight: bold;font-size: 2em">
-              <template slot="title">
-                <div>
-                  <img src="~@/assets/Vector Smart Object-7.png" alt=""
-                       style="height: 3vh;vertical-align: middle;margin-right: 2vw"
-                  >
-                  <span style="font-size: 1.5em;vertical-align: middle;color: black;">单鸡胜场</span>
-                </div>
-              </template>
-            </a-statistic>
             <!--荣誉等级-->
             <div class="rank">
-              <span class="rankInfo">
+              <span class="rankInfo" v-show="trophyRanks[0] !== 0">
                 <img src="@/assets/icon_rank_1.png" alt="" class="rankImg">
                 <div class="rankNum">{{trophyRanks[0]}}</div>
               </span>
-                    <span class="rankInfo">
+              <span class="rankInfo" v-show="trophyRanks[1] !== 0">
                 <img src="@/assets/icon_rank_2.png" alt="" class="rankImg">
                 <div class="rankNum">{{trophyRanks[1]}}</div>
               </span>
-                    <span class="rankInfo">
+              <span class="rankInfo" v-show="trophyRanks[2] !== 0">
                 <img src="@/assets/icon_rank_3.png" alt="" class="rankImg">
                 <div class="rankNum">{{trophyRanks[2]}}</div>
               </span>
-                    <span class="rankInfo">
+              <span class="rankInfo" v-show="trophyRanks[3] !== 0">
                 <img src="@/assets/icon_rank_4.png" alt="" class="rankImg">
                 <div class="rankNum">{{trophyRanks[3]}}</div>
               </span>
-                    <span class="rankInfo">
+              <span class="rankInfo" v-show="trophyRanks[4] !== 0">
                 <img src="@/assets/icon_rank_5.png" alt="" class="rankImg">
                 <div class="rankNum">{{trophyRanks[4]}}</div>
               </span>
-                    <span class="rankInfo">
+              <span class="rankInfo" v-show="trophyRanks[5] !== 0">
                 <img src="@/assets/icon_rank_6.png" alt="" class="rankImg">
                 <div class="rankNum">{{trophyRanks[5]}}</div>
               </span>
-                    <span class="rankInfo">
+              <span class="rankInfo" v-show="trophyRanks[6] !== 0">
                 <img src="@/assets/icon_rank_7.png" alt="" class="rankImg">
                 <div class="rankNum">{{trophyRanks[6]}}</div>
               </span>
-                    <span class="rankInfo">
+              <span class="rankInfo" v-show="trophyRanks[7] !== 0">
                 <img src="@/assets/icon_rank_8.png" alt="" class="rankImg">
                 <div class="rankNum">{{trophyRanks[7]}}</div>
               </span>
@@ -138,7 +138,7 @@
       </van-row>
       <!--战队-->
       <van-cell>
-        <a-statistic style="margin-top: 1vh" :value="personalData.club.name === undefined? '未加入战队': personalData.club.name+'('+personalData.club.tag+')'" valueStyle="color: rgb(35,143,242);font-weight: bold;font-size: 1.8em">
+        <a-statistic style="margin-top: 1vh" :suffix="'('+personalData.club.tag+')'" :value="personalData.club.name === undefined? '未加入战队': personalData.club.name" valueStyle="color: rgb(35,143,242);font-weight: bold;font-size: 1.8em">
           <template slot="title">
             <div>
               <img src="~@/assets/icon_club_league.png" alt=""
@@ -154,7 +154,7 @@
         <h2 style="margin: 2vh 0 15px 0">本赛季荣誉联赛结束后</h2>
         <van-row>
           <van-col span="12">
-            <a-statistic style="margin-top: 1vh" :value="trophyLeagueEnd[0]" valueStyle="color: rgb(254,208,53);font-weight: bold;font-size: 1.8em">
+            <a-statistic style="margin-top: 1vh" :value="trophyLeagueEnd[0]" :suffix="trophyLeagueEndNum" valueStyle="color: rgb(254,208,53);font-weight: bold;font-size: 1.8em">
               <template slot="title">
                 <div>
               <span style="font-size: 1.5em;vertical-align: middle;color: black;">
@@ -371,8 +371,18 @@ export default {
         }
         return rank
       }
-    }
-
+    },
+    trophyLeagueEndNum: {
+      get(){
+        let num = this.personalData.trophies - this.trophyLeagueEnd[0]
+        if(num > 0){
+          return '↓' + num
+        }
+        else{
+          return 0
+        }
+      }
+    },
   }
 }
 </script>

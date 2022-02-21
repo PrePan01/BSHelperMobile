@@ -1,7 +1,37 @@
 <template>
   <div>
+    <!--前三-->
+    <div v-if="personalBrawlers.length!==0" style="width: 95vw; margin: 2px auto;border: 1px solid rgb(232,232,232);padding: 5px 5px 20px 5px">
+      <div v-if="personalBrawlers.length!==0" style="text-align: center;margin-top: 10px;display: flex;justify-content: space-around;align-items: flex-end">
+        <div style="display: inline-block">
+          <img :src="require('../assets/pins/top/'+ topBrawlers[1].id +'top.png')" alt="" width="75vw" class="topBrawlers">
+          <img :src="require('../assets/pins/top/top2.png')" alt="" width="35vw" class="topIcon">
+          <div style="margin-top: 5px">
+            <img style="vertical-align: middle;margin-right: 3px" :src="require('../assets/icon_trophy_medium.png')" alt="" width="20vw">
+            <span style="color: black;font-size: 18px;vertical-align: middle">{{topBrawlers[1].trophies}}</span>
+          </div>
+        </div>
+        <div style="display: inline-block">
+          <img :src="require('../assets/pins/top/'+ topBrawlers[0].id +'top.png')" alt="" width="85vw" class="topBrawlers">
+          <img :src="require('../assets/pins/top/top1.png')" alt="" width="40vw" class="topIcon">
+          <div style="margin-top: 5px">
+            <img style="vertical-align: middle;margin-right: 3px" :src="require('../assets/icon_trophy_medium.png')" alt="" width="20vw">
+            <span style="color: black;font-size: 18px;vertical-align: middle">{{topBrawlers[0].trophies}}</span>
+          </div>
+        </div>
+        <div style="display: inline-block">
+          <img :src="require('../assets/pins/top/'+ topBrawlers[2].id +'top.png')" alt="" width="60vw" class="topBrawlers">
+          <img :src="require('../assets/pins/top/top3.png')" alt="" width="30vw" class="topIcon">
+          <div style="margin-top: 5px">
+            <img style="vertical-align: middle;margin-right: 3px" :src="require('../assets/icon_trophy_medium.png')" alt="" width="20vw">
+            <span style="color: black;font-size: 18px;vertical-align: middle">{{topBrawlers[2].trophies}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!--排序-->
-    <div style="margin: 8px 0 5px 0; text-align: center" v-if="personalBrawlers.length !== 0">
+    <div style="margin: 8px 1vw 5px 2vw;text-align: center" v-if="personalBrawlers.length !== 0">
       <van-row>
         <van-col span="9">
           <a-select default-value = 1 style="width: 95%" @change="arrSortByKey">
@@ -53,6 +83,7 @@
       </van-row>
     </div>
 
+    <!--列表-->
     <van-collapse v-model="activeNames">
       <van-collapse-item v-for="(item,index) in personalBrawlers" :key="index" :name="index" v-show="selectGear(item)">
         <!--标题-->
@@ -206,7 +237,7 @@ export default {
 
       }
 
-    }
+    },
   },
   mounted() {
     this.$bus.$on('PersonalBrawlers',(data) => {
@@ -308,12 +339,25 @@ export default {
         return 0
       }
 
+    },
+    topBrawlers: {
+      get(){
+        let beforeSortData = []
+        for(let i in this.personalBrawlers){
+          beforeSortData[i] = this.personalBrawlers[i]
+        }
+        let sortedData = beforeSortData.sort(function (a, b){
+          return b.trophies - a.trophies
+        })
+        return sortedData.slice(0,3)
+      }
     }
   }
 }
 </script>
 
 <style>
+@import "https://at.alicdn.com/t/font_3113095_3ehy5zd7ou7.css";
 img{
   image-rendering: -moz-crisp-edges;
   image-rendering: -o-crisp-edges;
@@ -330,5 +374,11 @@ img{
   line-height: 32px;
   font-weight: bold;
 }
-
+.topIcon{
+  margin: 0 auto;
+  display: block;
+}
+.topBrawlers{
+  margin-bottom: 5px;
+}
 </style>
