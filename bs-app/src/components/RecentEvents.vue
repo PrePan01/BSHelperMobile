@@ -798,7 +798,7 @@ img{
   bottom: 8vh;
 }
 .result{
-  font-family: '黑体',serif;
+  font-family: '黑体';
   font-weight: bold;
   font-size: 18px;
   vertical-align: middle;
