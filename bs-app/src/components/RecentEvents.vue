@@ -114,7 +114,6 @@
         <!--列表-->
         <template slot="title">
           <div style="display: flex; align-items: center">
-
             <img :src="require('../assets/gameModes/'+ item.battle.mode +'.png')" alt=""  style="margin-right: 1vw; width: 8vw;">
             <span style="display:inline-block; width: 25vw">{{item.event.map | mapTranslate}}</span>
             <!--3v3-->
@@ -156,37 +155,39 @@
             </span>
 
             <!--最右侧标签-->
-            <span style="margin-left: auto">
-              <a-tag color="pink" v-if="isMyMvp(item.battle)">
-                MVP
-              </a-tag>
-
-              <a-tag v-show="item.battle.mode !== 'roboRumble'" :color="item.battle.result === undefined? 'purple': item.battle.result === 'victory'? 'green': item.battle.result === 'defeat'? 'red': 'blue'">
+            <div style="margin-left: 5px">
+              <!--<a-tag v-show="item.battle.mode !== 'roboRumble'" :color="item.battle.result === undefined? 'purple': item.battle.result === 'victory'? 'green': item.battle.result === 'defeat'? 'red': 'blue'">
               {{ item.battle.result === undefined? '第' + item.battle.rank + '名': item.battle.result === 'victory'? '获胜': item.battle.result === 'defeat'? '战败': '平局'}}
-              </a-tag>
+              </a-tag>-->
+
               <!--杯数-->
               <span v-if="'teams' in item.battle && item.battle.teams.length === 2">
                 <span v-for="(item, index) in item.battle.teams[0]" :key="index + '0'">
-                  <a-tag v-if="item.name === myName" color="orange">{{ item.brawler.trophies }}</a-tag>
+                  <van-tag plain v-if="item.name === myName" color="orange">{{ item.brawler.trophies }}</van-tag>
                 </span>
                 <span v-for="(item, index) in item.battle.teams[1]" :key="index + '1'">
-                  <a-tag v-if="item.name === myName" color="orange">{{ item.brawler.trophies }}</a-tag>
+                  <van-tag plain v-if="item.name === myName" color="orange">{{ item.brawler.trophies }}</van-tag>
                 </span>
               </span>
 
               <span v-if="item.event.mode === 'soloShowdown' || item.battle.mode === 'soloShowdown'">
                 <span v-for="(item, index) in item.battle.players" :key="index + '0'">
-                  <a-tag style="" v-if="item.name === myName" color="orange">{{ item.brawler.trophies }}</a-tag>
+                  <van-tag plain v-if="item.name === myName" color="orange">{{ item.brawler.trophies }}</van-tag>
                 </span>
               </span>
 
               <span v-if="item.event.mode === 'duoShowdown' || item.battle.mode === 'duoShowdown'">
                 <span v-for="(teamsItem, index) in item.battle.teams" :key="index + '5'">
-                  <a-tag style="" v-if="teamsItem[0].name === myName" color="orange">{{ teamsItem[0].brawler.trophies }}</a-tag>
-                  <a-tag style="" v-if="teamsItem[1].name === myName" color="orange">{{ teamsItem[1].brawler.trophies }}</a-tag>
+                  <van-tag plain v-if="teamsItem[0].name === myName" color="orange">{{ teamsItem[0].brawler.trophies }}</van-tag>
+                  <van-tag plain v-if="teamsItem[1].name === myName" color="orange">{{ teamsItem[1].brawler.trophies }}</van-tag>
                 </span>
               </span>
-          </span>
+          </div>
+
+            <van-tag style="margin-left: 5px" plain color="red" v-if="isMyMvp(item.battle)">
+              MVP
+            </van-tag>
+            <div style="margin-left: auto" :class="{'result': true, 'winColor': item.battle.result === 'victory', 'loseColor': item.battle.result === 'defeat', 'drawColor': item.battle.result === 'draw', 'otherColor': item.battle.result === undefined}">{{ item.battle.result === undefined? '第' + item.battle.rank + '名': item.battle.result === 'victory'? '胜利': item.battle.result === 'defeat'? '战败': '平局'}}</div>
           </div>
         </template>
         <!--详情-->
@@ -372,7 +373,7 @@ export default {
       sheetShow:false,
       brawlUse: {},
       brawlUseSorted: [],
-      modeNum: []
+      modeNum: [],
     }
   },
   methods: {
@@ -701,6 +702,8 @@ export default {
           return '仅看MVP'
       }
     },
+    //星光联赛段位
+
   },
   mounted() {
     this.$bus.$on('myName', (data) => {
@@ -793,5 +796,24 @@ img{
 }
 #backTop{
   bottom: 8vh;
+}
+.result{
+  font-family: '黑体',serif;
+  font-weight: bold;
+  font-size: 18px;
+  vertical-align: middle;
+  text-shadow: #000 1px 0 0, #000 0 1px 0, #000 -1px 0 0, #000 0 -1px 0;
+}
+.winColor{
+  color: rgb(103,194,58);
+}
+.loseColor{
+  color: rgb(245,108,108);
+}
+.drawColor{
+  color: rgb(64,158,255);
+}
+.otherColor{
+  color: rgb(144,147,153);
 }
 </style>

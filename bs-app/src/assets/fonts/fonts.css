@@ -1,0 +1,10 @@
+@font-face {
+    /*自定义字体名*/
+    font-family: '黑体';
+    /*字体地址*/
+    src: url('../fonts/simhei.ttf');
+}
+@font-face {
+    font-family: '官方简中';
+    src: url('../fonts/FZLTDHB - CNS Text Font.TTF');
+}

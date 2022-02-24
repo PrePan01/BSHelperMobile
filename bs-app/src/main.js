@@ -12,6 +12,7 @@ import 'ant-design-vue/dist/antd.css';
 //路由
 import VueRouter from 'vue-router'
 import router from './router'
+import './assets/fonts/fonts.css'
 
 Vue.use(Vant);
 Vue.use(Antd);
