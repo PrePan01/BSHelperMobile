@@ -16,7 +16,7 @@
     </a-page-header>
     <a-popover>
       <template slot="content">
-        <img :src="require('@/assets/maps/'+ 'supercell-'+ mapName.toLowerCase().replace(/\s/g,'-') + '-thumb' +'.png')" alt="" width="300px">
+        <img :src="require('@/assets/maps/'+ 'supercell-'+ getMap + '-thumb' +'.png')" alt="" width="300px">
       </template>
       <a-button style="position: absolute;z-index: 3;right: 20px;top: 18px">
         查看地图
@@ -143,6 +143,19 @@ export default {
     this.name = this.$route.query.name
     this.event = this.$route.query.event
     this.getData()
+  },
+  computed: {
+    getMap: {
+      get(){
+        try{
+          require('@/assets/maps/'+ 'supercell-'+ this.mapName.toLowerCase().replace(/\s/g,'-') + '-thumb' +'.png')
+          return this.mapName.toLowerCase().replace(/\s/g,'-')
+        }
+        catch (e) {
+          return 'default'
+        }
+      }
+    }
   }
 }
 </script>

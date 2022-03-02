@@ -696,9 +696,36 @@ export default {
       else if (en === 'Field Goal') return '绿茵交锋'
       else if (en === 'Center Stage') return '中心舞台'
       else if (en === 'Center Field') return '中心球场'
+      else if (en === 'Super Beach') return '超级海滩'
+      else if (en === 'Beach Ball') return '沙滩足球'
+      else if (en === 'Post Haste') return '火速出击'
+      else if (en === 'Coarse Course') return '粗制滥造'
+      else if (en === 'Penalty Kick') return '点球大战'
+      else if (en === 'Well Cut') return '带球过人'
+      else if (en === 'Warped Beach') return '弯曲海滩'
+      else if (en === 'Off the Line') return '超出界外'
+      else if (en === 'Hairdryer Treatment') return '场边指导'
       // 机甲
       else if (en === 'Some Assembly Required') return '等待组装'
+      // 淘汰赛
+      else if (en === 'Goldarm Gulch') return '金臂峡谷'
+      else if (en === 'Crimewater') return '危险水域'
+      else if (en === 'Flaring Phoenix') return '烈焰凤凰'
+      else if (en === 'Flowing Springs') return '潺潺溪流'
+      else if (en === "Belle's Rock") return '摇滚贝尔'
+      else if (en === 'Splash Out') return '大手大脚'
+      else if (en === 'Riverside') return '长河堤岸'
+      // 热区
+      else if (en === 'Open Business') return '开门营业'
+      else if (en === 'Mosh Pit') return '冲撞区域'
+      else if (en === 'Dueling Beetles') return '甲虫决斗'
+      else if (en === 'Parallel Plays') return '平行游戏'
+      else if (en === 'Ring of Fire') return '灼热火圈'
+      else if (en === 'Double Sided') return '双边并行'
+      else if (en === 'Temple of Boom') return '斗域奇兵'
+
       else return en
+
     },
     checkboxValue(data){
       switch (data){
