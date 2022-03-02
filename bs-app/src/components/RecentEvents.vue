@@ -54,7 +54,7 @@
 
     <van-row>
       <van-col span="12">
-        <!--0宝石，1足球，2赏金，3金库，4热区，5机甲，6淘汰赛，7单鸡，8双鸡，9车轮战-->
+        <!--0宝石，1足球，2赏金，3金库，4热区，5机甲，6淘汰赛，7单鸡，8双鸡，9车轮战，10积分战-->
         <!--模式次数-->
         <div class="modeNum">
           <div v-for="(item, index) in modeNum" :key="index" class="modeNumItem" v-show="item[1] !== 0">
@@ -550,9 +550,9 @@ export default {
       this.brawlUseSorted = brawlUseSorted
     },
     calModeNum(){
-      //0宝石，1足球，2赏金，3金库，4热区，5机甲，6淘汰赛，7单鸡，8双鸡，9车轮战
+      //0宝石，1足球，2赏金，3金库，4热区，5机甲，6淘汰赛，7单鸡，8双鸡，9车轮战，10积分战
       //[序号，次数，胜场，负场]
-      let data = [[0,0,0,0],[1,0,0,0],[2,0,0,0],[3,0,0,0],[4,0,0,0],[5,0,0,0],[6,0,0,0],[7,0],[8,0],[9,0,0,0]]
+      let data = [[0,0,0,0],[1,0,0,0],[2,0,0,0],[3,0,0,0],[4,0,0,0],[5,0,0,0],[6,0,0,0],[7,0],[8,0],[9,0,0,0],[10,0,0,0]]
       for(let item in this.battleLogs){
         let battleItem = this.battleLogs[item].battle
         if(battleItem.mode === 'gemGrab'){
@@ -639,6 +639,16 @@ export default {
           if (battleItem.result === 'defeat') {
             data[9][1]++
             data[9][3]++
+          }
+        }
+        else if(battleItem.mode === 'wipeout'){
+          if (battleItem.result === 'victory') {
+            data[10][1]++
+            data[10][2]++
+          }
+          if (battleItem.result === 'defeat') {
+            data[10][1]++
+            data[10][3]++
           }
         }
       }

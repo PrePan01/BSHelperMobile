@@ -125,14 +125,14 @@
               <div v-if="item.starPowers.length !== 0" style="margin-bottom: 1vh">
                 <div style="color: black; margin-bottom: 0.5em">星辉之力</div>
                 <span v-for="(picItem, index) in item.starPowers" :key="index">
-                <img :src="require('../assets/starPowersAndGadgets/'+ picItem.id +'.png')" alt="" width="30vh" style="margin-right: 15px">
+                <img :src="require('../assets/starPowersAndGadgets/'+ getStarPowers(picItem) +'.png')" alt="" width="30vh" style="margin-right: 15px">
                 </span>
               </div>
               <!--武装配件-->
               <div v-if="item.gadgets.length !== 0" style="margin-bottom: 1vh">
                 <div style="color: black; margin-bottom: 0.5em">武装配件</div>
                 <span v-for="(picItem, index) in item.gadgets" :key="index">
-                <img :src="require('../assets/starPowersAndGadgets/'+ picItem.id +'.png')" alt="" width="30vh" style="margin-right: 15px">
+                <img :src="require('../assets/starPowersAndGadgets/'+ getStarPowers(picItem) +'.png')" alt="" width="30vh" style="margin-right: 15px">
                 </span>
               </div>
               <!--装备-->
@@ -350,6 +350,17 @@ export default {
           return b.trophies - a.trophies
         })
         return sortedData.slice(0,3)
+      }
+    },
+    getStarPowers(){
+      return function (data){
+        try{
+          require('../assets/starPowersAndGadgets/'+ data.id +'.png')
+          return data.id
+        }
+        catch (e) {
+          return 'default'
+        }
       }
     }
   }
