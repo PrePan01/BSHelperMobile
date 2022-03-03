@@ -6,7 +6,7 @@
       <template slot="title">
         <div style="vertical-align: middle;font-size: 1.25em">最近25场（只统计3V3）</div>
       </template>
-      <!--统计数据-->
+      <!--统计数据表格-->
       <van-row style="display: flex;align-items: center;">
         <van-col span="9">
           <!--胜负缩略图-->
@@ -55,9 +55,10 @@
     <van-row>
       <van-col span="12">
         <!--0宝石，1足球，2赏金，3金库，4热区，5机甲，6淘汰赛，7单鸡，8双鸡，9车轮战，10积分战-->
+        <!--item[模式，次数，胜场，负场]-->
         <!--模式次数-->
         <div class="modeNum">
-          <div v-for="(item, index) in modeNum" :key="index" class="modeNumItem" v-show="item[1] !== 0">
+          <div v-for="(item, index) in modeNum" :key="index" :class="selectModeIndex === item[0]?'modeNumItemActive':''" class="modeNumItem" v-show="item[1] !== 0" @click="selectModeIndexFn(item[0])">
             <img v-bind:src="require('../assets/gameModes/'+ item[0] +'.png')" alt="" style="width: 17vw">
             <div style="color: black;font-size: 16px">{{item[1]+'次'}}</div>
             <div style="font-size: 14px;margin-top: -5px" v-show="item[0] !== 7 && item[0] !== 8">
@@ -110,7 +111,7 @@
 
     <!--战绩列表-->
     <van-collapse v-model="activeNames">
-      <van-collapse-item v-show="showEvents(item.battle)" v-for="(item,index) in battleLogs" :key="index" :name="item.battleTime" >
+      <van-collapse-item v-show="selectMode(item.battle) && showEvents(item.battle)" v-for="(item,index) in battleLogs" :key="index" :name="item.battleTime" >
         <!--列表-->
         <template slot="title">
           <div style="display: flex; align-items: center">
@@ -119,10 +120,10 @@
             <!--3v3-->
             <span v-if="'teams' in item.battle && item.battle.teams.length === 2">
               <span v-for="(item, index) in item.battle.teams[0]" :key="index + '0'">
-                <img v-if="item.name === myName" :src="require('../assets/brawlers/'+ item.brawler.id +'.png')" alt="" width="30vw">
+                <img v-if="item.name === myName" :src="require('../assets/brawlers/'+ item.brawler.id +'.png')" alt="" width="34vw">
               </span>
               <span v-for="(item, index) in item.battle.teams[1]" :key="index + '1'">
-                <img v-if="item.name === myName" :src="require('../assets/brawlers/'+ item.brawler.id +'.png')" alt="" width="30vw">
+                <img v-if="item.name === myName" :src="require('../assets/brawlers/'+ item.brawler.id +'.png')" alt="" width="34vw">
               </span>
             </span>
             <!--duels-->
@@ -187,7 +188,7 @@
             <van-tag style="margin-left: 5px" plain color="red" v-if="isMyMvp(item.battle)">
               MVP
             </van-tag>
-            <div style="margin-left: auto" :class="{'result': true, 'winColor': item.battle.result === 'victory', 'loseColor': item.battle.result === 'defeat', 'drawColor': item.battle.result === 'draw', 'otherColor': item.battle.result === undefined}">{{ item.battle.result === undefined? '第' + item.battle.rank + '名': item.battle.result === 'victory'? '胜利': item.battle.result === 'defeat'? '战败': '平局'}}</div>
+            <div :class="{'result': true, 'winColor': item.battle.result === 'victory', 'loseColor': item.battle.result === 'defeat', 'drawColor': item.battle.result === 'draw', 'otherColor': item.battle.result === undefined}">{{ item.battle.result === undefined? '第' + item.battle.rank + '名': item.battle.result === 'victory'? '胜利': item.battle.result === 'defeat'? '战败': '平局'}}</div>
           </div>
         </template>
         <!--详情-->
@@ -374,6 +375,7 @@ export default {
       brawlUse: {},
       brawlUseSorted: [],
       modeNum: [],
+      selectModeIndex: -1
     }
   },
   methods: {
@@ -656,6 +658,23 @@ export default {
         return y[1] - x[1];
       });
       this.modeNum = data
+    },
+    selectModeIndexFn(data){
+      if(this.selectModeIndex === data){
+        this.selectModeIndex = -1
+      }
+      else{
+        this.selectModeIndex = data
+      }
+    },
+    selectMode(data){
+      if(this.selectModeIndex === -1){
+        return true
+      }
+      else{
+        let mode = ['gemGrab', 'brawlBall', 'bounty', 'heist', 'hotZone', 'siege', 'knockout', 'soloShowdown', 'duoShowdown', 'duels','wipeout']
+        return mode[this.selectModeIndex] === data.mode
+      }
     }
   },
   filters: {
@@ -752,6 +771,11 @@ export default {
       this.calBrawlersUse()
       this.calModeNum()
     })
+  },
+  watch: {
+    battleLogs: function (){
+      this.selectModeIndex = -1
+    }
   }
 }
 </script>
@@ -831,15 +855,20 @@ img{
   border: 1px solid rgb(232,232,232);
   padding: 15px 10px 6px;
 }
+.modeNumItemActive{
+  border: 1px solid black;
+}
 #backTop{
   bottom: 8vh;
 }
 .result{
   font-family: '黑体';
   font-weight: bold;
-  font-size: 18px;
+  font-size: 22px;
   vertical-align: middle;
-  text-shadow: #000 1px 0 0, #000 0 1px 0, #000 -1px 0 0, #000 0 -1px 0;
+  text-shadow: rgb(40,44,52) 1px 0 0, rgb(40,44,52) 0 1px 0, rgb(40,44,52) -1px 0 0, rgb(40,44,52) 0 -1px 0;
+  margin-left: auto;
+  margin-right: 3px;
 }
 .winColor{
   color: rgb(103,194,58);
@@ -851,6 +880,6 @@ img{
   color: rgb(64,158,255);
 }
 .otherColor{
-  color: rgb(144,147,153);
+  color: rgb(143, 147, 154);
 }
 </style>
