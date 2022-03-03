@@ -624,11 +624,11 @@ export default {
           data[28].数量++
           this.rank[4]++
         }
-        else if(this.brawlers[i].highestTrophies >= 726 && this.brawlers[i].highestTrophies <= 750) {
+        else if(this.brawlers[i].highestTrophies >= 726 && this.brawlers[i].highestTrophies <= 749) {
           data[29].数量++
           this.rank[4]++
         }
-        else if(this.brawlers[i].highestTrophies >= 751 && this.brawlers[i].highestTrophies <= 775) {
+        else if(this.brawlers[i].highestTrophies >= 750 && this.brawlers[i].highestTrophies <= 775) {
           data[30].数量++
           this.rank[5]++
         }
