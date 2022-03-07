@@ -154,12 +154,15 @@
                 <img v-if="playersItem.name === myName" :src="require('../assets/brawlers/'+ playersItem.brawler.id +'.png')" alt="" width="30vw">
               </span>
             </span>
+            <!--天选之战-->
+            <span v-if="item.event.mode === 'bigGame'">
+              <span v-for="(playersItem, index) in item.battle.players" :key="index">
+                <img v-if="playersItem.name === myName" :src="require('../assets/brawlers/'+ playersItem.brawler.id +'.png')" alt="" width="30vw">
+              </span>
+            </span>
 
             <!--最右侧标签-->
             <div style="margin-left: 5px">
-              <!--<a-tag v-show="item.battle.mode !== 'roboRumble'" :color="item.battle.result === undefined? 'purple': item.battle.result === 'victory'? 'green': item.battle.result === 'defeat'? 'red': 'blue'">
-              {{ item.battle.result === undefined? '第' + item.battle.rank + '名': item.battle.result === 'victory'? '获胜': item.battle.result === 'defeat'? '战败': '平局'}}
-              </a-tag>-->
 
               <!--杯数-->
               <span v-if="'teams' in item.battle && item.battle.teams.length === 2">
@@ -188,7 +191,19 @@
             <van-tag style="margin-left: 5px" plain color="red" v-if="isMyMvp(item.battle)">
               MVP
             </van-tag>
-            <div :class="{'result': true, 'winColor': item.battle.result === 'victory', 'loseColor': item.battle.result === 'defeat', 'drawColor': item.battle.result === 'draw', 'otherColor': item.battle.result === undefined}">{{ item.battle.result === undefined? '第' + item.battle.rank + '名': item.battle.result === 'victory'? '胜利': item.battle.result === 'defeat'? '战败': '平局'}}</div>
+
+            <div
+                v-if="item.battle.mode!=='bigGame'"
+                :class="{
+                  'result': true,
+                  'winColor': item.battle.result === 'victory',
+                  'loseColor': item.battle.result === 'defeat',
+                  'drawColor': item.battle.result === 'draw',
+                  'otherColor': item.battle.result === undefined
+                }">
+              {{ item.battle.result === undefined? '第' + item.battle.rank + '名': item.battle.result === 'victory'? '胜利': item.battle.result === 'defeat'? '战败': '平局'}}
+            </div>
+
           </div>
         </template>
         <!--详情-->
@@ -336,6 +351,35 @@
                   <b>{{ item.battleTime | dateFormatter }}</b>
                 </a-descriptions-item>
               </a-descriptions>
+            </van-col>
+            <van-col span="14">
+              <div style="text-align: center">
+                <span v-for="(item, index) in item.battle.players" :key="index" style="display: inline-block;text-align: center;margin: 0vh 8px 0 0">
+                  <img :src="require('../assets/brawlers/'+ item.brawler.id +'.png')" alt="" style="width: 15vw;display: block">
+                  <van-tag plain type="primary">Lv.{{ item.brawler.power }}</van-tag>
+                  <div style="width: 15vw;font-size: 0.2em;color: black;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" :class="{name: item.name === myName}">{{item.name}}</div>
+                </span>
+              </div>
+            </van-col>
+          </van-row>
+        </div>
+        <!--天选之战-->
+        <div v-if="item.event.mode === 'bigGame'">
+          <van-row>
+            <van-col span="10">
+              <a-descriptions style="margin-left: 10px">
+                <a-descriptions-item label="比赛时间">
+                  <b>{{ item.battleTime | dateFormatter }}</b>
+                </a-descriptions-item>
+              </a-descriptions>
+              <div style="margin-left: 20px;text-align: center">
+                <div style="color: black">天选英雄</div>
+                <img :src="require('../assets/brawlers/'+ item.battle.bigBrawler.brawler.id +'.png')" alt="" style="width: 15vw;">
+                <br>
+                <van-tag plain type="primary">Lv.{{ item.battle.bigBrawler.brawler.power }}</van-tag>
+                <br>
+                <span style="width: 15vw;font-size: 0.2em;color: black;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" :class="{name: item.battle.bigBrawler.name === myName}">{{item.battle.bigBrawler.name}}</span>
+              </div>
             </van-col>
             <van-col span="14">
               <div style="text-align: center">
