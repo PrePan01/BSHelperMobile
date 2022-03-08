@@ -54,7 +54,7 @@
 
     <van-row>
       <van-col span="12">
-        <!--0宝石，1足球，2赏金，3金库，4热区，5机甲，6淘汰赛，7单鸡，8双鸡，9车轮战，10积分战-->
+        <!--0宝石，1足球，2赏金，3金库，4热区，5机甲，6淘汰赛，7单鸡，8双鸡，9车轮战，10积分战，11推车-->
         <!--item[模式，次数，胜场，负场]-->
         <!--模式次数-->
         <div class="modeNum">
@@ -598,7 +598,7 @@ export default {
     calModeNum(){
       //0宝石，1足球，2赏金，3金库，4热区，5机甲，6淘汰赛，7单鸡，8双鸡，9车轮战，10积分战
       //[序号，次数，胜场，负场]
-      let data = [[0,0,0,0],[1,0,0,0],[2,0,0,0],[3,0,0,0],[4,0,0,0],[5,0,0,0],[6,0,0,0],[7,0],[8,0],[9,0,0,0],[10,0,0,0]]
+      let data = [[0,0,0,0],[1,0,0,0],[2,0,0,0],[3,0,0,0],[4,0,0,0],[5,0,0,0],[6,0,0,0],[7,0],[8,0],[9,0,0,0],[10,0,0,0],[11,0,0,0]]
       for(let item in this.battleLogs){
         let battleItem = this.battleLogs[item].battle
         if(battleItem.mode === 'gemGrab'){
@@ -697,6 +697,16 @@ export default {
             data[10][3]++
           }
         }
+        else if(battleItem.mode === 'payload'){
+          if (battleItem.result === 'victory') {
+            data[11][1]++
+            data[11][2]++
+          }
+          if (battleItem.result === 'defeat') {
+            data[11][1]++
+            data[11][3]++
+          }
+        }
       }
       data = data.sort(function(x, y){
         return y[1] - x[1];
@@ -716,7 +726,7 @@ export default {
         return true
       }
       else{
-        let mode = ['gemGrab', 'brawlBall', 'bounty', 'heist', 'hotZone', 'siege', 'knockout', 'soloShowdown', 'duoShowdown', 'duels','wipeout']
+        let mode = ['gemGrab', 'brawlBall', 'bounty', 'heist', 'hotZone', 'siege', 'knockout', 'soloShowdown', 'duoShowdown', 'duels', 'wipeout', 'payload']
         return mode[this.selectModeIndex] === data.mode
       }
     }
@@ -908,7 +918,7 @@ img{
 .result{
   font-family: '黑体';
   font-weight: bold;
-  font-size: 22px;
+  font-size: 20px;
   vertical-align: middle;
   text-shadow: rgb(40,44,52) 1px 0 0, rgb(40,44,52) 0 1px 0, rgb(40,44,52) -1px 0 0, rgb(40,44,52) 0 -1px 0;
   margin-left: auto;
