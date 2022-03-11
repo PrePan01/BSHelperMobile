@@ -114,16 +114,16 @@
       <van-collapse-item v-show="selectMode(item.battle) && showEvents(item.battle)" v-for="(item,index) in battleLogs" :key="index" :name="item.battleTime" >
         <!--列表-->
         <template slot="title">
-          <div style="display: flex; align-items: center">
+          <div style="display: flex; align-items: center;padding: 3px 0">
             <img :src="require('../assets/gameModes/'+ item.battle.mode +'.png')" alt=""  style="margin-right: 1vw; width: 8vw;">
-            <span style="display:inline-block; width: 25vw">{{item.event.map | mapTranslate}}</span>
+            <span style="display:inline-block; width: 26vw;font-size: 16px">{{item.event.map | mapTranslate}}</span>
             <!--3v3-->
             <span v-if="'teams' in item.battle && item.battle.teams.length === 2">
               <span v-for="(item, index) in item.battle.teams[0]" :key="index + '0'">
-                <img v-if="item.name === myName" :src="require('../assets/brawlers/'+ item.brawler.id +'.png')" alt="" width="34vw">
+                <img v-if="item.name === myName" :src="require('../assets/brawlers/'+ item.brawler.id +'.png')" alt="" width="40vw">
               </span>
               <span v-for="(item, index) in item.battle.teams[1]" :key="index + '1'">
-                <img v-if="item.name === myName" :src="require('../assets/brawlers/'+ item.brawler.id +'.png')" alt="" width="34vw">
+                <img v-if="item.name === myName" :src="require('../assets/brawlers/'+ item.brawler.id +'.png')" alt="" width="40vw">
               </span>
             </span>
             <!--duels-->
@@ -138,26 +138,26 @@
             <!--soloSD-->
             <span v-if="item.event.mode === 'soloShowdown' || item.battle.mode === 'soloShowdown'">
               <span v-for="(playersItem, index) in item.battle.players" :key="index + '4'">
-                <img v-if="playersItem.name === myName" :src="require('../assets/brawlers/'+ playersItem.brawler.id +'.png')" alt="" width="30vw">
+                <img v-if="playersItem.name === myName" :src="require('../assets/brawlers/'+ playersItem.brawler.id +'.png')" alt="" width="40vw">
               </span>
             </span>
             <!--duoSD-->
             <span v-if="item.event.mode === 'duoShowdown' || item.battle.mode === 'duoShowdown'">
               <span v-for="(teamsItem, index) in item.battle.teams" :key="index + '5'">
-                <img v-if="teamsItem[0].name === myName" :src="require('../assets/brawlers/'+ teamsItem[0].brawler.id +'.png')" alt="" width="30vw">
-                <img v-if="teamsItem[1].name === myName" :src="require('../assets/brawlers/'+ teamsItem[1].brawler.id +'.png')" alt="" width="30vw">
+                <img v-if="teamsItem[0].name === myName" :src="require('../assets/brawlers/'+ teamsItem[0].brawler.id +'.png')" alt="" width="40vw">
+                <img v-if="teamsItem[1].name === myName" :src="require('../assets/brawlers/'+ teamsItem[1].brawler.id +'.png')" alt="" width="40vw">
               </span>
             </span>
             <!--机甲入侵-->
             <span v-if="item.event.mode === 'roboRumble'">
               <span v-for="(playersItem, index) in item.battle.players" :key="index">
-                <img v-if="playersItem.name === myName" :src="require('../assets/brawlers/'+ playersItem.brawler.id +'.png')" alt="" width="30vw">
+                <img v-if="playersItem.name === myName" :src="require('../assets/brawlers/'+ playersItem.brawler.id +'.png')" alt="" width="40vw">
               </span>
             </span>
             <!--天选之战-->
             <span v-if="item.event.mode === 'bigGame'">
               <span v-for="(playersItem, index) in item.battle.players" :key="index">
-                <img v-if="playersItem.name === myName" :src="require('../assets/brawlers/'+ playersItem.brawler.id +'.png')" alt="" width="30vw">
+                <img v-if="playersItem.name === myName" :src="require('../assets/brawlers/'+ playersItem.brawler.id +'.png')" alt="" width="40vw">
               </span>
             </span>
 
@@ -167,30 +167,30 @@
               <!--杯数-->
               <span v-if="'teams' in item.battle && item.battle.teams.length === 2">
                 <span v-for="(item, index) in item.battle.teams[0]" :key="index + '0'">
-                  <van-tag plain v-if="item.name === myName" color="orange">{{ item.brawler.trophies }}</van-tag>
+                  <a-tag plain v-if="item.name === myName" color="orange">{{ item.brawler.trophies }}</a-tag>
                 </span>
                 <span v-for="(item, index) in item.battle.teams[1]" :key="index + '1'">
-                  <van-tag plain v-if="item.name === myName" color="orange">{{ item.brawler.trophies }}</van-tag>
+                  <a-tag plain v-if="item.name === myName" color="orange">{{ item.brawler.trophies }}</a-tag>
                 </span>
               </span>
 
               <span v-if="item.event.mode === 'soloShowdown' || item.battle.mode === 'soloShowdown'">
                 <span v-for="(item, index) in item.battle.players" :key="index + '0'">
-                  <van-tag plain v-if="item.name === myName" color="orange">{{ item.brawler.trophies }}</van-tag>
+                  <a-tag plain v-if="item.name === myName" color="orange">{{ item.brawler.trophies }}</a-tag>
                 </span>
               </span>
 
               <span v-if="item.event.mode === 'duoShowdown' || item.battle.mode === 'duoShowdown'">
                 <span v-for="(teamsItem, index) in item.battle.teams" :key="index + '5'">
-                  <van-tag plain v-if="teamsItem[0].name === myName" color="orange">{{ teamsItem[0].brawler.trophies }}</van-tag>
-                  <van-tag plain v-if="teamsItem[1].name === myName" color="orange">{{ teamsItem[1].brawler.trophies }}</van-tag>
+                  <a-tag plain v-if="teamsItem[0].name === myName" color="orange">{{ teamsItem[0].brawler.trophies }}</a-tag>
+                  <a-tag plain v-if="teamsItem[1].name === myName" color="orange">{{ teamsItem[1].brawler.trophies }}</a-tag>
                 </span>
               </span>
           </div>
 
-            <van-tag style="margin-left: 5px" plain color="red" v-if="isMyMvp(item.battle)">
+            <a-tag style="display: inline-block" plain color="red" v-if="isMyMvp(item.battle)">
               MVP
-            </van-tag>
+            </a-tag>
 
             <div
                 v-if="item.battle.mode!=='bigGame'"
@@ -598,7 +598,7 @@ export default {
     calModeNum(){
       //0宝石，1足球，2赏金，3金库，4热区，5机甲，6淘汰赛，7单鸡，8双鸡，9车轮战，10积分战
       //[序号，次数，胜场，负场]
-      let data = [[0,0,0,0],[1,0,0,0],[2,0,0,0],[3,0,0,0],[4,0,0,0],[5,0,0,0],[6,0,0,0],[7,0],[8,0],[9,0,0,0],[10,0,0,0],[11,0,0,0]]
+      let data = [[0,0,0,0],[1,0,0,0],[2,0,0,0],[3,0,0,0],[4,0,0,0],[5,0,0,0],[6,0,0,0],[7,0],[8,0],[9,0,0,0],[10,0,0,0],[11,0,0,0],[12,0,0,0]]
       for(let item in this.battleLogs){
         let battleItem = this.battleLogs[item].battle
         if(battleItem.mode === 'gemGrab'){
@@ -707,6 +707,16 @@ export default {
             data[11][3]++
           }
         }
+        else if(battleItem.mode === 'basketBrawl'){
+          if (battleItem.result === 'victory') {
+            data[12][1]++
+            data[12][2]++
+          }
+          if (battleItem.result === 'defeat') {
+            data[12][1]++
+            data[12][3]++
+          }
+        }
       }
       data = data.sort(function(x, y){
         return y[1] - x[1];
@@ -726,7 +736,7 @@ export default {
         return true
       }
       else{
-        let mode = ['gemGrab', 'brawlBall', 'bounty', 'heist', 'hotZone', 'siege', 'knockout', 'soloShowdown', 'duoShowdown', 'duels', 'wipeout', 'payload']
+        let mode = ['gemGrab', 'brawlBall', 'bounty', 'heist', 'hotZone', 'siege', 'knockout', 'soloShowdown', 'duoShowdown', 'duels', 'wipeout', 'payload', 'basketBrawl']
         return mode[this.selectModeIndex] === data.mode
       }
     }
@@ -796,7 +806,8 @@ export default {
       else if (en === 'Ring of Fire') return '灼热火圈'
       else if (en === 'Double Sided') return '双边并行'
       else if (en === 'Temple of Boom') return '斗域奇兵'
-
+      // 篮球
+      else if (en === 'Ball Hog') return '首席球迷'
       else return en
 
     },
@@ -836,6 +847,10 @@ export default {
 
 <style>
 @import 'https://at.alicdn.com/t/font_3113095_9ai60locd0e.css';
+
+.van-collapse-item--border::after{
+  border-top: 1px solid lightgray;
+}
 
 img{
   image-rendering: -moz-crisp-edges;

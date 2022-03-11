@@ -22,7 +22,14 @@
         </p>
       </div>
     </div>
-    <van-button plain type="info" @click="showStarter">直接进入</van-button>
+    <a-button-group size="large">
+      <a-button  @click="showStarter">
+        直接进入
+      </a-button>
+      <a-button  @click="toUpdateInfo">
+        更新日志
+      </a-button>
+    </a-button-group>
   </div>
 </template>
 
@@ -46,6 +53,9 @@ export default {
     searchHistory(){
       this.$bus.$emit('onSearch', this.historySearch)
       this.$bus.$emit('showStarter', false)
+    },
+    toUpdateInfo(){
+      this.$router.push('/updateInfo')
     }
   },
   mounted(){

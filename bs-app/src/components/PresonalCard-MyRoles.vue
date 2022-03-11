@@ -77,7 +77,7 @@
         <van-col span="6">
           <div class="brawlersNum">
             <span style="border: 1px solid #d9d9d9;padding: 3px 5px;border-radius: 4px;color: rgb(57,118,227)">{{brawlsNum}}</span>
-            <span> / 54</span>
+            <span> / 55</span>
           </div>
         </van-col>
       </van-row>
