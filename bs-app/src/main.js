@@ -13,6 +13,11 @@ import 'ant-design-vue/dist/antd.css';
 import VueRouter from 'vue-router'
 import router from './router'
 import './assets/fonts/fonts.css'
+//过滤器
+import * as filters from './filters/mapTranslate'
+Object.keys(filters).forEach(key => {
+  Vue.filter(key, filters[key])
+})
 
 Vue.use(Vant);
 Vue.use(Antd);
