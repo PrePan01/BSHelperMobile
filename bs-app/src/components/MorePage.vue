@@ -24,6 +24,7 @@
     <van-cell-group style="border: 1px solid rgb(245,246,247);">
       <van-cell title="问题反馈" is-link size="large" @click="popUpShow = true"/>
       <van-cell title="更新日志" is-link size="large" @click="toUpdateInfo"/>
+      <a href="http://prepan.top/download/latest.apk"><van-cell title="游戏下载" :label="version" is-link size="large"/></a>
     </van-cell-group>
 
     <van-popup v-model="popUpShow" position="bottom">
@@ -41,7 +42,8 @@ export default {
   name: "MorePage",
   data(){
     return{
-      popUpShow: false
+      popUpShow: false,
+      version: '更新日期：3/17 | 版本：42.356'
     }
   },
   methods: {

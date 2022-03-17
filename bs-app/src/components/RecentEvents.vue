@@ -1,7 +1,7 @@
 <template>
   <div>
     <a-back-top id="backTop" />
-    <div style="height: 1vh"></div>
+
     <a-card v-if="battleLogs !== []" style="width: 95vw; margin: 0 auto; padding: -5px">
       <template slot="title">
         <div style="vertical-align: middle;font-size: 1.25em">最近25场（只统计3V3）</div>
@@ -104,11 +104,6 @@
       </div>
     </van-action-sheet>
 
-    <!--地图翻译-->
-    <van-notice-bar mode="closeable" color="#1989fa" background="#ecf9ff">
-      <div @click="toMapTrans">地图名称未翻译完全，点击贡献翻译。</div>
-    </van-notice-bar>
-
     <!--战绩列表-->
     <van-collapse v-model="activeNames">
       <van-collapse-item v-show="selectMode(item.battle) && showEvents(item.battle)" v-for="(item,index) in battleLogs" :key="index" :name="item.battleTime" >
@@ -188,7 +183,7 @@
               </span>
           </div>
 
-            <a-tag style="display: inline-block" plain color="red" v-if="isMyMvp(item.battle)">
+            <a-tag style="display: inline-block" plain color="red" v-if="'starPlayer' in item.event && isMyMvp(item.battle)">
               MVP
             </a-tag>
 
@@ -201,7 +196,7 @@
                   'drawColor': item.battle.result === 'draw',
                   'otherColor': item.battle.result === undefined
                 }">
-              {{ item.battle.result === undefined? '第' + item.battle.rank + '名': item.battle.result === 'victory'? '胜利': item.battle.result === 'defeat'? '战败': '平局'}}
+              {{ item.battle.result === undefined? '#' + item.battle.rank: item.battle.result === 'victory'? '胜利': item.battle.result === 'defeat'? '战败': '平局'}}
             </div>
 
           </div>
@@ -392,6 +387,10 @@
             </van-col>
           </van-row>
         </div>
+
+        <div v-if="item.event.mode === 'unknown'">
+
+        </div>
       </van-collapse-item>
     </van-collapse>
     <div style="height: 10vh"></div>
@@ -429,18 +428,22 @@ export default {
       var draw = 0
       var myMVP = 0
       for (let i in this.battleLogs) {
-        if ('starPlayer' in this.battleLogs[i].battle) {
-          if (this.battleLogs[i].battle.starPlayer !== null) {
-            if (this.battleLogs[i].battle.starPlayer.name === this.myName)
-              myMVP++
+        if(this.battleLogs[i].event.mode !== 'unknown'){
+          if ('starPlayer' in this.battleLogs[i].battle) {
+            if (this.battleLogs[i].battle.starPlayer !== null) {
+              if (this.battleLogs[i].battle.starPlayer.name === this.myName)
+                myMVP++
+            }
           }
-        }
-        if (this.battleLogs[i].battle.result === 'victory') {
-          victory++
-        } else if (this.battleLogs[i].battle.result === 'defeat') {
-          defeat++
-        } else if (this.battleLogs[i].battle.result === 'draw') {
-          draw++
+          if('result' in this.battleLogs[i].battle){
+            if (this.battleLogs[i].battle.result === 'victory') {
+              victory++
+            } else if (this.battleLogs[i].battle.result === 'defeat') {
+              defeat++
+            } else if (this.battleLogs[i].battle.result === 'draw') {
+              draw++
+            }
+          }
         }
       }
       this.victoryNum = victory
@@ -495,94 +498,96 @@ export default {
       let data = {}
       for (let item in this.battleLogs) {
         let battleLogsItem = this.battleLogs[item]
-        //处理3V3
-        if ('teams' in battleLogsItem.battle && battleLogsItem.battle.teams.length === 2) {
-          let teams = battleLogsItem.battle.teams
-          for (let i in teams[0]) {
-            if (teams[0][i].name === this.myName) {
-              if (teams[0][i].brawler.id in data) {
-                if (battleLogsItem.battle.result === 'victory') {
-                  data[teams[0][i].brawler.id][0]++
-                  data[teams[0][i].brawler.id][1]++
+        if(battleLogsItem.event.mode !== 'unknown'){
+          //处理3V3
+          if ('teams' in battleLogsItem.battle && battleLogsItem.battle.teams.length === 2) {
+            let teams = battleLogsItem.battle.teams
+            for (let i in teams[0]) {
+              if (teams[0][i].name === this.myName) {
+                if (teams[0][i].brawler.id in data) {
+                  if (battleLogsItem.battle.result === 'victory') {
+                    data[teams[0][i].brawler.id][0]++
+                    data[teams[0][i].brawler.id][1]++
+                  }
+                  if (battleLogsItem.battle.result === 'defeat') {
+                    data[teams[0][i].brawler.id][0]++
+                    data[teams[0][i].brawler.id][2]++
+                  }
+                } else {
+                  if (battleLogsItem.battle.result === 'victory') {
+                    data[teams[0][i].brawler.id] = [1, 1, 0]
+                  }
+                  if (battleLogsItem.battle.result === 'defeat') {
+                    data[teams[0][i].brawler.id] = [1, 0, 1]
+                  }
                 }
-                if (battleLogsItem.battle.result === 'defeat') {
-                  data[teams[0][i].brawler.id][0]++
-                  data[teams[0][i].brawler.id][2]++
-                }
-              } else {
-                if (battleLogsItem.battle.result === 'victory') {
-                  data[teams[0][i].brawler.id] = [1, 1, 0]
-                }
-                if (battleLogsItem.battle.result === 'defeat') {
-                  data[teams[0][i].brawler.id] = [1, 0, 1]
+              }
+            }
+            for (let i in teams[1]) {
+              if (teams[1][i].name === this.myName) {
+                if (teams[1][i].brawler.id in data) {
+                  if (battleLogsItem.battle.result === 'victory') {
+                    data[teams[1][i].brawler.id][0]++
+                    data[teams[1][i].brawler.id][1]++
+                  }
+                  if (battleLogsItem.battle.result === 'defeat') {
+                    data[teams[1][i].brawler.id][0]++
+                    data[teams[1][i].brawler.id][2]++
+                  }
+                } else {
+                  if (battleLogsItem.battle.result === 'victory') {
+                    data[teams[1][i].brawler.id] = [1, 1, 0]
+                  }
+                  if (battleLogsItem.battle.result === 'defeat') {
+                    data[teams[1][i].brawler.id] = [1, 0, 1]
+                  }
                 }
               }
             }
           }
-          for (let i in teams[1]) {
-            if (teams[1][i].name === this.myName) {
-              if (teams[1][i].brawler.id in data) {
-                if (battleLogsItem.battle.result === 'victory') {
-                  data[teams[1][i].brawler.id][0]++
-                  data[teams[1][i].brawler.id][1]++
-                }
-                if (battleLogsItem.battle.result === 'defeat') {
-                  data[teams[1][i].brawler.id][0]++
-                  data[teams[1][i].brawler.id][2]++
-                }
-              } else {
-                if (battleLogsItem.battle.result === 'victory') {
-                  data[teams[1][i].brawler.id] = [1, 1, 0]
-                }
-                if (battleLogsItem.battle.result === 'defeat') {
-                  data[teams[1][i].brawler.id] = [1, 0, 1]
-                }
-              }
-            }
-          }
-        }
-        //处理车轮战
-        if(battleLogsItem.battle.mode === 'duels'){
-          if(battleLogsItem.battle.players[0].name === this.myName){
-            for(let i in battleLogsItem.battle.players[0].brawlers){
-              let brawlersItem = battleLogsItem.battle.players[0].brawlers
-              if (brawlersItem[i].id in data) {
-                if (battleLogsItem.battle.result === 'victory') {
-                  data[brawlersItem[i].id][0]++
-                  data[brawlersItem[i].id][1]++
-                }
-                if (battleLogsItem.battle.result === 'defeat') {
-                  data[brawlersItem[i].id][0]++
-                  data[brawlersItem[i].id][2]++
-                }
-              } else {
-                if (battleLogsItem.battle.result === 'victory') {
-                  data[brawlersItem[i].id] = [1, 1, 0]
-                }
-                if (battleLogsItem.battle.result === 'defeat') {
-                  data[brawlersItem[i].id] = [1, 0, 1]
+          //处理车轮战
+          if(battleLogsItem.battle.mode === 'duels'){
+            if(battleLogsItem.battle.players[0].name === this.myName){
+              for(let i in battleLogsItem.battle.players[0].brawlers){
+                let brawlersItem = battleLogsItem.battle.players[0].brawlers
+                if (brawlersItem[i].id in data) {
+                  if (battleLogsItem.battle.result === 'victory') {
+                    data[brawlersItem[i].id][0]++
+                    data[brawlersItem[i].id][1]++
+                  }
+                  if (battleLogsItem.battle.result === 'defeat') {
+                    data[brawlersItem[i].id][0]++
+                    data[brawlersItem[i].id][2]++
+                  }
+                } else {
+                  if (battleLogsItem.battle.result === 'victory') {
+                    data[brawlersItem[i].id] = [1, 1, 0]
+                  }
+                  if (battleLogsItem.battle.result === 'defeat') {
+                    data[brawlersItem[i].id] = [1, 0, 1]
+                  }
                 }
               }
             }
-          }
-          else if(battleLogsItem.battle.players[1].name === this.myName){
-            for(let i in battleLogsItem.battle.players[1].brawlers){
-              let brawlersItem = battleLogsItem.battle.players[1].brawlers
-              if (brawlersItem[i].id in data) {
-                if (battleLogsItem.battle.result === 'victory') {
-                  data[brawlersItem[i].id][0]++
-                  data[brawlersItem[i].id][1]++
-                }
-                if (battleLogsItem.battle.result === 'defeat') {
-                  data[brawlersItem[i].id][0]++
-                  data[brawlersItem[i].id][2]++
-                }
-              } else {
-                if (battleLogsItem.battle.result === 'victory') {
-                  data[brawlersItem[i].id] = [1, 1, 0]
-                }
-                if (battleLogsItem.battle.result === 'defeat') {
-                  data[brawlersItem[i].id] = [1, 0, 1]
+            else if(battleLogsItem.battle.players[1].name === this.myName){
+              for(let i in battleLogsItem.battle.players[1].brawlers){
+                let brawlersItem = battleLogsItem.battle.players[1].brawlers
+                if (brawlersItem[i].id in data) {
+                  if (battleLogsItem.battle.result === 'victory') {
+                    data[brawlersItem[i].id][0]++
+                    data[brawlersItem[i].id][1]++
+                  }
+                  if (battleLogsItem.battle.result === 'defeat') {
+                    data[brawlersItem[i].id][0]++
+                    data[brawlersItem[i].id][2]++
+                  }
+                } else {
+                  if (battleLogsItem.battle.result === 'victory') {
+                    data[brawlersItem[i].id] = [1, 1, 0]
+                  }
+                  if (battleLogsItem.battle.result === 'defeat') {
+                    data[brawlersItem[i].id] = [1, 0, 1]
+                  }
                 }
               }
             }
@@ -601,120 +606,122 @@ export default {
       let data = [[0,0,0,0],[1,0,0,0],[2,0,0,0],[3,0,0,0],[4,0,0,0],[5,0,0,0],[6,0,0,0],[7,0],[8,0],[9,0,0,0],[10,0,0,0],[11,0,0,0],[12,0,0,0]]
       for(let item in this.battleLogs){
         let battleItem = this.battleLogs[item].battle
-        if(battleItem.mode === 'gemGrab'){
-          if (battleItem.result === 'victory') {
-            data[0][1]++
-            data[0][2]++
+        if(this.battleLogs[item].event.mode !== 'unknown'){
+          if(battleItem.mode === 'gemGrab'){
+            if (battleItem.result === 'victory') {
+              data[0][1]++
+              data[0][2]++
+            }
+            if (battleItem.result === 'defeat') {
+              data[0][1]++
+              data[0][3]++
+            }
           }
-          if (battleItem.result === 'defeat') {
-            data[0][1]++
-            data[0][3]++
+          else if(battleItem.mode === 'brawlBall'){
+            if (battleItem.result === 'victory') {
+              data[1][1]++
+              data[1][2]++
+            }
+            if (battleItem.result === 'defeat') {
+              data[1][1]++
+              data[1][3]++
+            }
           }
-        }
-        else if(battleItem.mode === 'brawlBall'){
-          if (battleItem.result === 'victory') {
-            data[1][1]++
-            data[1][2]++
+          else if(battleItem.mode === 'bounty'){
+            if (battleItem.result === 'victory') {
+              data[2][1]++
+              data[2][2]++
+            }
+            if (battleItem.result === 'defeat') {
+              data[2][1]++
+              data[2][3]++
+            }
           }
-          if (battleItem.result === 'defeat') {
-            data[1][1]++
-            data[1][3]++
+          else if(battleItem.mode === 'heist'){
+            if (battleItem.result === 'victory') {
+              data[3][1]++
+              data[3][2]++
+            }
+            if (battleItem.result === 'defeat') {
+              data[3][1]++
+              data[3][3]++
+            }
           }
-        }
-        else if(battleItem.mode === 'bounty'){
-          if (battleItem.result === 'victory') {
-            data[2][1]++
-            data[2][2]++
+          else if(battleItem.mode === 'hotZone'){
+            if (battleItem.result === 'victory') {
+              data[4][1]++
+              data[4][2]++
+            }
+            if (battleItem.result === 'defeat') {
+              data[4][1]++
+              data[4][3]++
+            }
           }
-          if (battleItem.result === 'defeat') {
-            data[2][1]++
-            data[2][3]++
+          else if(battleItem.mode === 'siege'){
+            if (battleItem.result === 'victory') {
+              data[5][1]++
+              data[5][2]++
+            }
+            if (battleItem.result === 'defeat') {
+              data[5][1]++
+              data[5][3]++
+            }
           }
-        }
-        else if(battleItem.mode === 'heist'){
-          if (battleItem.result === 'victory') {
-            data[3][1]++
-            data[3][2]++
+          else if(battleItem.mode === 'knockout'){
+            if (battleItem.result === 'victory') {
+              data[6][1]++
+              data[6][2]++
+            }
+            if (battleItem.result === 'defeat') {
+              data[6][1]++
+              data[6][3]++
+            }
           }
-          if (battleItem.result === 'defeat') {
-            data[3][1]++
-            data[3][3]++
+          else if(battleItem.mode === 'soloShowdown'){
+            data[7][1]++
           }
-        }
-        else if(battleItem.mode === 'hotZone'){
-          if (battleItem.result === 'victory') {
-            data[4][1]++
-            data[4][2]++
+          else if(battleItem.mode === 'duoShowdown'){
+            data[8][1]++
           }
-          if (battleItem.result === 'defeat') {
-            data[4][1]++
-            data[4][3]++
+          else if(battleItem.mode === 'duels'){
+            if (battleItem.result === 'victory') {
+              data[9][1]++
+              data[9][2]++
+            }
+            if (battleItem.result === 'defeat') {
+              data[9][1]++
+              data[9][3]++
+            }
           }
-        }
-        else if(battleItem.mode === 'siege'){
-          if (battleItem.result === 'victory') {
-            data[5][1]++
-            data[5][2]++
+          else if(battleItem.mode === 'wipeout'){
+            if (battleItem.result === 'victory') {
+              data[10][1]++
+              data[10][2]++
+            }
+            if (battleItem.result === 'defeat') {
+              data[10][1]++
+              data[10][3]++
+            }
           }
-          if (battleItem.result === 'defeat') {
-            data[5][1]++
-            data[5][3]++
+          else if(battleItem.mode === 'payload'){
+            if (battleItem.result === 'victory') {
+              data[11][1]++
+              data[11][2]++
+            }
+            if (battleItem.result === 'defeat') {
+              data[11][1]++
+              data[11][3]++
+            }
           }
-        }
-        else if(battleItem.mode === 'knockout'){
-          if (battleItem.result === 'victory') {
-            data[6][1]++
-            data[6][2]++
-          }
-          if (battleItem.result === 'defeat') {
-            data[6][1]++
-            data[6][3]++
-          }
-        }
-        else if(battleItem.mode === 'soloShowdown'){
-          data[7][1]++
-        }
-        else if(battleItem.mode === 'duoShowdown'){
-          data[8][1]++
-        }
-        else if(battleItem.mode === 'duels'){
-          if (battleItem.result === 'victory') {
-            data[9][1]++
-            data[9][2]++
-          }
-          if (battleItem.result === 'defeat') {
-            data[9][1]++
-            data[9][3]++
-          }
-        }
-        else if(battleItem.mode === 'wipeout'){
-          if (battleItem.result === 'victory') {
-            data[10][1]++
-            data[10][2]++
-          }
-          if (battleItem.result === 'defeat') {
-            data[10][1]++
-            data[10][3]++
-          }
-        }
-        else if(battleItem.mode === 'payload'){
-          if (battleItem.result === 'victory') {
-            data[11][1]++
-            data[11][2]++
-          }
-          if (battleItem.result === 'defeat') {
-            data[11][1]++
-            data[11][3]++
-          }
-        }
-        else if(battleItem.mode === 'basketBrawl'){
-          if (battleItem.result === 'victory') {
-            data[12][1]++
-            data[12][2]++
-          }
-          if (battleItem.result === 'defeat') {
-            data[12][1]++
-            data[12][3]++
+          else if(battleItem.mode === 'basketBrawl'){
+            if (battleItem.result === 'victory') {
+              data[12][1]++
+              data[12][2]++
+            }
+            if (battleItem.result === 'defeat') {
+              data[12][1]++
+              data[12][3]++
+            }
           }
         }
       }
@@ -795,6 +802,8 @@ export default {
 
 <style>
 @import 'https://at.alicdn.com/t/font_3113095_9ai60locd0e.css';
+
+
 
 .van-collapse-item--border::after{
   border-top: 1px solid rgba(57,118,227,0.3);

@@ -300,6 +300,7 @@ export default {
       else if(data === 'LOLA') return '萝拉'
       else if(data === 'FANG') return '阿方'
       else if(data === 'NITA') return '妮塔'
+      else if(data === 'EVE') return '伊芙'
     }
   },
   computed: {
