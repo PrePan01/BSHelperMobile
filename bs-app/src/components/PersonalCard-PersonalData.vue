@@ -17,7 +17,7 @@
         <van-col span="12">
           <van-cell>
             <!--奖杯数-->
-            <a-statistic style="margin-top: 1vh" :value="personalData.trophies" valueStyle="color: rgb(254,208,53);font-weight: bold;font-size: 2em">
+            <a-statistic style="margin-top: 1vh" :suffix="trophiesChange === 0 ? '-' : trophiesChange > 0? '↑'+ trophiesChange : '↓'+trophiesChange" :value="personalData.trophies" valueStyle="color: rgb(254,208,53);font-weight: bold;font-size: 2em">
               <template slot="title">
                 <div>
                   <img src="~@/assets/icon_trophy_medium.png" alt=""
@@ -39,7 +39,7 @@
               </template>
             </a-statistic>
             <!--单鸡胜场-->
-            <a-statistic style="margin-top: 3vh" :value="personalData.soloVictories" valueStyle="color: rgb(35,143,242);font-weight: bold;font-size: 2em">
+            <a-statistic style="margin-top: 3vh" :suffix="soloChange === 0 ? '-' : soloChange > 0? '↑'+ soloChange : '↓'+soloChange" :value="personalData.soloVictories" valueStyle="color: rgb(35,143,242);font-weight: bold;font-size: 2em">
               <template slot="title">
                 <div>
                   <img src="~@/assets/Vector Smart Object-7.png" alt=""
@@ -77,7 +77,7 @@
               </template>
             </a-statistic>
             <!--3v3胜场-->
-            <a-statistic style="margin-top: 3vh" :value="personalData['3vs3Victories']" valueStyle="color: rgb(35,143,242);font-weight: bold;font-size: 2em">
+            <a-statistic style="margin-top: 3vh" :suffix="threeVsChange === 0 ? '-' : threeVsChange > 0? '↑'+ threeVsChange : '↓'+threeVsChange" :value="personalData['3vs3Victories']" valueStyle="color: rgb(35,143,242);font-weight: bold;font-size: 2em">
               <template slot="title">
                 <div>
                   <img src="~@/assets/3vs3.png" alt=""
@@ -88,7 +88,7 @@
               </template>
             </a-statistic>
             <!--双鸡胜场-->
-            <a-statistic style="margin-top: 3vh" :value="personalData.duoVictories" valueStyle="color: rgb(35,143,242);font-weight: bold;font-size: 2em">
+            <a-statistic style="margin-top: 3vh" :suffix="duoChange === 0 ? '-' : duoChange > 0? '↑' + duoChange : '↓' + duoChange" :value="personalData.duoVictories" valueStyle="color: rgb(35,143,242);font-weight: bold;font-size: 2em">
               <template slot="title">
                 <div>
                   <img src="~@/assets/icon_showdownplus.png" alt=""
@@ -183,23 +183,64 @@
 
       </van-cell>
     </van-list>
+    <h3 style="text-align: center;margin: 10px auto; border: 1px solid rgb(245,246,247);width: 70vw;padding: 10px 0"><b>上次查询</b><br>{{lastSearchTime}}</h3>
     <div style="height: 10vh"></div>
   </div>
 </template>
 
 <script>
+import moment from "moment"
+
+
 export default {
   name: "PersonalCard-PersonalData",
   data(){
     return{
       personalData: {},
-      showTag: true
+      showTag: true,
+      trophiesChange: 0,
+      threeVsChange: 0,
+      soloChange: 0,
+      duoChange: 0,
+      lastSearchTime: ''
+    }
+  },
+  methods: {
+    getDataChange(){
+      let lastTrophies = localStorage.getItem('lastTrophies' + this.personalData.tag)
+      let threeVsChange = localStorage.getItem('threeVsChange' + this.personalData.tag)
+      let soloChange = localStorage.getItem('soloChange' + this.personalData.tag)
+      let duoChange = localStorage.getItem('duoChange' + this.personalData.tag)
+      if(lastTrophies === null){
+        return
+      }
+      this.trophiesChange = this.personalData.trophies - lastTrophies
+      this.threeVsChange = this.personalData['3vs3Victories'] - threeVsChange
+      this.soloChange = this.personalData.soloVictories - soloChange
+      this.duoChange = this.personalData.duoVictories - duoChange
+    },
+    getLastSearchTime(){
+      let lastSearchTime = localStorage.getItem('lastSearchTime' + this.personalData.tag)
+      if(lastSearchTime === null){
+        this.lastSearchTime = '当前是第一次使用战绩小助手！'
+        return
+      }else{
+        this.lastSearchTime = lastSearchTime
+      }
     }
   },
   mounted(){
     //接收个人信息数据
     this.$bus.$on('PersonalData', (data) => {
+      this.getLastSearchTime()
+      //上一次查询时间
+      localStorage.setItem('lastSearchTime' + this.personalData.tag,moment(new Date()).format('YYYY-MM-DD HH:mm:ss'))
       this.personalData = data
+      this.getDataChange()
+      localStorage.setItem('lastTrophies' + this.personalData.tag, this.personalData.trophies)
+      localStorage.setItem('threeVsChange' + this.personalData.tag, this.personalData['3vs3Victories'])
+      localStorage.setItem('soloChange' + this.personalData.tag, this.personalData.soloVictories)
+      localStorage.setItem('duoChange' + this.personalData.tag, this.personalData.duoVictories)
     })
   },
   computed:{

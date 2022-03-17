@@ -2,7 +2,7 @@
   <div>
     <a-back-top id="backTop" />
 
-    <a-card v-if="battleLogs !== []" style="width: 95vw; margin: 0 auto; padding: -5px">
+    <a-card v-if="battleLogs !== []" style="width: 95vw; margin:1vh auto 0 auto; padding: -5px">
       <template slot="title">
         <div style="vertical-align: middle;font-size: 1.25em">最近25场（只统计3V3）</div>
       </template>
@@ -802,8 +802,6 @@ export default {
 
 <style>
 @import 'https://at.alicdn.com/t/font_3113095_9ai60locd0e.css';
-
-
 
 .van-collapse-item--border::after{
   border-top: 1px solid rgba(57,118,227,0.3);
