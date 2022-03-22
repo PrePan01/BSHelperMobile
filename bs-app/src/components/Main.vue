@@ -41,6 +41,7 @@ import PersonalCard from '@/components/PersonalCard'
 import RecentEvents from "@/components/RecentEvents";
 import MorePage from "@/components/MorePage";
 import Starter from "@/components/Starter";
+import { Notify } from 'vant';
 
 export default {
   name: 'Main',
@@ -80,8 +81,23 @@ export default {
             this.$bus.$emit('myName',this.personalData.name)
             this.$bus.$emit('BattleLogs',this.battleLogs)
             this.showOverlay = false
+          }).catch((err) => {
+            console.log(err)
+            Notify({ type: 'danger', message: '战绩列表查询失败，请刷新重试' });
+            this.showOverlay = false
           })
         }
+      }).catch((err) => {
+        if(err.response.status === 500){
+          Notify({ type: 'danger', message: '出现异常，请刷新重试(500)' });
+        }
+        else if(err.response.status === 404){
+          Notify({ type: 'danger', message: '接口出错，请稍后重试(404)' });
+        }
+        else{
+          Notify({ type: 'danger', message: '查询失败，请稍后重试' });
+        }
+        this.showOverlay = false
       })
     },
     //个人信息数据
