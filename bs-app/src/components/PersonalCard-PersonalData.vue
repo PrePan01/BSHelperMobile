@@ -151,7 +151,10 @@
       </van-cell>
       <!--荣誉联赛结束后-->
       <van-cell>
-        <h2 style="margin: 2vh 0 15px 0">本赛季荣誉联赛结束后</h2>
+        <h2 style="margin: 2vh 0 15px 0">
+          本赛季荣誉联赛结束后
+          <van-count-down v-if="countDown !== 0" style="display: inline-block" format="DD 天 HH 时 mm 分 ss 秒" :time="countDown" />
+        </h2>
         <van-row>
           <van-col span="12">
             <a-statistic style="margin-top: 1vh" :value="trophyLeagueEnd[0]" :suffix="trophyLeagueEndNum" valueStyle="color: rgb(254,208,53);font-weight: bold;font-size: 1.8em">
@@ -424,6 +427,13 @@ export default {
         }
       }
     },
+    countDown: {
+      get(){
+        let now = new Date();
+        let final = new Date("2022-04-04 16:00:00");
+        return final - now
+      }
+    }
   }
 }
 </script>
