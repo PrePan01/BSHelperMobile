@@ -186,14 +186,16 @@
 
       </van-cell>
     </van-list>
-    <h3 style="text-align: center;margin: 10px auto; border: 1px solid rgb(245,246,247);width: 70vw;padding: 10px 0"><b>上次查询</b><br>{{lastSearchTime}}</h3>
+    <h3 style="text-align: center;margin: 10px auto; border: 1px solid rgb(245,246,247);width: 70vw;padding: 10px 0;"><b>上次查询</b><br>{{lastSearchTime}}</h3>
     <div style="height: 10vh"></div>
   </div>
 </template>
 
 <script>
-import moment from "moment"
 
+// eslint-disable-next-line
+import moment from "moment"
+import 'moment/locale/zh-cn'
 
 export default {
   name: "PersonalCard-PersonalData",
@@ -228,7 +230,7 @@ export default {
         this.lastSearchTime = '当前是第一次使用战绩小助手！'
         return
       }else{
-        this.lastSearchTime = lastSearchTime
+        this.lastSearchTime = moment(lastSearchTime).fromNow() /*moment(Date.now() - parseInt(lastSearchTime)).format('YYYY-MM-DD HH:mm:ss')*/
       }
     }
   },
@@ -237,7 +239,7 @@ export default {
     this.$bus.$on('PersonalData', (data) => {
       this.getLastSearchTime()
       //上一次查询时间
-      localStorage.setItem('lastSearchTime' + this.personalData.tag,moment(new Date()).format('YYYY-MM-DD HH:mm:ss'))
+      localStorage.setItem('lastSearchTime' + this.personalData.tag,moment())
       this.personalData = data
       this.getDataChange()
       localStorage.setItem('lastTrophies' + this.personalData.tag, this.personalData.trophies)

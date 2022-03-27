@@ -115,10 +115,10 @@
             <!--3v3-->
             <span v-if="'teams' in item.battle && item.battle.teams.length === 2">
               <span v-for="(item, index) in item.battle.teams[0]" :key="index + '0'">
-                <img v-if="item.name === myName" :src="require('../assets/brawlers/'+ item.brawler.id +'.png')" alt="" width="40vw">
+                <img v-if="item.name === myName" :src="require('../assets/brawlers/'+ item.brawler.id +'.png')" alt="" width="44vw">
               </span>
               <span v-for="(item, index) in item.battle.teams[1]" :key="index + '1'">
-                <img v-if="item.name === myName" :src="require('../assets/brawlers/'+ item.brawler.id +'.png')" alt="" width="40vw">
+                <img v-if="item.name === myName" :src="require('../assets/brawlers/'+ item.brawler.id +'.png')" alt="" width="44vw">
               </span>
             </span>
             <!--duels-->
@@ -183,20 +183,25 @@
               </span>
           </div>
 
-            <a-tag style="display: inline-block" plain color="red" v-if="'starPlayer' in item.event && isMyMvp(item.battle)">
+            <a-tag style="display: inline-block;margin-left: -3px;margin-right: 3px;padding: 0 6px;" plain color="red" v-if="('starPlayer' in item.event || 'starPlayer' in item.battle) && isMyMvp(item.battle)">
               MVP
             </a-tag>
 
-            <div
-                v-if="item.battle.mode!=='bigGame'"
-                :class="{
+            <div style="margin-left: auto; margin-right: 3px">
+              <div
+                  v-if="item.battle.mode!=='bigGame'"
+                  :class="{
                   'result': true,
                   'winColor': item.battle.result === 'victory',
                   'loseColor': item.battle.result === 'defeat',
                   'drawColor': item.battle.result === 'draw',
                   'otherColor': item.battle.result === undefined
                 }">
-              {{ item.battle.result === undefined? '#' + item.battle.rank: item.battle.result === 'victory'? '胜利': item.battle.result === 'defeat'? '战败': '平局'}}
+                {{ item.battle.result === undefined? '#' + item.battle.rank: item.battle.result === 'victory'? '胜利': item.battle.result === 'defeat'? '战败': '平局'}}
+              </div>
+              <div style="margin: -5px 0;font-size: 12px;text-align: right">
+                {{item.battleTime | dateFormatter | momentTrans}}
+              </div>
             </div>
 
           </div>
@@ -778,8 +783,9 @@ export default {
           return '仅看MVP'
       }
     },
-    //星光联赛段位
-
+    momentTrans(data){
+      return moment(data).fromNow()
+    }
   },
   mounted() {
     this.$bus.$on('myName', (data) => {
@@ -889,10 +895,11 @@ img{
   font-family: '黑体';
   font-weight: bold;
   font-size: 20px;
-  vertical-align: middle;
+  text-align: right;
+  /*vertical-align: middle;*/
   text-shadow: rgb(40,44,52) 1px 0 0, rgb(40,44,52) 0 1px 0, rgb(40,44,52) -1px 0 0, rgb(40,44,52) 0 -1px 0;
-  margin-left: auto;
-  margin-right: 3px;
+  /*margin-left: auto;*/
+  /*margin-right: 3px;*/
 }
 .winColor{
   color: rgb(103,194,58);
