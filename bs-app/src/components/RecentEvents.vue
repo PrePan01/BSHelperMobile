@@ -187,7 +187,7 @@
               MVP
             </a-tag>
 
-            <div style="margin-left: auto; margin-right: 3px">
+            <div style="margin: 0 3px 0 auto ">
               <div
                   v-if="item.battle.mode!=='bigGame'"
                   :class="{

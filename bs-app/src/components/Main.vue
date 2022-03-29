@@ -95,7 +95,7 @@ export default {
           Notify({ type: 'danger', message: '接口出错，请稍后重试(404)' });
         }
         else{
-          Notify({ type: 'danger', message: '查询失败，请稍后重试' });
+          Notify({ type: 'danger', message: '查询失败，请刷新重试，或稍后再试' });
         }
         this.showOverlay = false
       })

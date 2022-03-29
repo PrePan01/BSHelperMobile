@@ -1,15 +1,21 @@
 <template>
   <div class="mainContainer">
 
-    <a-card class="card joinUsCard" @click="$router.push('/recordList')">
-      <i class="iconfont icon-paixingbang cardIcon"></i>
-      <h2>排行榜</h2>
-    </a-card>
+    <van-row>
+      <van-col span="12">
+        <a-card style="width: 43vw" class="card joinUsCard" @click="$router.push('/recordList')">
+          <i class="iconfont icon-paixingbang cardIcon"></i>
+          <h2>排行榜</h2>
+        </a-card>
+      </van-col>
+      <van-col span="12">
+        <a-card style="width: 43vw;float: right" class="card joinUsCard" @click="$router.push('/events')">
+          <i class="iconfont icon-mingxinghuodong cardIcon"></i>
+          <h2>天梯活动</h2>
+        </a-card>
+      </van-col>
+    </van-row>
 
-    <a-card class="card joinUsCard" @click="$router.push('/events')">
-      <i class="iconfont icon-mingxinghuodong cardIcon"></i>
-      <h2>天梯活动</h2>
-    </a-card>
 
     <a-card class="card" @click="$router.push('/clubSearch')">
       <i class="iconfont icon-sousuo1 cardIcon"></i>
@@ -64,9 +70,9 @@ export default {
   margin: 3vh auto 0 auto;
 }
 .card{
-  height: 25vh;
+  height: 24vh;
   width: 90vw;
-  margin-bottom: 4vh;
+  margin-bottom: 2vh;
   text-align: center;
   box-shadow: 0 0 5px 1px rgba(232,232,232,0.8);
 }
@@ -78,7 +84,7 @@ export default {
 .card h2{
   font-family: 黑体, serif;
   font-weight: bold;
-  font-size: 2em;
+  font-size: 1.8em;
 }
 .cardIcon{
   text-shadow: 0 3px 5px lightgray;
