@@ -153,7 +153,7 @@
       <van-cell>
         <h2 style="margin: 2vh 0 15px 0">
           本赛季荣誉联赛结束后
-          <van-count-down v-if="countDown !== 0" style="display: inline-block" format="DD 天 HH 时 mm 分 ss 秒" :time="countDown" />
+          <van-count-down v-if="countDown !== 0" :class="{countDownRed: countDown < 259200000}" style="display: inline-block" format="DD 天 HH 时 mm 分 ss 秒" :time="countDown" />
         </h2>
         <van-row>
           <van-col span="12">
@@ -470,6 +470,9 @@ img{
 }
 .rankNum{
 
+}
+.countDownRed{
+  color: red;
 }
 
 </style>

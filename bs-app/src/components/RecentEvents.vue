@@ -161,11 +161,13 @@
 
               <!--杯数-->
               <span v-if="'teams' in item.battle && item.battle.teams.length === 2">
-                <span v-for="(item, index) in item.battle.teams[0]" :key="index + '0'">
-                  <a-tag plain v-if="item.name === myName" color="orange">{{ item.brawler.trophies }}</a-tag>
+                <span v-for="(item1, index) in item.battle.teams[0]" :key="index + '0'">
+                  <a-tag plain v-if="item1.name === myName && (item.battle.type === 'teamRanked' || item.battle.type === 'soloRanked')" color="orange">{{ item1.brawler.trophies | rankNum }}</a-tag>
+                  <a-tag plain v-if="item1.name === myName && item.battle.type !== 'teamRanked' && item.battle.type !== 'soloRanked'" color="orange">{{ item1.brawler.trophies }}</a-tag>
                 </span>
-                <span v-for="(item, index) in item.battle.teams[1]" :key="index + '1'">
-                  <a-tag plain v-if="item.name === myName" color="orange">{{ item.brawler.trophies }}</a-tag>
+                <span v-for="(item1, index) in item.battle.teams[1]" :key="index + '1'">
+                  <a-tag plain v-if="item1.name === myName && (item.battle.type === 'teamRanked' || item.battle.type === 'soloRanked')" color="orange">{{ item1.brawler.trophies | rankNum }}</a-tag>
+                  <a-tag plain v-if="item1.name === myName && item.battle.type !== 'teamRanked' && item.battle.type !== 'soloRanked'" color="orange">{{ item1.brawler.trophies }}</a-tag>
                 </span>
               </span>
 
@@ -222,7 +224,7 @@
             </div>
             <div style="color: black;line-height: 3vh;margin-bottom: 4px;font-size: 15px">
               <div>
-                <span style="margin-right: 7vw"><b>类型：</b>{{ item.battle.type === 'ranked'? '排位': item.battle.type === 'challenge'? '挑战': item.battle.type === 'teamRanked'? '星光联赛' : '其他' }}</span>
+                <span style="margin-right: 7vw"><b>类型：</b>{{ item.battle.type === 'ranked'? '排位': item.battle.type === 'challenge'? '挑战': item.battle.type === 'teamRanked'? '组排联赛': item.battle.type === 'soloRanked'? '单排联赛' : '其他' }}</span>
                 <span class="mvpSpan"><b>MVP：</b>{{ 'starPlayer' in item.battle? item.battle.starPlayer !== null? item.battle.starPlayer.name: '暂无' : '暂无' }}</span>
                 <span><b>奖杯：</b>{{ item.battle.trophyChange >0? '+'+item.battle.trophyChange: item.battle.trophyChange }}</span>
               </div>
@@ -234,16 +236,17 @@
             <div style="display: flex; margin: 0 auto;align-items: center">
               <div style="text-align: center;display: inline-block">
                 <div
-                    v-for="(item, index) in item.battle.teams[0]"
+                    v-for="(brawlerItem, index) in item.battle.teams[0]"
                     :key="index"
                     style="display: inline-block;text-align: center;margin: 0 3px"
                     @click="$bus.$emit('onSearch', item.tag.slice(1))">
-                  <img :src="require('../assets/brawlers/'+ item.brawler.id +'.png')" alt="" style="width: 13vw;display: block">
-                  <van-tag plain type="primary" :color="item.brawler.power === 11? 'rgb(114,46,209)': item.brawler.power === 10? 'rgb(19,194,194)': 'rgb(82,196,26)'">Lv.{{ item.brawler.power }}</van-tag>
-                  <div style="width: 13vw;font-size: 0.1em;color: black;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" :class="{name: item.name === myName}">{{item.name}}</div>
+                  <img :src="require('../assets/brawlers/'+ brawlerItem.brawler.id +'.png')" alt="" style="width: 13vw;display: block">
+                  <van-tag plain type="primary" :color="brawlerItem.brawler.power === 11? 'rgb(114,46,209)': brawlerItem.brawler.power === 10? 'rgb(19,194,194)': 'rgb(82,196,26)'">Lv.{{ brawlerItem.brawler.power }}</van-tag>
+                  <div style="width: 13vw;font-size: 0.1em;color: black;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" :class="{name: item.name === myName}">{{brawlerItem.name}}</div>
                   <div style="color: black;font-size: 0.1em;margin-top: -2px">
                     <img style="vertical-align: middle" src="@/assets/icon_trophy_small.png" alt="" width="13px">
-                    <span style="vertical-align: middle">{{item.brawler.trophies}}</span>
+                    <span v-if="item.battle.type === 'teamRanked' || item.battle.type === 'soloRanked'" style="vertical-align: middle">{{brawlerItem.brawler.trophies | rankNum}}</span>
+                    <span v-else style="vertical-align: middle">{{brawlerItem.brawler.trophies}}</span>
                   </div>
                 </div>
               </div>
@@ -252,16 +255,17 @@
               </div>
               <div style="text-align: center;display: inline-block">
                 <span
-                    v-for="(item, index) in item.battle.teams[1]"
+                    v-for="(brawlerItem, index) in item.battle.teams[1]"
                     :key="index"
                     style="display: inline-block;text-align: center;margin: 0 3px"
-                    @click="$bus.$emit('onSearch', item.tag.slice(1))">
-                  <img :src="require('../assets/brawlers/'+ item.brawler.id +'.png')" alt="" style="width: 13vw;display: block">
-                  <van-tag plain type="primary" :color="item.brawler.power === 11? 'rgb(114,46,209)': item.brawler.power === 10? 'rgb(19,194,194)': 'rgb(82,196,26)'">Lv.{{ item.brawler.power }}</van-tag>
-                  <div style="width: 13vw;font-size: 0.1em;color: black;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" :class="{name: item.name === myName}">{{item.name}}</div>
+                    @click="$bus.$emit('onSearch', brawlerItem.tag.slice(1))">
+                  <img :src="require('../assets/brawlers/'+ brawlerItem.brawler.id +'.png')" alt="" style="width: 13vw;display: block">
+                  <van-tag plain type="primary" :color="brawlerItem.brawler.power === 11? 'rgb(114,46,209)': brawlerItem.brawler.power === 10? 'rgb(19,194,194)': 'rgb(82,196,26)'">Lv.{{ brawlerItem.brawler.power }}</van-tag>
+                  <div style="width: 13vw;font-size: 0.1em;color: black;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" :class="{name: brawlerItem.name === myName}">{{brawlerItem.name}}</div>
                   <div style="color: black;font-size: 0.1em;margin-top: -2px">
                     <img style="vertical-align: middle" src="@/assets/icon_trophy_small.png" alt="" width="13px">
-                    <span style="vertical-align: middle">{{item.brawler.trophies}}</span>
+                    <span v-if="item.battle.type === 'teamRanked' || item.battle.type === 'soloRanked'" style="vertical-align: middle">{{brawlerItem.brawler.trophies | rankNum}}</span>
+                    <span v-else style="vertical-align: middle">{{brawlerItem.brawler.trophies}}</span>
                   </div>
                 </span>
               </div>
@@ -785,6 +789,29 @@ export default {
     },
     momentTrans(data){
       return moment(data).fromNow()
+    },
+    rankNum(data){
+      switch (data){
+        case 1: return '青铜1'
+        case 2: return '青铜2'
+        case 3: return '青铜3'
+        case 4: return '白银1'
+        case 5: return '白银2'
+        case 6: return '白银3'
+        case 7: return '黄金1'
+        case 8: return '黄金2'
+        case 9: return '黄金3'
+        case 10: return '钻石1'
+        case 11: return '钻石2'
+        case 12: return '钻石3'
+        case 13: return '神话1'
+        case 14: return '神话2'
+        case 15: return '神话3'
+        case 16: return '传奇1'
+        case 17: return '传奇2'
+        case 18: return '传奇3'
+        case 19: return '大师'
+      }
     }
   },
   mounted() {
