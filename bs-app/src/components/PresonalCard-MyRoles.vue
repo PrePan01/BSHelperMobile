@@ -90,13 +90,14 @@
         <template #title>
           <div style="display: flex; flex-direction: row; align-items: center;">
             <img :src="require('../assets/brawlers/'+ item.id +'.png')" alt="" width="50vh" style="margin-right: 2vw">
-            <span>{{item.name | brawlersName}}</span>
+            <span style="font-size: 16px">{{item.name | brawlersName}}</span>
             <span style="margin-left: auto">
               <a-tag :color="item.power === 11? 'purple': item.power === 10? 'cyan': 'green'">
                 Lv.{{item.power}}
               </a-tag>
               <a-tag color="orange">
-                {{ item.trophies+' / '+item.highestTrophies }}
+                <!--{{ item.trophies + ' / ' + item.highestTrophies }}-->
+                <b>{{item.trophies}}</b> / {{item.highestTrophies}}
               </a-tag>
             </span>
           </div>
