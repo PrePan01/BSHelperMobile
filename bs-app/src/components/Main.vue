@@ -72,6 +72,7 @@ export default {
         else{
           this.personalData = res.data
           this.$bus.$emit('PersonalData',res.data)
+          this.$bus.$emit('PersonalTrophies',res.data.trophies)
           this.$bus.$emit('PersonalBrawlers',res.data.brawlers)
           axios({
             methods: 'GET',

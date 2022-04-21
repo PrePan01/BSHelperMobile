@@ -7,7 +7,7 @@
         <div style="vertical-align: middle;font-size: 1.25em">最近25场（只统计3V3）</div>
       </template>
       <!--统计数据表格-->
-      <van-row style="display: flex;align-items: center;">
+      <van-row ref="summaryCard" style="display: flex;align-items: center;">
         <van-col span="9">
           <!--胜负缩略图-->
             <div style="width: 100px;float: left;">
@@ -37,7 +37,7 @@
           </div>
           <div style="height: 1vh"></div>
           <div>
-            <a-statistic title="胜率" :value="winRate"/>
+            <a-statistic title="胜率" :value="isNaN(winRate)?'--':winRate"/>
           </div>
         </van-col>
         <van-col span="5">
@@ -46,10 +46,14 @@
           </div>
           <div style="height: 1vh"></div>
           <div>
-            <a-statistic title="MVP率" :value="MVPRate"/>
+            <a-statistic title="MVP率" :value="isNaN(MVPRate)?'--':MVPRate"/>
           </div>
         </van-col>
       </van-row>
+      <!--折线图-->
+      <div style="text-align: center;margin-top: 1vh;color: rgba(0, 0, 0, 0.45);font-size: 14px">近期杯数走势</div>
+      <div ref="chart" style="height: 250px;width: 90vw;margin: -6vh 0 -3vh -3vw">
+      </div>
     </a-card>
 
     <van-row>
@@ -239,7 +243,7 @@
                     v-for="(brawlerItem, index) in item.battle.teams[0]"
                     :key="index"
                     style="display: inline-block;text-align: center;margin: 0 3px"
-                    @click="$bus.$emit('onSearch', item.tag.slice(1))">
+                    @click="$bus.$emit('onSearch', brawlerItem.tag.slice(1))">
                   <img :src="require('../assets/brawlers/'+ brawlerItem.brawler.id +'.png')" alt="" style="width: 13vw;display: block">
                   <van-tag plain type="primary" :color="brawlerItem.brawler.power === 11? 'rgb(114,46,209)': brawlerItem.brawler.power === 10? 'rgb(19,194,194)': 'rgb(82,196,26)'">Lv.{{ brawlerItem.brawler.power }}</van-tag>
                   <div style="width: 13vw;font-size: 0.1em;color: black;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" :class="{name: item.name === myName}">{{brawlerItem.name}}</div>
@@ -408,12 +412,15 @@
 
 <script>
 import moment from "moment"
+import * as echarts from 'echarts';
+
 
 export default {
   name: "RecentEvents",
   data(){
     return{
       battleLogs: [],
+      trophies: 0,
       victoryNum: 0,
       defeatNum: 0,
       drawNum: 0,
@@ -755,6 +762,74 @@ export default {
         let mode = ['gemGrab', 'brawlBall', 'bounty', 'heist', 'hotZone', 'siege', 'knockout', 'soloShowdown', 'duoShowdown', 'duels', 'wipeout', 'payload', 'basketBrawl']
         return mode[this.selectModeIndex] === data.mode
       }
+    },
+    drawChart(){
+      let chartDom = this.$refs.chart
+      let myChart = echarts.init(chartDom);
+      let option;
+      let trophiesData = [0];
+      let trophiesDataItem = 1
+      let wid = this.$refs.summaryCard.clientWidth
+      for(let i = this.battleLogs.length - 1;i > 0;i --, trophiesDataItem++){
+        trophiesData.push(
+            'trophyChange' in this.battleLogs[i].battle?
+                this.battleLogs[i].battle.trophyChange + trophiesData[trophiesDataItem - 1]:
+                trophiesData[trophiesDataItem - 1]
+        )
+      }
+      option = {
+        tooltip : {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'line',
+            snap: true,
+            label: {
+              backgroundColor: '#6a7985'
+            }
+          }
+        },
+        color: ['rgb(255,213,145)'],
+        xAxis: {
+          type: 'category',
+        },
+        yAxis: {
+          type: 'value',
+          minInterval: 8,
+          splitLine: {
+            show: false
+          }
+        },
+        series: [
+          {
+            data: trophiesData,
+            type: 'line',
+            smooth: true,
+            symbol: "none",
+            lineStyle: {
+              width: 2.5
+            }
+          }
+        ],
+        dataZoom: [
+          {
+            type: 'slider',
+            show: true,
+            start: 60,
+            end: 100,
+            xAxisIndex: 0,
+            height: 20,
+            moveHandleSize: 12,
+            left: 10,
+            width: wid,
+            moveHandleStyle: {
+              color: "rgba(223, 230, 243, 0.6)"
+            },
+            fillerColor: "rgba(167, 183, 204, 0.1)",
+            handleSize: 30
+          }
+        ]
+      };
+      option && myChart.setOption(option);
     }
   },
   filters: {
@@ -818,11 +893,15 @@ export default {
     this.$bus.$on('myName', (data) => {
       this.myName = data
     })
+    this.$bus.$on('PersonalTrophies', (data) => {
+      this.trophies = data
+    })
     this.$bus.$on('BattleLogs', (data) => {
       this.battleLogs = data
       this.summary()
       this.calBrawlersUse()
       this.calModeNum()
+      this.drawChart()
     })
   },
   watch: {
