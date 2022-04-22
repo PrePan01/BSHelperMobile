@@ -772,7 +772,7 @@ export default {
       let wid = this.$refs.summaryCard.clientWidth
       for(let i = this.battleLogs.length - 1;i > 0;i --, trophiesDataItem++){
         trophiesData.push(
-            'trophyChange' in this.battleLogs[i].battle?
+            'trophyChange' in this.battleLogs[i].battle && this.battleLogs[i].battle.type === 'ranked'?
                 this.battleLogs[i].battle.trophyChange + trophiesData[trophiesDataItem - 1]:
                 trophiesData[trophiesDataItem - 1]
         )
@@ -814,7 +814,7 @@ export default {
           {
             type: 'slider',
             show: true,
-            start: 60,
+            start: 40,
             end: 100,
             xAxisIndex: 0,
             height: 20,
