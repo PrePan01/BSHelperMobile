@@ -1,6 +1,10 @@
 <template>
   <div>
     <Starter class="starter" v-show="showStarter"></Starter>
+    <van-notice-bar
+        left-icon="warning"
+        text="系统维护中！战绩查询暂不可用，请等待维护结束后再试！"
+    />
     <div v-show="tabberActive !== 2">
       <!--搜索框-->
       <van-search

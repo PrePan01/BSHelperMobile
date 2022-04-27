@@ -10,8 +10,6 @@
       </div>
     </van-dialog>
 
-    <img v-if="Date().slice(8,10) < 5" :src="require('../assets/0402.jpg')" style="width: 100%; position: absolute; top:0;" alt="灯笼挑战" @click="openBanner">
-
     <div style="text-align: center;">
       <!--<i class="iconfont icon-gongju-" style="font-size: 30vw;color: rgb(2,82,205)" ></i>
       <h1 class="title">战绩小助手</h1>
