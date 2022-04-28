@@ -67,7 +67,7 @@
               强攻
             </a-select-option>
             <a-select-option value = 'e'>
-              韧性
+              洞察
             </a-select-option>
             <a-select-option value = 'f'>
               护盾
@@ -210,7 +210,7 @@ export default {
         this.selectByGears = 'DAMAGE'
       }
       else if(value === 'e'){
-        this.selectByGears = 'RESISTANCE'
+        this.selectByGears = 'VISION'
       }
       else if(value === 'f'){
         this.selectByGears = 'SHIELD'
