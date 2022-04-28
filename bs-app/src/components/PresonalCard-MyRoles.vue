@@ -316,7 +316,7 @@ export default {
             if(name === 'SPEED') arr[0]++
             else if(name === 'HEALTH') arr[1]++
             else if(name === 'DAMAGE') arr[2]++
-            else if(name === 'RESISTANCE') arr[3]++
+            else if(name === 'VISION') arr[3]++
             else if(name === 'SHIELD') arr[4]++
           }
         }
@@ -332,7 +332,7 @@ export default {
         else if(this.selectByGears === 'DAMAGE'){
           return arr[2]
         }
-        else if(this.selectByGears === 'RESISTANCE'){
+        else if(this.selectByGears === 'VISION'){
           return arr[3]
         }
         else if(this.selectByGears === 'SHIELD'){
