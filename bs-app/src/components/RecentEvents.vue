@@ -56,6 +56,18 @@
       </div>
     </a-card>
 
+    <div v-show="showFeedback">
+      <div class="feedback" v-show="!showFeedbackResult">
+        <span style="margin-right: 5px">你喜欢 [近期杯数走势] 这个功能吗？</span>
+        <van-button plain hairline type="primary" size="mini" @click="feedbackYes">喜欢</van-button>
+        <van-button plain hairline type="default" size="mini" @click="feedbackNormal">一般</van-button>
+        <van-button plain hairline type="danger" size="mini" @click="feedbackNo">不喜欢</van-button>
+      </div>
+      <div class="feedback" v-show="showFeedbackResult">
+        感谢您的反馈！<i class="iconfont icon-guanbi" @click="showFeedback = false"></i>
+      </div>
+    </div>
+
     <!--模式英雄统计-->
     <van-row>
       <van-col span="12">
@@ -414,6 +426,7 @@
 <script>
 import moment from "moment"
 import * as echarts from 'echarts';
+import axios from 'axios'
 
 
 export default {
@@ -435,7 +448,9 @@ export default {
       brawlUse: {},
       brawlUseSorted: [],
       modeNum: [],
-      selectModeIndex: -1
+      selectModeIndex: -1,
+      showFeedback: true,
+      showFeedbackResult: false
     }
   },
   methods: {
@@ -841,7 +856,34 @@ export default {
         ]
       };
       option && myChart.setOption(option);
-    }
+    },
+    feedbackYes(){
+      axios({
+        methods: 'GET',
+        url: 'http://8.134.215.115:3000/api/feedback/fb0504/yes'
+      }).then(() => {
+        this.showFeedbackResult = !this.showFeedbackResult
+        localStorage.setItem('feedback0504', 'false')
+      })
+    },
+    feedbackNormal(){
+      axios({
+        methods: 'GET',
+        url: 'http://8.134.215.115:3000/api/feedback/fb0504/normal'
+      }).then(() => {
+        this.showFeedbackResult = !this.showFeedbackResult
+        localStorage.setItem('feedback0504', 'false')
+      })
+    },
+    feedbackNo(){
+      axios({
+        methods: 'GET',
+        url: 'http://8.134.215.115:3000/api/feedback/fb0504/no'
+      }).then(() => {
+        this.showFeedbackResult = !this.showFeedbackResult
+        localStorage.setItem('feedback0504', 'false')
+      })
+    },
   },
   filters: {
     //时间转换过滤器
@@ -910,10 +952,12 @@ export default {
     this.$bus.$on('BattleLogs', (data) => {
       this.battleLogs = data
       this.summary()
+
       this.calBrawlersUse()
       this.calModeNum()
       this.drawChart()
     })
+    localStorage.getItem('feedback0504') === 'false'? this.showFeedback = false: ''
   },
   watch: {
     battleLogs: function (){
@@ -924,7 +968,7 @@ export default {
 </script>
 
 <style>
-@import 'https://at.alicdn.com/t/font_3113095_9ai60locd0e.css';
+@import 'https://at.alicdn.com/t/font_3113095_xl8kzdgoexd.css';
 
 .van-collapse-item--border::after{
   border-top: 1px solid rgba(57,118,227,0.3);
@@ -1029,5 +1073,12 @@ img{
 }
 .otherColor{
   color: rgb(143, 147, 154);
+}
+
+.feedback{
+  display: flex;
+  justify-content: center;
+  margin: 5px 0 0 0;
+  align-items: center;
 }
 </style>
