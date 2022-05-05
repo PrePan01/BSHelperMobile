@@ -49,7 +49,7 @@ export default {
   data(){
     return{
       popUpShow: false,
-      version: '更新日期：4/27 | 版本：43.229'
+      version: '更新日期：5/4 | 版本：43.238'
     }
   },
   methods: {
