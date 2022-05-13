@@ -17,7 +17,7 @@
         <van-col span="12">
           <van-cell>
             <!--奖杯数-->
-            <a-statistic style="margin-top: 1vh" :suffix="trophiesChange === 0 ? '-' : trophiesChange > 0? '↑'+ trophiesChange : '↓'+trophiesChange" :value="personalData.trophies" valueStyle="text-shadow: 1px 1px 1px rgba(0,0,0,0.7);color: rgb(254,208,53);font-weight: bold;font-size: 2em">
+            <a-statistic style="margin-top: 1vh" :suffix="trophiesChange === 0 ? '-' : trophiesChange > 0? '↑'+ trophiesChange : '↓'+trophiesChange" :value="personalData.trophies" valueStyle="text-shadow: 1px 1px 1px rgba(0,0,0,0.4);color: rgb(254,208,53);font-weight: bold;font-size: 2em">
               <template slot="title">
                 <div>
                   <img src="~@/assets/icon_trophy_medium.png" alt=""
@@ -66,7 +66,7 @@
         <van-col span="12">
           <van-cell>
             <!--最高奖杯数-->
-            <a-statistic style="margin-top: 1vh" :value="personalData.highestTrophies" valueStyle="text-shadow: 1px 1px 1px rgba(0,0,0,0.7);color: red;font-weight: bold;font-size: 2em">
+            <a-statistic style="margin-top: 1vh" :value="personalData.highestTrophies" valueStyle="text-shadow: 1px 1px 1px rgba(0,0,0,0.4);color: red;font-weight: bold;font-size: 2em">
               <template slot="title">
                 <div>
                   <img src="~@/assets/icon_trophy_medium.png" alt=""

@@ -77,7 +77,7 @@
         <van-col span="6">
           <div class="brawlersNum">
             <span style="border: 1px solid #d9d9d9;padding: 3px 5px;border-radius: 4px;color: rgb(57,118,227)">{{brawlsNum}}</span>
-            <span> / 55</span>
+            <span> / 56</span>
           </div>
         </van-col>
       </van-row>
@@ -302,6 +302,7 @@ export default {
       else if(data === 'FANG') return '阿方'
       else if(data === 'NITA') return '妮塔'
       else if(data === 'EVE') return '伊芙'
+      else if(data === 'JANET') return '珍妮特'
     }
   },
   computed: {
