@@ -860,7 +860,7 @@ export default {
     feedbackYes(){
       axios({
         methods: 'GET',
-        url: 'http://8.134.215.115:3000/api/feedback/fb0504/yes'
+        url: 'https://8.134.215.115:3000/api/feedback/fb0504/yes'
       }).then(() => {
         this.showFeedbackResult = !this.showFeedbackResult
         localStorage.setItem('feedback0504', 'false')
@@ -869,7 +869,7 @@ export default {
     feedbackNormal(){
       axios({
         methods: 'GET',
-        url: 'http://8.134.215.115:3000/api/feedback/fb0504/normal'
+        url: 'https://8.134.215.115:3000/api/feedback/fb0504/normal'
       }).then(() => {
         this.showFeedbackResult = !this.showFeedbackResult
         localStorage.setItem('feedback0504', 'false')
@@ -878,7 +878,7 @@ export default {
     feedbackNo(){
       axios({
         methods: 'GET',
-        url: 'http://8.134.215.115:3000/api/feedback/fb0504/no'
+        url: 'https://8.134.215.115:3000/api/feedback/fb0504/no'
       }).then(() => {
         this.showFeedbackResult = !this.showFeedbackResult
         localStorage.setItem('feedback0504', 'false')
