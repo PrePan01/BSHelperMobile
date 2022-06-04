@@ -3,9 +3,11 @@
 
     <van-row>
       <van-col span="12">
-        <a-card style="width: 43vw" class="card joinUsCard" @click="$router.push('/recordList')">
+        <!--@click="$router.push('/recordList')"-->
+        <a-card style="width: 43vw" class="card joinUsCard">
           <i class="iconfont icon-paixingbang cardIcon"></i>
           <h2>排行榜</h2>
+          <h4>维护中...</h4>
         </a-card>
       </van-col>
       <van-col span="12">

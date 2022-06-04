@@ -56,18 +56,6 @@
       </div>
     </a-card>
 
-    <div v-show="showFeedback">
-      <div class="feedback" v-show="!showFeedbackResult">
-        <span style="margin-right: 5px">你喜欢 [近期杯数走势] 这个功能吗？</span>
-        <van-button plain hairline type="primary" size="mini" @click="feedbackYes">喜欢</van-button>
-        <van-button plain hairline type="default" size="mini" @click="feedbackNormal">一般</van-button>
-        <van-button plain hairline type="danger" size="mini" @click="feedbackNo">不喜欢</van-button>
-      </div>
-      <div class="feedback" v-show="showFeedbackResult">
-        感谢您的反馈！<i class="iconfont icon-guanbi" @click="showFeedback = false"></i>
-      </div>
-    </div>
-
     <!--模式英雄统计-->
     <van-row>
       <van-col span="12">
@@ -259,8 +247,8 @@
                     @click="$bus.$emit('onSearch', brawlerItem.tag.slice(1))">
                   <img :src="require('../assets/brawlers/'+ brawlerItem.brawler.id +'.png')" alt="" style="width: 13vw;display: block">
                   <van-tag plain type="primary" :color="brawlerItem.brawler.power === 11? 'rgb(114,46,209)': brawlerItem.brawler.power === 10? 'rgb(19,194,194)': 'rgb(82,196,26)'">Lv.{{ brawlerItem.brawler.power }}</van-tag>
-                  <div style="width: 13vw;font-size: 0.1em;color: black;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" :class="{name: item.name === myName}">{{brawlerItem.name}}</div>
-                  <div style="color: black;font-size: 0.1em;margin-top: -2px">
+                  <div style="width: 13vw;font-size: 12px;color: black;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" :class="{name: item.name === myName}">{{brawlerItem.name}}</div>
+                  <div style="color: black;font-size: 12px;margin-top: -2px">
                     <img style="vertical-align: middle" src="@/assets/icon_trophy_small.png" alt="" width="13px">
                     <span v-if="item.battle.type === 'teamRanked' || item.battle.type === 'soloRanked'" style="vertical-align: middle">{{brawlerItem.brawler.trophies | rankNum}}</span>
                     <span v-else style="vertical-align: middle">{{brawlerItem.brawler.trophies}}</span>
@@ -278,8 +266,8 @@
                     @click="$bus.$emit('onSearch', brawlerItem.tag.slice(1))">
                   <img :src="require('../assets/brawlers/'+ brawlerItem.brawler.id +'.png')" alt="" style="width: 13vw;display: block">
                   <van-tag plain type="primary" :color="brawlerItem.brawler.power === 11? 'rgb(114,46,209)': brawlerItem.brawler.power === 10? 'rgb(19,194,194)': 'rgb(82,196,26)'">Lv.{{ brawlerItem.brawler.power }}</van-tag>
-                  <div style="width: 13vw;font-size: 0.1em;color: black;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" :class="{name: brawlerItem.name === myName}">{{brawlerItem.name}}</div>
-                  <div style="color: black;font-size: 0.1em;margin-top: -2px">
+                  <div style="width: 13vw;font-size: 12px;color: black;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" :class="{name: brawlerItem.name === myName}">{{brawlerItem.name}}</div>
+                  <div style="color: black;font-size: 12px;margin-top: -2px">
                     <img style="vertical-align: middle" src="@/assets/icon_trophy_small.png" alt="" width="13px">
                     <span v-if="item.battle.type === 'teamRanked' || item.battle.type === 'soloRanked'" style="vertical-align: middle">{{brawlerItem.brawler.trophies | rankNum}}</span>
                     <span v-else style="vertical-align: middle">{{brawlerItem.brawler.trophies}}</span>
@@ -339,12 +327,12 @@
                 <div v-for="(item, index) in item.battle.players[0].brawlers" :key="index" style="display: inline-block;text-align: center;margin: 0 3px">
                   <img :src="require('../assets/brawlers/'+ item.id +'.png')" alt="" style="width: 13vw;display: block">
                   <van-tag plain type="primary" :color="item.power === 11? 'rgb(114,46,209)': item.power === 10? 'rgb(19,194,194)': 'rgb(82,196,26)'">Lv.{{ item.power }}</van-tag>
-                  <div style="color: black;font-size: 0.1em;margin-top: -2px">
+                  <div style="color: black;font-size: 12px;margin-top: -2px">
                     <img style="vertical-align: middle" src="@/assets/icon_trophy_small.png" alt="" width="13px">
                     <span style="vertical-align: middle">{{item.trophies}}</span>
                   </div>
                 </div>
-                <div style="font-size: 0.1em;color: black" :class="{name: item.battle.players[0].name === myName}">{{item.battle.players[0].name}}</div>
+                <div style="font-size: 12px;color: black" :class="{name: item.battle.players[0].name === myName}">{{item.battle.players[0].name}}</div>
               </div>
               <div style="text-align: center;display: inline-block;">
                 <i style="font-size: 20px;padding: 0 1px" class="iconfont icon-duizhan2x"></i>
@@ -353,12 +341,12 @@
                 <span v-for="(item, index) in item.battle.players[1].brawlers" :key="index" style="display: inline-block;text-align: center;margin: 0 3px">
                   <img :src="require('../assets/brawlers/'+ item.id +'.png')" alt="" style="width: 13vw;display: block">
                   <van-tag plain type="primary" :color="item.power === 11? 'rgb(114,46,209)': item.power === 10? 'rgb(19,194,194)': 'rgb(82,196,26)'">Lv.{{ item.power }}</van-tag>
-                  <div style="color: black;font-size: 0.1em;margin-top: -2px">
+                  <div style="color: black;font-size: 12px;margin-top: -2px">
                     <img style="vertical-align: middle" src="@/assets/icon_trophy_small.png" alt="" width="13px">
                     <span style="vertical-align: middle">{{item.trophies}}</span>
                   </div>
                 </span>
-                <div style="font-size: 0.1em;color: black" :class="{name: item.battle.players[1].name === myName}">{{item.battle.players[1].name}}</div>
+                <div style="font-size: 12px;color: black" :class="{name: item.battle.players[1].name === myName}">{{item.battle.players[1].name}}</div>
               </div>
             </div>
           </div>
@@ -426,8 +414,6 @@
 <script>
 import moment from "moment"
 import * as echarts from 'echarts';
-import axios from 'axios'
-
 
 export default {
   name: "RecentEvents",
@@ -856,34 +842,7 @@ export default {
         ]
       };
       option && myChart.setOption(option);
-    },
-    feedbackYes(){
-      axios({
-        methods: 'GET',
-        url: 'https://8.134.215.115:3000/api/feedback/fb0504/yes'
-      }).then(() => {
-        this.showFeedbackResult = !this.showFeedbackResult
-        localStorage.setItem('feedback0504', 'false')
-      })
-    },
-    feedbackNormal(){
-      axios({
-        methods: 'GET',
-        url: 'https://8.134.215.115:3000/api/feedback/fb0504/normal'
-      }).then(() => {
-        this.showFeedbackResult = !this.showFeedbackResult
-        localStorage.setItem('feedback0504', 'false')
-      })
-    },
-    feedbackNo(){
-      axios({
-        methods: 'GET',
-        url: 'https://8.134.215.115:3000/api/feedback/fb0504/no'
-      }).then(() => {
-        this.showFeedbackResult = !this.showFeedbackResult
-        localStorage.setItem('feedback0504', 'false')
-      })
-    },
+    }
   },
   filters: {
     //时间转换过滤器

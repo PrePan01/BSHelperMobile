@@ -9,14 +9,14 @@
     <!--标题头-->
     <a-page-header
         style="border: 1px solid rgb(235, 237, 240)"
-        :title="name | eventsName"
+        :title="modeName | eventsName"
         :sub-title="mapName"
         @back="onClickLeft"
     >
     </a-page-header>
     <a-popover>
       <template slot="content">
-        <img :src="require('@/assets/maps/'+ 'supercell-'+ getMap + '-thumb' +'.png')" alt="" width="300px">
+        <img :src="(mapImageUrl)" alt="" width="300px">
       </template>
       <a-button style="position: absolute;z-index: 3;right: 20px;top: 18px">
         查看地图
@@ -48,8 +48,10 @@ export default {
   data(){
     return{
       event: '',  //active: 当前活动
-      name: '',  //模式名称,
+      name: '',
+      modeName: '',  //模式名称,
       mapName: '', //地图名称
+      mapImageUrl: '',
       stats: [], //英雄胜率数据
       teamStats: [], //队伍胜率数据，
       columns: [
@@ -99,20 +101,24 @@ export default {
       }).then((res) => {
         if(this.event === 'active'){
           for(let i in res.data.active){
-            if(res.data.active[i].map.gameMode.name === this.name){
+            if(res.data.active[i].slot.id == this.name){
               this.stats = res.data.active[i].map.stats
               this.teamStats = res.data.active[i].map.teamStats
               this.mapName = res.data.active[i].map.name
+              this.mapImageUrl = res.data.active[i].map.imageUrl
+              this.modeName =  res.data.active[i].map.gameMode.name
               break
             }
           }
         }
         else{
           for(let i in res.data.upcoming){
-            if(res.data.upcoming[i].map.gameMode.name === this.name){
+            if(res.data.upcoming[i].slot.id == this.name){
               this.stats = res.data.upcoming[i].map.stats
               this.teamStats = res.data.upcoming[i].map.teamStats
               this.mapName = res.data.upcoming[i].map.name
+              this.mapImageUrl = res.data.upcoming[i].map.imageUrl
+              this.modeName =  res.data.upcoming[i].map.gameMode.name
               break
             }
           }
@@ -143,19 +149,6 @@ export default {
     this.name = this.$route.query.name
     this.event = this.$route.query.event
     this.getData()
-  },
-  computed: {
-    getMap: {
-      get(){
-        try{
-          require('@/assets/maps/'+ 'supercell-'+ this.mapName.toLowerCase().replace(/\s/g,'-') + '-thumb' +'.png')
-          return this.mapName.toLowerCase().replace(/\s/g,'-')
-        }
-        catch (e) {
-          return 'default'
-        }
-      }
-    }
   }
 }
 </script>

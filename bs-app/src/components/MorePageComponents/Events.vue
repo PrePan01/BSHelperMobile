@@ -20,7 +20,7 @@
     </van-divider>
     <div v-for="(item) in activeEvents" :key="item.id" class="activeEvents">
       <!--宝石-->
-      <div class="eachEvents" v-if="item.slot.name === 'Gem Grab'" @click="$router.push({path: '/eventsdetails', query: {event: 'active', name: 'Gem Grab'}})">
+      <div class="eachEvents" v-if="item.slot.name === 'Gem Grab'" @click="$router.push({path: '/eventsdetails', query: {event: 'active', name: item.slot.id}})">
         <div class="eventsCard">
           <div class="timeCard">
             <div style="color: white">
@@ -41,7 +41,7 @@
       </div>
 
       <!--足球-->
-      <div class="eachEvents" v-if="item.slot.name === 'Daily Events' && item.map.gameMode.name === 'Brawl Ball'" @click="$router.push({path: '/eventsdetails', query: {event: 'active', name: 'Brawl Ball'}})">
+      <div class="eachEvents" v-if="item.slot.name === 'Daily Events' && item.map.gameMode.name === 'Brawl Ball'" @click="$router.push({path: '/eventsdetails', query: {event: 'active', name: item.slot.id}})">
         <div style="background-color: rgb(154,177,253);" class="eventsCard">
           <div class="timeCard">
             <div style="color: white">
@@ -62,7 +62,7 @@
       </div>
 
       <!--热区-->
-      <div class="eachEvents" v-if="(item.slot.name === 'Team Events' || item.slot.name === 'Team Events 2') && item.map.gameMode.name === 'Hot Zone'" @click="$router.push({path: '/eventsdetails', query: {event: 'active', name: 'Hot Zone'}})" >
+      <div class="eachEvents" v-if="(item.slot.name === 'Team Events' || item.slot.name === 'Team Events 2') && item.map.gameMode.name === 'Hot Zone'" @click="$router.push({path: '/eventsdetails', query: {event: 'active', name: item.slot.id}})" >
         <div style="background-color: rgb(226,59,79);" class="eventsCard">
           <div class="timeCard">
             <div style="color: white">
@@ -83,7 +83,7 @@
       </div>
 
       <!--赏金猎人-->
-      <div class="eachEvents" v-if="(item.slot.name === 'Team Events' || item.slot.name === 'Team Events 2') && item.map.gameMode.name === 'Bounty'" @click="$router.push({path: '/eventsdetails', query: {event: 'active', name: 'Bounty'}})">
+      <div class="eachEvents" v-if="(item.slot.name === 'Team Events' || item.slot.name === 'Team Events 2') && item.map.gameMode.name === 'Bounty'" @click="$router.push({path: '/eventsdetails', query: {event: 'active', name: item.slot.id}})">
         <div style="background-color: rgb(0,206,254);" class="eventsCard">
           <div class="timeCard">
             <div style="color: white">
@@ -104,7 +104,7 @@
       </div>
 
       <!--机甲攻坚战-->
-      <div class="eachEvents" v-if="(item.slot.name === 'Team Events' || item.slot.name === 'Team Events 2') && item.map.gameMode.name === 'Siege'" @click="$router.push({path: '/eventsdetails', query: {event: 'active', name: 'Siege'}})">
+      <div class="eachEvents" v-if="(item.slot.name === 'Team Events' || item.slot.name === 'Team Events 2') && item.map.gameMode.name === 'Siege'" @click="$router.push({path: '/eventsdetails', query: {event: 'active', name: item.slot.id}})">
         <div style="background-color: rgb(239,78,49);" class="eventsCard">
           <div class="timeCard">
             <div style="color: white">
@@ -125,7 +125,7 @@
       </div>
 
       <!--乱斗淘汰赛-->
-      <div class="eachEvents" v-if="(item.slot.name === 'Team Events' || item.slot.name === 'Team Events 2') && item.map.gameMode.name === 'Knockout'" @click="$router.push({path: '/eventsdetails', query: {event: 'active', name: 'Knockout'}})">
+      <div class="eachEvents" v-if="(item.slot.name === 'Team Events' || item.slot.name === 'Team Events 2') && item.map.gameMode.name === 'Knockout'" @click="$router.push({path: '/eventsdetails', query: {event: 'active', name: item.slot.id}})">
         <div style="background-color: rgb(247,131,28);" class="eventsCard">
           <div class="timeCard">
             <div style="color: white">
@@ -146,7 +146,7 @@
       </div>
 
       <!--金库攻防-->
-      <div class="eachEvents" v-if="(item.slot.name === 'Team Events' || item.slot.name === 'Team Events 2') && item.map.gameMode.name === 'Heist'" @click="$router.push({path: '/eventsdetails', query: {event: 'active', name: 'Heist'}})">
+      <div class="eachEvents" v-if="(item.slot.name === 'Team Events' || item.slot.name === 'Team Events 2') && item.map.gameMode.name === 'Heist'" @click="$router.push({path: '/eventsdetails', query: {event: 'active', name: item.slot.id}})">
         <div style="background-color: rgb(247,131,28);" class="eventsCard">
           <div class="timeCard">
             <div style="color: white">
@@ -165,6 +165,7 @@
           </div>
         </div>
       </div>
+
 
     </div>
 
@@ -219,7 +220,7 @@
       </div>
 
       <!--热区-->
-      <div class="eachEvents" v-if="(item.slot.name === 'Team Events' || item.slot.name === 'Team Events 2') && item.map.gameMode.name === 'Hot Zone'" @click="$router.push({path: '/eventsdetails', query: {event: 'upcoming', name: 'Hot Zone'}})" >
+      <div class="eachEvents" v-if="(item.slot.name === 'Team Events' || item.slot.name === 'Team Events 2') && item.map.gameMode.name === 'Hot Zone'" @click="$router.push({path: '/eventsdetails', query: {event: 'upcoming', name: item.slot.id}})" >
         <div style="background-color: rgb(226,59,79);" class="eventsCard">
           <div class="timeCard">
             <div style="color: white">
@@ -240,7 +241,7 @@
       </div>
 
       <!--赏金猎人-->
-      <div class="eachEvents" v-if="(item.slot.name === 'Team Events' || item.slot.name === 'Team Events 2') && item.map.gameMode.name === 'Bounty'" @click="$router.push({path: '/eventsdetails', query: {event: 'upcoming', name: 'Bounty'}})">
+      <div class="eachEvents" v-if="(item.slot.name === 'Team Events' || item.slot.name === 'Team Events 2') && item.map.gameMode.name === 'Bounty'" @click="$router.push({path: '/eventsdetails', query: {event: 'upcoming', name: item.slot.id}})">
         <div style="background-color: rgb(0,206,254);" class="eventsCard">
           <div class="timeCard">
             <div style="color: white">
@@ -261,7 +262,7 @@
       </div>
 
       <!--机甲攻坚战-->
-      <div class="eachEvents" v-if="(item.slot.name === 'Team Events' || item.slot.name === 'Team Events 2') && item.map.gameMode.name === 'Siege'" @click="$router.push({path: '/eventsdetails', query: {event: 'upcoming', name: 'Siege'}})">
+      <div class="eachEvents" v-if="(item.slot.name === 'Team Events' || item.slot.name === 'Team Events 2') && item.map.gameMode.name === 'Siege'" @click="$router.push({path: '/eventsdetails', query: {event: 'upcoming', name: item.slot.id}})">
         <div style="background-color: rgb(239,78,49);" class="eventsCard">
           <div class="timeCard">
             <div style="color: white">
@@ -282,7 +283,7 @@
       </div>
 
       <!--乱斗淘汰赛-->
-      <div class="eachEvents" v-if="(item.slot.name === 'Team Events' || item.slot.name === 'Team Events 2') && item.map.gameMode.name === 'Knockout'" @click="$router.push({path: '/eventsdetails', query: {event: 'upcoming', name: 'Knockout'}})">
+      <div class="eachEvents" v-if="(item.slot.name === 'Team Events' || item.slot.name === 'Team Events 2') && item.map.gameMode.name === 'Knockout'" @click="$router.push({path: '/eventsdetails', query: {event: 'upcoming', name: item.slot.id}})">
         <div style="background-color: rgb(247,131,28);" class="eventsCard">
           <div class="timeCard">
             <div style="color: white">
@@ -303,7 +304,7 @@
       </div>
 
       <!--金库攻防-->
-      <div class="eachEvents" v-if="(item.slot.name === 'Team Events' || item.slot.name === 'Team Events 2') && item.map.gameMode.name === 'Heist'" @click="$router.push({path: '/eventsdetails', query: {event: 'upcoming', name: 'Heist'}})">
+      <div class="eachEvents" v-if="(item.slot.name === 'Team Events' || item.slot.name === 'Team Events 2') && item.map.gameMode.name === 'Heist'" @click="$router.push({path: '/eventsdetails', query: {event: 'upcoming', name: item.slot.id}})">
         <div style="background-color: rgb(247,131,28);" class="eventsCard">
           <div class="timeCard">
             <div style="color: white">
