@@ -30,7 +30,10 @@
     </a-card>
 
     <van-cell-group style="border: 1px solid rgb(245,246,247);">
-      <van-cell title="问题反馈" is-link size="large" @click="popUpShow = true"/>
+      <!--@click="popUpShow = true"-->
+      <a href="https://www.tapechat.net/uu/6CL6M5/QW3O5XXP?uid=5779398">
+        <van-cell title="问题反馈" is-link size="large" />
+      </a>
       <van-cell title="更新日志" is-link size="large" @click="toUpdateInfo"/>
       <a href="http://prepan.top/download/latest.apk">
         <van-cell title="游戏下载" :label="version" is-link size="large"/>

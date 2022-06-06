@@ -38,7 +38,7 @@
         直接进入
       </a-button>
       <a-button  @click="toUpdateInfo">
-        更新日志
+        公告&更新日志
       </a-button>
     </a-button-group>
 

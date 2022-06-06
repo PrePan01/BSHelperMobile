@@ -303,6 +303,7 @@ export default {
       else if(data === 'NITA') return '妮塔'
       else if(data === 'EVE') return '伊芙'
       else if(data === 'JANET') return '珍妮特'
+      else if(data === 'BONNIE') return '邦妮'
     }
   },
   computed: {
