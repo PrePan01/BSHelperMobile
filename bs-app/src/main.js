@@ -14,9 +14,14 @@ import VueRouter from 'vue-router'
 import router from './router'
 import './assets/fonts/fonts.css'
 //过滤器
-import * as filters from './filters/mapTranslate'
-Object.keys(filters).forEach(key => {
-  Vue.filter(key, filters[key])
+import * as mapTranslate from './filters/mapTranslate'
+import * as brawlersName from './filters/brawlersName'
+
+Object.keys(mapTranslate).forEach(key => {
+  Vue.filter(key, mapTranslate[key])
+})
+Object.keys(brawlersName).forEach(key => {
+  Vue.filter(key, brawlersName[key])
 })
 
 Vue.use(Vant);

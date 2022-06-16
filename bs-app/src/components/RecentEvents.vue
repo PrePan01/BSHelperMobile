@@ -4,7 +4,7 @@
 
     <a-card v-if="battleLogs !== []" style="width: 95vw; margin:1vh auto 0 auto; padding: -5px">
       <template slot="title">
-        <div style="vertical-align: middle;font-size: 1.25em">最近25场（只统计3V3）</div>
+        <div style="vertical-align: middle;font-size: 1.25em">最近25场</div>
       </template>
       <!--统计数据表格-->
       <van-row ref="summaryCard" style="display: flex;align-items: center;">
@@ -24,7 +24,7 @@
         </van-col>
         <van-col span="5">
           <div>
-            <a-statistic title="获胜" :value="victoryNum" valueStyle="color: rgb(103,194,58)"/>
+            <a-statistic title="获胜" :value="victoryNum" valueStyle="color: rgb(103,194,58);"/>
           </div>
           <div style="height: 1vh"></div>
           <div>
@@ -51,6 +51,7 @@
         </van-col>
       </van-row>
       <!--折线图-->
+      <van-divider />
       <div style="text-align: center;margin-top: 1vh;color: rgba(0, 0, 0, 0.45);font-size: 14px">近期杯数走势</div>
       <div ref="chart" style="height: 250px;width: 90vw;margin: -6vh 0 -3vh -3vw">
       </div>
@@ -481,9 +482,6 @@ export default {
       else if (this.winRate > 60.0 && this.winRate <= 70.0) this.myLevel = 'S'
       else if (this.winRate > 70.0 && this.winRate <= 80.0) this.myLevel = 'SS'
       else if (this.winRate > 80.0) this.myLevel = 'SSS'
-    },
-    toMapTrans(){
-      this.$router.push('/mapTranslate')
     },
     isMyMvp(data){
       if('starPlayer' in data){

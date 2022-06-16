@@ -7,7 +7,7 @@
         <a-card style="width: 43vw" class="card joinUsCard">
           <i class="iconfont icon-paixingbang cardIcon"></i>
           <h2>排行榜</h2>
-          <h4>维护中...</h4>
+          <div>维护中...</div>
         </a-card>
       </van-col>
       <van-col span="12">

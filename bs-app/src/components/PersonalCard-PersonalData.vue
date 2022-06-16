@@ -2,7 +2,7 @@
   <div>
     <van-list>
       <!--id-->
-      <van-divider :style="{color: 'rgb(26,82,197)', fontWeight: 'bold', marginTop: '4vh', fontSize: '2em'}">
+      <van-divider :style="{color: 'rgb(26,82,197)', fontWeight: 'bold', marginTop: '4vh', fontSize: '30px'}">
         {{ personalData.name }}
       </van-divider>
       <div style="text-align: center">
@@ -17,7 +17,7 @@
         <van-col span="12">
           <van-cell>
             <!--奖杯数-->
-            <a-statistic style="margin-top: 1vh" :suffix="trophiesChange === 0 ? '-' : trophiesChange > 0? '↑'+ trophiesChange : '↓'+trophiesChange" :value="personalData.trophies" valueStyle="text-shadow: 1px 1px 1px rgba(0,0,0,0.4);color: rgb(254,208,53);font-weight: bold;font-size: 2em">
+            <a-statistic style="margin-top: 1vh" :suffix="trophiesChange === 0 ? '-' : trophiesChange > 0? '↑'+ trophiesChange : '↓'+trophiesChange" :value="personalData.trophies" valueStyle="color: rgb(254,208,53);font-weight: bold;font-size: 30px">
               <template slot="title">
                 <div>
                   <img src="~@/assets/icon_trophy_medium.png" alt=""
@@ -28,7 +28,7 @@
               </template>
             </a-statistic>
             <!--等级-->
-            <a-statistic style="margin-top: 3vh" :value="personalData.expLevel" valueStyle="color: rgb(35,143,242);font-weight: bold;font-size: 2em">
+            <a-statistic style="margin-top: 3vh" :value="personalData.expLevel" valueStyle="color: rgb(35,143,242);font-weight: bold;font-size: 30px">
               <template slot="title">
                 <div>
                   <img src="~@/assets/icon_player_level.png" alt=""
@@ -39,7 +39,7 @@
               </template>
             </a-statistic>
             <!--单鸡胜场-->
-            <a-statistic style="margin-top: 3vh" :suffix="soloChange === 0 ? '-' : soloChange > 0? '↑'+ soloChange : '↓'+soloChange" :value="personalData.soloVictories" valueStyle="color: rgb(35,143,242);font-weight: bold;font-size: 2em">
+            <a-statistic style="margin-top: 3vh" :suffix="soloChange === 0 ? '-' : soloChange > 0? '↑'+ soloChange : '↓'+soloChange" :value="personalData.soloVictories" valueStyle="color: rgb(35,143,242);font-weight: bold;font-size: 30px">
               <template slot="title">
                 <div>
                   <img src="~@/assets/Vector Smart Object-7.png" alt=""
@@ -50,7 +50,7 @@
               </template>
             </a-statistic>
             <!--15胜挑战-->
-            <a-statistic style="margin-top: 3vh" :value="personalData.isQualifiedFromChampionshipChallenge === false? '×': '√'" valueStyle="color: rgb(35,143,242);font-weight: bold;font-size: 2em">
+            <a-statistic style="margin-top: 3vh" :value="personalData.isQualifiedFromChampionshipChallenge === false? '×': '√'" valueStyle="color: rgb(35,143,242);font-weight: bold;font-size: 30px">
               <template slot="title">
                 <div>
                   <img src="~@/assets/icon_championship.png" alt=""
@@ -66,7 +66,7 @@
         <van-col span="12">
           <van-cell>
             <!--最高奖杯数-->
-            <a-statistic style="margin-top: 1vh" :value="personalData.highestTrophies" valueStyle="text-shadow: 1px 1px 1px rgba(0,0,0,0.4);color: red;font-weight: bold;font-size: 2em">
+            <a-statistic style="margin-top: 1vh" :value="personalData.highestTrophies" valueStyle="color: red;font-weight: bold;font-size: 30px">
               <template slot="title">
                 <div>
                   <img src="~@/assets/icon_trophy_medium.png" alt=""
@@ -77,7 +77,7 @@
               </template>
             </a-statistic>
             <!--3v3胜场-->
-            <a-statistic style="margin-top: 3vh" :suffix="threeVsChange === 0 ? '-' : threeVsChange > 0? '↑'+ threeVsChange : '↓'+threeVsChange" :value="personalData['3vs3Victories']" valueStyle="color: rgb(35,143,242);font-weight: bold;font-size: 2em">
+            <a-statistic style="margin-top: 3vh" :suffix="threeVsChange === 0 ? '-' : threeVsChange > 0? '↑'+ threeVsChange : '↓'+threeVsChange" :value="personalData['3vs3Victories']" valueStyle="color: rgb(35,143,242);font-weight: bold;font-size: 30px">
               <template slot="title">
                 <div>
                   <img src="~@/assets/3vs3.png" alt=""
@@ -88,7 +88,7 @@
               </template>
             </a-statistic>
             <!--双鸡胜场-->
-            <a-statistic style="margin-top: 3vh" :suffix="duoChange === 0 ? '-' : duoChange > 0? '↑' + duoChange : '↓' + duoChange" :value="personalData.duoVictories" valueStyle="color: rgb(35,143,242);font-weight: bold;font-size: 2em">
+            <a-statistic style="margin-top: 3vh" :suffix="duoChange === 0 ? '-' : duoChange > 0? '↑' + duoChange : '↓' + duoChange" :value="personalData.duoVictories" valueStyle="color: rgb(35,143,242);font-weight: bold;font-size: 30px">
               <template slot="title">
                 <div>
                   <img src="~@/assets/icon_showdownplus.png" alt=""
