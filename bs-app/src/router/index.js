@@ -9,6 +9,7 @@ import EventsDetails from '@/components/MorePageComponents/EventsDetails'
 import Main from '@/components/Main'
 import MorePage from '@/components/MorePage'
 import MapTranslate from '@/components/MapTranslate'
+import Skins from "@/components/MorePageComponents/Skins";
 
 export default new router({
     routes: [
@@ -47,6 +48,10 @@ export default new router({
         {
             path: '/eventsdetails',
             component: EventsDetails
+        },
+        {
+            path: '/skins',
+            component: Skins
         },
     ]
 })

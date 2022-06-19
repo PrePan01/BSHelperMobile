@@ -6,7 +6,7 @@
         <!--@click="$router.push('/recordList')"-->
         <a-card style="width: 43vw" class="card joinUsCard">
           <i class="iconfont icon-paixingbang cardIcon"></i>
-          <h2>排行榜</h2>
+          <h2 style="margin-bottom: 0">排行榜</h2>
           <div>维护中...</div>
         </a-card>
       </van-col>
@@ -22,6 +22,11 @@
     <a-card class="card" @click="$router.push('/clubSearch')">
       <i class="iconfont icon-sousuo1 cardIcon"></i>
       <h2>战队查询</h2>
+    </a-card>
+
+    <a-card class="card" @click="$router.push('/skins')">
+      <img class="cardIcon1" src="@/assets/衣架.svg" alt="">
+      <h2>皮肤图鉴</h2>
     </a-card>
 
     <a-card class="card joinUsCard" @click="$router.push('/joinUs')">
@@ -94,9 +99,14 @@ export default {
   font-size: 1.8em;
 }
 .cardIcon{
-  text-shadow: 0 3px 5px lightgray;
   font-size: 16vw;
   color: rgba(15,91,228,0.8);
   font-weight: bold;
 }
+.cardIcon1{
+  width: 17vw;
+  margin-top: 1vh;
+  margin-bottom: 2vh;
+}
+
 </style>

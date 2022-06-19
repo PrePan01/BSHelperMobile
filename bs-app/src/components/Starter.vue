@@ -11,9 +11,12 @@
     </van-dialog>
 
     <div style="text-align: center;">
-      <!--<i class="iconfont icon-gongju-" style="font-size: 30vw;color: rgb(2,82,205)" ></i>
-      <h1 class="title">战绩小助手</h1>
-      <h3 class="title">（国际服）</h3>-->
+      <van-notice-bar
+          background="#FFF"
+          left-icon="volume-o"
+          scrollable
+          text="皮肤图鉴模块正式上线，欢迎点击皮肤下方铅笔按钮共同维护最新史低价格数据，详情请查看【更多】-【皮肤图鉴】！"
+      />
       <img :src="require('../assets/startpic.png')" alt="" style="width: 80vw;margin: 0 0 -5vh 10vw">
     </div>
     <div></div>

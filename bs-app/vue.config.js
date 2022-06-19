@@ -11,13 +11,13 @@ module.exports = {
 					'^/playStatsApi': ''
 				}
 			},
-			/*"/brawlapi": {
+			"/demo": {
 				changeOrigin: true,
-				target: 'https://api.brawlapi.com',
+				target: 'ttps://prepan.top/bs_m',
 				pathRewrite: {
-					'^/brawlapi': ''
+					'^/demo': ''
 				}
-			}*/
+			}
 		}
 	}
 }

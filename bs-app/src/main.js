@@ -6,6 +6,7 @@ import { Notify } from 'vant';
 import { Toast } from 'vant';
 import { Popup } from 'vant';
 import 'vant/lib/index.css';
+import { Lazyload } from 'vant';
 //AntDesign组件库
 import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
@@ -30,6 +31,7 @@ Vue.use(VueRouter);
 Vue.use(Notify);
 Vue.use(Toast);
 Vue.use(Popup);
+Vue.use(Lazyload);
 
 Vue.config.productionTip = false
 
