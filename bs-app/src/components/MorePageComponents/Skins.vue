@@ -37,9 +37,9 @@
             <div class="nameTitle-brawlerName">
               {{brawlActiveIndex | brawlersName}}
             </div>
-            <div style="font-size: 28px">
+            <!--<div style="font-size: 28px">
               共{{skinsData[brawlActiveIndex].length}}款皮肤
-            </div>
+            </div>-->
           </div>
           <div v-for="(item, index) in skinsData[brawlActiveIndex]" :key="index">
               <template>
@@ -98,7 +98,8 @@
 </template>
 
 <script>
-import skinData from '@/assets/skinData.json'
+// import skinData from '@/assets/skinData.json'
+import axios from "axios";
 
 export default {
   name: "Skins",
@@ -133,9 +134,15 @@ export default {
       this.$refs.ifr.src = "https://wj.qq.com/s2/10412556/bf33/"
     }
   },
-  mounted() {
+  created() {
     this.createBrawlersList()
-    this.skinsData = skinData
+    axios({
+      methods:'GET',
+      url: 'https://prepan.top/bs_m/skinData.json'
+    }).then( res => {
+      this.skinsData = res.data
+    })
+    // this.skinsData = skinData
   },
 }
 </script>
