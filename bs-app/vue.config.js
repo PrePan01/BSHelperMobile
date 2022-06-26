@@ -10,7 +10,14 @@ module.exports = {
 				pathRewrite: {
 					'^/playStatsApi': ''
 				}
-			}
+			},
+			"/demo": {
+				changeOrigin: true,
+				target: 'https://prepan.top/bs_m',
+				pathRewrite: {
+					'^/demo': ''
+				}
+			},
 		}
 	}
 }

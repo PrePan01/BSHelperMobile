@@ -37,9 +37,9 @@
             <div class="nameTitle-brawlerName">
               {{brawlActiveIndex | brawlersName}}
             </div>
-            <!--<div style="font-size: 28px">
+            <div style="font-size: 22px">
               共{{skinsData[brawlActiveIndex].length}}款皮肤
-            </div>-->
+            </div>
           </div>
           <div v-for="(item, index) in skinsData[brawlActiveIndex]" :key="index">
               <template>
