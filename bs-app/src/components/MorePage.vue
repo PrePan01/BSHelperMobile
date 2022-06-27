@@ -40,6 +40,7 @@
         <van-cell title="问题反馈" is-link size="large" />
       </a>
       <van-cell title="更新日志" is-link size="large" @click="toUpdateInfo"/>
+      <van-cell title="支持赞助" is-link size="large" @click="toSupport"/>
       <a href="http://prepan.top/download/latest.apk">
         <van-cell title="游戏下载" :label="version" is-link size="large"/>
       </a>
@@ -70,6 +71,9 @@ export default {
     },
     toUpdateInfo(){
       this.$router.push('/updateInfo')
+    },
+    toSupport(){
+      this.$router.push('/support')
     }
   }
 }
