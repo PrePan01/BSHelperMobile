@@ -62,7 +62,7 @@ export default {
   data(){
     return{
       popUpShow: false,
-      version: '更新日期：5/12 | 版本：43.248'
+      version: '更新日期：6/29 | 版本：44.226'
     }
   },
   methods: {

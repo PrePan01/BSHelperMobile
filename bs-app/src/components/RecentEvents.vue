@@ -64,7 +64,7 @@
         <!--item[模式，次数，胜场，负场]-->
         <!--模式次数-->
         <div class="modeNum">
-          <div v-for="(item, index) in modeNum" :key="index" :class="selectModeIndex === item[0]?'modeNumItemActive':''" class="modeNumItem" v-show="item[1] !== 0" @click="selectModeIndexFn(item[0])">
+          <div v-for="(item, index) in modeNum"  :key="index" :class="selectModeIndex === item[0]?'modeNumItemActive':''" class="modeNumItem" v-show="item[1] !== 0" @click="selectModeIndexFn(item[0])">
             <img v-bind:src="require('../assets/gameModes/'+ item[0] +'.png')" alt="" style="width: 17vw">
             <div style="color: black;font-size: 16px">{{item[1]+'次'}}</div>
             <div style="font-size: 14px;margin-top: -5px" v-show="item[0] !== 7 && item[0] !== 8">
