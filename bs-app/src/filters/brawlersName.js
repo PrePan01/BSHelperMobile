@@ -56,5 +56,5 @@ export function brawlersName(data){
     else if(data === 'EVE' || data === 54 ) return '伊芙'
     else if(data === 'JANET' || data === 55 ) return '珍妮特'
     else if(data === 'BONNIE' || data === 56 ) return '邦妮'
-    else if(data === 'OTIS' || data === 56 ) return '奥蒂斯'
+    else if(data === 'OTIS' || data === 57 ) return '奥蒂斯'
 }
