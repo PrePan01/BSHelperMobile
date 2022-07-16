@@ -42,7 +42,7 @@ export function brawlersName(data){
     else if(data === 'LOU' || data === 40 ) return '小罗'
     else if(data === 'BYRON' || data === 41 ) return '拜伦'
     else if(data === 'EDGAR' || data === 42 ) return '艾德加'
-    else if(data === 'COLONEL RUFFS' || data === 43 ) return '拉夫上校'
+    else if(data === 'COLONEL\nRUFFS' || data === 43 ) return '拉夫上校'
     else if(data === 'STU' || data === 44 ) return '斯图'
     else if(data === 'BELLE' || data === 45 ) return '贝尔'
     else if(data === 'SQUEAK' || data === 46 ) return '史魁克'
@@ -56,4 +56,5 @@ export function brawlersName(data){
     else if(data === 'EVE' || data === 54 ) return '伊芙'
     else if(data === 'JANET' || data === 55 ) return '珍妮特'
     else if(data === 'BONNIE' || data === 56 ) return '邦妮'
+    else if(data === 'OTIS' || data === 56 ) return '奥蒂斯'
 }

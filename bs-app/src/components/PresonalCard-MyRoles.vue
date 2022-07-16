@@ -77,7 +77,7 @@
         <van-col span="6">
           <div class="brawlersNum">
             <span style="border: 1px solid #d9d9d9;padding: 3px 5px;border-radius: 4px;color: rgb(57,118,227)">{{brawlsNum}}</span>
-            <span> / 57</span>
+            <span> / 58</span>
           </div>
         </van-col>
       </van-row>
@@ -89,16 +89,28 @@
         <!--标题-->
         <template #title>
           <div style="display: flex; flex-direction: row; align-items: center;">
-            <img :src="require('../assets/brawlers/'+ item.id +'.png')" alt="" width="50vh" style="margin-right: 2vw">
-            <span style="font-size: 16px">{{item.name | brawlersName}}</span>
-            <span style="margin-left: auto">
+            <img :src="require('../assets/brawlers/'+ item.id +'.png')" alt="" width="52px" style="margin-right: 2vw">
+            <div style="display: flex;flex-direction: column;align-items: flex-start">
+              <span style="font-size: 18px;margin-bottom: 4px">{{item.name | brawlersName}}</span>
               <a-tag :color="item.power === 11? 'purple': item.power === 10? 'cyan': 'green'">
                 Lv.{{item.power}}
               </a-tag>
-              <a-tag color="orange">
-                <!--{{ item.trophies + ' / ' + item.highestTrophies }}-->
+            </div>
+            <span style="margin-left: auto;padding-right: 40px">
+              <!--<a-tag color="orange">
                 <b>{{item.trophies}}</b> / {{item.highestTrophies}}
-              </a-tag>
+              </a-tag>-->
+              <div style="display: inline-block;width: 120px">
+                <a-progress strokeWidth="8" :percent="item.trophies / item.highestTrophies * 100" status="active" strokeColor="rgb(255,190,32)">
+                <template #format="">
+                  <span style="color: black">
+                    <span style="font-weight: bold;font-size: 16px;color: rgb(255,190,32)">{{ item.trophies }}</span>
+                    /
+                    <span>{{item.highestTrophies}}</span>
+                  </span>
+                </template>
+              </a-progress>
+              </div>
             </span>
           </div>
         </template>

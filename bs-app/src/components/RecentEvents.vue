@@ -13,11 +13,10 @@
             <div style="width: 100px;float: left;">
               <div v-for="(item,index) in battleLogs" :key="index" :class="{
                 battlelogsIndex: true,
-                battlelogsIndexRed: item.battle.result === 'defeat',
+                battlelogsIndexRed: item.battle.result === 'defeat' || item.battle.rank > 5,
                 battlelogsIndexBlue: 'rank' in item.battle,
-                battlelogsIndexGreen: item.battle.result === 'victory',
-                battlelogsIndexBlue: item.battle.result === 'draw',
-                battlelogsIndexNull: !('result' in item.battle)
+                battlelogsIndexGreen: item.battle.result === 'victory' || item.battle.rank <= 4,
+                battlelogsIndexBlue: item.battle.result === 'draw'
               }">
               </div>
             </div>
@@ -60,7 +59,7 @@
     <!--模式英雄统计-->
     <van-row>
       <van-col span="12">
-        <!--0宝石，1足球，2赏金，3金库，4热区，5机甲，6淘汰赛，7单鸡，8双鸡，9车轮战，10积分战，11推车，12篮球，13机甲天降-->
+        <!--0宝石，1足球，2赏金，3金库，4热区，5机甲，6淘汰赛，7单鸡，8双鸡，9车轮战，10积分战，11推车，12篮球，13机甲天降，14追猎战-->
         <!--item[模式，次数，胜场，负场]-->
         <!--模式次数-->
         <div class="modeNum">
@@ -130,35 +129,41 @@
             <!--duels-->
             <span v-if="item.event.mode === 'duels'">
               <span v-for="(picItem, index) in item.battle.players[0].brawlers" :key="index + '2'">
-                <img v-if="item.battle.players[0].name === myName" :src="require('../assets/brawlers/'+ picItem.id +'.png')" alt="" width="30vw" style="margin-right: 5px">
+                <img v-if="item.battle.players[0].name === myName" :src="require('../assets/brawlers/'+ picItem.id +'.png')" alt="" width="36vw" style="margin-right: 5px">
               </span>
               <span v-for="(picItem, index) in item.battle.players[1].brawlers" :key="index+ '3'">
-                <img v-if="item.battle.players[1].name === myName" :src="require('../assets/brawlers/'+ picItem.id +'.png')" alt="" width="30vw" style="margin-right: 5px">
+                <img v-if="item.battle.players[1].name === myName" :src="require('../assets/brawlers/'+ picItem.id +'.png')" alt="" width="36vw" style="margin-right: 5px">
               </span>
             </span>
             <!--soloSD-->
             <span v-if="item.event.mode === 'soloShowdown' || item.battle.mode === 'soloShowdown'">
               <span v-for="(playersItem, index) in item.battle.players" :key="index + '4'">
-                <img v-if="playersItem.name === myName" :src="require('../assets/brawlers/'+ playersItem.brawler.id +'.png')" alt="" width="40vw">
+                <img v-if="playersItem.name === myName" :src="require('../assets/brawlers/'+ playersItem.brawler.id +'.png')" alt="" width="44vw">
               </span>
             </span>
             <!--duoSD-->
             <span v-if="item.event.mode === 'duoShowdown' || item.battle.mode === 'duoShowdown'">
               <span v-for="(teamsItem, index) in item.battle.teams" :key="index + '5'">
-                <img v-if="teamsItem[0].name === myName" :src="require('../assets/brawlers/'+ teamsItem[0].brawler.id +'.png')" alt="" width="40vw">
-                <img v-if="teamsItem[1].name === myName" :src="require('../assets/brawlers/'+ teamsItem[1].brawler.id +'.png')" alt="" width="40vw">
+                <img v-if="teamsItem[0].name === myName" :src="require('../assets/brawlers/'+ teamsItem[0].brawler.id +'.png')" alt="" width="44vw">
+                <img v-if="teamsItem[1].name === myName" :src="require('../assets/brawlers/'+ teamsItem[1].brawler.id +'.png')" alt="" width="44vw">
               </span>
             </span>
             <!--机甲入侵-->
             <span v-if="item.event.mode === 'roboRumble'">
               <span v-for="(playersItem, index) in item.battle.players" :key="index">
-                <img v-if="playersItem.name === myName" :src="require('../assets/brawlers/'+ playersItem.brawler.id +'.png')" alt="" width="40vw">
+                <img v-if="playersItem.name === myName" :src="require('../assets/brawlers/'+ playersItem.brawler.id +'.png')" alt="" width="44vw">
               </span>
             </span>
             <!--天选之战-->
             <span v-if="item.event.mode === 'bigGame'">
               <span v-for="(playersItem, index) in item.battle.players" :key="index">
-                <img v-if="playersItem.name === myName" :src="require('../assets/brawlers/'+ playersItem.brawler.id +'.png')" alt="" width="40vw">
+                <img v-if="playersItem.name === myName" :src="require('../assets/brawlers/'+ playersItem.brawler.id +'.png')" alt="" width="44vw">
+              </span>
+            </span>
+            <!--追猎战-->
+            <span v-if="item.event.mode === 'hunters'">
+              <span v-for="(playersItem, index) in item.battle.players" :key="index">
+                <img v-if="playersItem.name === myName" :src="require('../assets/brawlers/'+ playersItem.brawler.id +'.png')" alt="" width="44vw">
               </span>
             </span>
 
@@ -177,7 +182,7 @@
                 </span>
               </span>
 
-              <span v-if="item.event.mode === 'soloShowdown' || item.battle.mode === 'soloShowdown'">
+              <span v-if="item.event.mode === 'soloShowdown' || item.battle.mode === 'soloShowdown' || item.battle.mode === 'hunters'">
                 <span v-for="(item, index) in item.battle.players" :key="index + '0'">
                   <a-tag plain v-if="item.name === myName" color="orange">{{ item.brawler.trophies }}</a-tag>
                 </span>
@@ -200,10 +205,9 @@
                   v-if="item.battle.mode!=='bigGame'"
                   :class="{
                   'result': true,
-                  'winColor': item.battle.result === 'victory',
-                  'loseColor': item.battle.result === 'defeat',
+                  'winColor': item.battle.result === 'victory' || item.battle.rank <= 4,
+                  'loseColor': item.battle.result === 'defeat' || item.battle.rank > 5,
                   'drawColor': item.battle.result === 'draw',
-                  'otherColor': item.battle.result === undefined
                 }">
                 {{ item.battle.result === undefined? '#' + item.battle.rank: item.battle.result === 'victory'? '胜利': item.battle.result === 'defeat'? '战败': '平局'}}
               </div>
@@ -400,6 +404,34 @@
                 </span>
               </div>
             </van-col>
+          </van-row>
+        </div>
+        <!--追猎战-->
+        <div v-if="item.event.mode === 'hunters'">
+          <van-row>
+
+            <div style="color: black;text-align: center">
+              <span style="margin-right: 12vw">
+                <i style="font-weight: bold" class="iconfont icon-shijian"></i>
+                <span style="font-size: 16px;margin-left: 5px">{{ item.battleTime | dateFormatter }}</span>
+              </span>
+              <span><b>奖杯：</b>{{ item.battle.trophyChange >0? '+'+item.battle.trophyChange: item.battle.trophyChange }}</span>
+            </div>
+
+            <van-divider style="margin: 10px 0 10px 0"></van-divider>
+
+            <div style="text-align: center;display: flex;flex-wrap: wrap;width: 85vw;margin: 0 auto;justify-content: space-between">
+              <span v-for="(item, index) in item.battle.players" :key="index" style="display: flex;text-align: center;flex-direction: column;
+align-items: center">
+                <img :src="require('../assets/brawlers/'+ item.brawler.id +'.png')" alt="" style="width: 14vw;display: block;margin-bottom: 4px">
+                <van-tag plain type="primary" :color="item.brawler.power === 11? 'rgb(114,46,209)': item.brawler.power === 10? 'rgb(19,194,194)': 'rgb(82,196,26)'">Lv.{{ item.brawler.power }}</van-tag>
+                <div style="width: 15vw;font-size: 12px;color: black;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" :class="{name: item.name === myName}">{{item.name}}</div>
+                <div style="color: black;font-size: 12px;margin-top: -2px">
+                  <img style="vertical-align: middle" src="@/assets/icon_trophy_small.png" alt="" width="13px">
+                  <span style="vertical-align: middle">{{item.brawler.trophies}}</span>
+                </div>
+              </span>
+            </div>
           </van-row>
         </div>
 
@@ -617,9 +649,9 @@ export default {
       this.brawlUseSorted = brawlUseSorted
     },
     calModeNum(){
-      //0宝石，1足球，2赏金，3金库，4热区，5机甲，6淘汰赛，7单鸡，8双鸡，9车轮战，10积分战,11推车，12篮球，13机甲天降
+      //0宝石，1足球，2赏金，3金库，4热区，5机甲，6淘汰赛，7单鸡，8双鸡，9车轮战，10积分战,11推车，12篮球，13机甲天降，14追猎战
       //[序号，次数，胜场，负场]
-      let data = [[0,0,0,0],[1,0,0,0],[2,0,0,0],[3,0,0,0],[4,0,0,0],[5,0,0,0],[6,0,0,0],[7,0],[8,0],[9,0,0,0],[10,0,0,0],[11,0,0,0],[12,0,0,0],[13,0,0,0]]
+      let data = [[0,0,0,0],[1,0,0,0],[2,0,0,0],[3,0,0,0],[4,0,0,0],[5,0,0,0],[6,0,0,0],[7,0],[8,0],[9,0,0,0],[10,0,0,0],[11,0,0,0],[12,0,0,0],[13,0,0,0],[14,0,0,0]]
       for(let item in this.battleLogs){
         let battleItem = this.battleLogs[item].battle
         if(this.battleLogs[item].event.mode !== 'unknown' || this.battleLogs[item].battle.mode !== 'unknown'){
@@ -749,6 +781,16 @@ export default {
               data[13][3]++
             }
           }
+          else if(battleItem.mode === 'hunters'){
+            if (battleItem.rank < 5) {
+              data[14][1]++
+              data[14][2]++
+            }
+            if (battleItem.rank >= 5) {
+              data[14][1]++
+              data[14][3]++
+            }
+          }
         }
       }
       data = data.sort(function(x, y){
@@ -769,7 +811,7 @@ export default {
         return true
       }
       else{
-        let mode = ['gemGrab', 'brawlBall', 'bounty', 'heist', 'hotZone', 'siege', 'knockout', 'soloShowdown', 'duoShowdown', 'duels', 'wipeout', 'payload', 'basketBrawl', 'invasion']
+        let mode = ['gemGrab', 'brawlBall', 'bounty', 'heist', 'hotZone', 'siege', 'knockout', 'soloShowdown', 'duoShowdown', 'duels', 'wipeout', 'payload', 'basketBrawl', 'invasion', 'hunters']
         return mode[this.selectModeIndex] === data.mode
       }
     },

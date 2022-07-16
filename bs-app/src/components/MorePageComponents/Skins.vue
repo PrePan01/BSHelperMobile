@@ -125,7 +125,7 @@ export default {
     },
     createBrawlersList(){
       let num = 0
-      for(let i = 0; i <= 56; i++,num++){
+      for(let i = 0; i <= 57; i++,num++){
         if(num===33 || num===55) num++
         this.brawlersList[i] = 16000000 + num
       }
