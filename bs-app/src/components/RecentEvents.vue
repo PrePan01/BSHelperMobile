@@ -115,8 +115,8 @@
         <!--列表-->
         <template slot="title">
           <div style="display: flex; align-items: center;padding: 3px 0">
-            <img :src="require('../assets/gameModes/'+ item.battle.mode +'.png')" alt=""  style="margin-right: 1vw; width: 8vw;">
-            <span style="display:inline-block; width: 26vw;font-size: 16px">{{item.event.map | mapTranslate}}</span>
+            <img :src="require('../assets/gameModes/'+ item.battle.mode +'.png')" alt=""  style="margin-right: 1vw; width: 8vw;z-index: 1">
+            <span style="display:inline-block; width: 26vw;font-size: 16px;z-index: 1">{{item.event.map | mapTranslate}}</span>
             <!--3v3-->
             <span v-if="'teams' in item.battle && item.battle.teams.length === 2">
               <span v-for="(item, index) in item.battle.teams[0]" :key="index + '0'">
@@ -217,6 +217,9 @@
             </div>
 
           </div>
+          <div class="listBg listRedBg" v-if="item.battle.result === 'defeat' || item.battle.rank > 5"></div>
+          <div class="listBg listGreenBg" v-if="item.battle.result === 'victory' || item.battle.rank <= 4"></div>
+          <div class="listBg listBlueBg" v-if="item.battle.result === 'draw'"></div>
         </template>
         <!--详情-->
         <!--3V3-->
@@ -1079,5 +1082,21 @@ img{
   justify-content: center;
   margin: 5px 0 0 0;
   align-items: center;
+}
+.listBg {
+  height: 100px;
+  width: 300px;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.listRedBg {
+  background-image: linear-gradient(to right, rgba(245,108,108,0.15), rgba(255,255,255,0) 40%);
+}
+.listGreenBg {
+  background-image: linear-gradient(to right, rgba(103,194,58,0.15), rgba(255,255,255,0) 40%);
+}
+.listBlueBg {
+  background-image: linear-gradient(to right, rgba(64,158,255,0.15), rgba(255,255,255,0) 40%);
 }
 </style>
