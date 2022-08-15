@@ -1,5 +1,15 @@
 <template>
   <div class="mainContainer">
+
+    <a-alert
+        message="提示！"
+        description="此站为移动端小助手，请使用手机或竖屏访问噢！"
+        type="warning"
+        v-if="showSizeWarning"
+        show-icon
+        class="sizeWarning"
+    />
+
     <van-dialog v-model="showNewFn" title="新功能出现！" width="300px" confirmButtonText="我知道啦" confirmButtonColor="#0252CD" @closed="closeDialog()">
       <div style="margin: 10px auto;width: 290px;text-align: center">
         <img :src="require('../assets/newfn.png')" alt="" width="280px">
@@ -54,7 +64,8 @@ export default {
   data(){
     return{
       historySearch: '',
-      showNewFn: false
+      showNewFn: false,
+      showSizeWarning: false
     }
   },
   methods: {
@@ -84,6 +95,9 @@ export default {
   mounted(){
     this.historySearch = localStorage.getItem('historySearch')
     this.showNewFn = localStorage.getItem('newFn') !== 'shown'
+    if(window.screen.width > window.screen.height) {
+      this.showSizeWarning = true
+    }
   }
 }
 </script>
@@ -110,6 +124,11 @@ img{
   color: rgb(2,82,205);
   font-weight: bold;
   font-family: 黑体,serif;
+}
+.sizeWarning {
+  position: absolute;
+  top: 10vh;
+  z-index: 100;
 }
 </style>
 <style>

@@ -15,8 +15,20 @@
     <a-page-header
         style="border: 1px solid rgb(235, 237, 240);height: 8vh"
         title="皮肤图鉴"
+        :sub-title="'数据更新时间 '+updateTime"
         @back="onClickLeft"
-    />
+    ></a-page-header>
+
+    <!--贡献名单-->
+    <a-button type="Default" class="contribute" @click="openContribute = true">
+      贡献名单
+    </a-button>
+    <van-popup v-model="openContribute" position="top" :style="{ height: '30%' }" class="contribute-container">
+      <h2>皮肤数据贡献名单</h2>
+      <div>PrePan</div>
+      <h4>感谢每一位提交更新数据的小伙伴！</h4>
+    </van-popup>
+
     <div>
       <van-row>
         <van-col span="5" style="height: 92vh;overflow: scroll">
@@ -109,7 +121,9 @@ export default {
       chooseBrawlerData: [],
       brawlActiveIndex: 0,
       skinsData: [],
-      showPop: false
+      showPop: false,
+      updateTime: "",
+      openContribute: false
     }
   },
   methods: {
@@ -138,9 +152,10 @@ export default {
     this.createBrawlersList()
     axios({
       methods:'GET',
-      url: 'https://prepan.top/bs_m/skinData.json'
+      url: '/demo/skinData.json'
     }).then( res => {
-      this.skinsData = res.data
+      this.updateTime = res.data[0][0]
+      this.skinsData = res.data[1]
     })
     // this.skinsData = skinData
   },
@@ -191,5 +206,17 @@ img{
 .priceL{
   font-size: 22px;
   color: black;
+}
+.contribute {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  z-index: 10;
+}
+.contribute-container {
+  padding: 20px;
+}
+.contribute-container div {
+  margin: 20px 0 80px 0;
 }
 </style>

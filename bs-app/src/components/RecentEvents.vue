@@ -10,16 +10,16 @@
       <van-row ref="summaryCard" style="display: flex;align-items: center;">
         <van-col span="9">
           <!--胜负缩略图-->
-            <div style="width: 100px;float: left;">
-              <div v-for="(item,index) in battleLogs" :key="index" :class="{
+          <div style="width: 100px;float: left;">
+            <div v-for="(item,index) in battleLogs" :key="index" :class="{
                 battlelogsIndex: true,
                 battlelogsIndexRed: item.battle.result === 'defeat' || item.battle.rank > 5,
                 battlelogsIndexBlue: 'rank' in item.battle,
                 battlelogsIndexGreen: item.battle.result === 'victory' || item.battle.rank <= 4,
                 battlelogsIndexBlue: item.battle.result === 'draw'
               }">
-              </div>
             </div>
+          </div>
         </van-col>
         <van-col span="5">
           <div>
@@ -194,7 +194,7 @@
                   <a-tag plain v-if="teamsItem[1].name === myName" color="orange">{{ teamsItem[1].brawler.trophies }}</a-tag>
                 </span>
               </span>
-          </div>
+            </div>
 
             <a-tag style="display: inline-block;margin-left: -3px;margin-right: 3px;padding: 0 6px;" plain color="red" v-if="('starPlayer' in item.event || 'starPlayer' in item.battle) && isMyMvp(item.battle)">
               MVP

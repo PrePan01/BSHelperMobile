@@ -431,10 +431,8 @@ export default {
     },
     countDown: {
       get(){
-        let now = new Date();
         // TODO 荣誉联赛结束时间
-        let final = new Date("2022-06-27 16:00:00");
-        return final - now
+        return new Date("2022-07-25 16:00:00") - new Date()
       }
     }
   }
