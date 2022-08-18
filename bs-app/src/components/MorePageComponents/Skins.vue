@@ -25,7 +25,7 @@
     </a-button>
     <van-popup v-model="openContribute" position="top" :style="{ height: '30%' }" class="contribute-container">
       <h2>皮肤数据贡献名单</h2>
-      <div>PrePan</div>
+      <span v-for="(item, index) in contributor" :key="index" class="contributor">{{ item }}</span>
       <h4>感谢每一位提交更新数据的小伙伴！</h4>
     </van-popup>
 
@@ -123,7 +123,8 @@ export default {
       skinsData: [],
       showPop: false,
       updateTime: "",
-      openContribute: false
+      openContribute: false,
+      contributor: []
     }
   },
   methods: {
@@ -152,9 +153,10 @@ export default {
     this.createBrawlersList()
     axios({
       methods:'GET',
-      url: 'https://prepan.top/bs_m/skinData.json'
+      url: '/demo/skinData.json'
     }).then( res => {
       this.updateTime = res.data[0][0]
+      this.contributor = res.data[0][1]
       this.skinsData = res.data[1]
     })
     // this.skinsData = skinData
@@ -216,7 +218,10 @@ img{
 .contribute-container {
   padding: 20px;
 }
-.contribute-container div {
-  margin: 20px 0 80px 0;
+.contribute-container h4 {
+  margin: 20px 0 0 0;
+}
+.contributor {
+  margin: 10px 15px 10px 0;
 }
 </style>
