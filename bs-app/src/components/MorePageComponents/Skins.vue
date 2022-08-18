@@ -153,7 +153,7 @@ export default {
     this.createBrawlersList()
     axios({
       methods:'GET',
-      url: '/demo/skinData.json'
+      url: 'https://prepan.top/bs_m/skinData.json'
     }).then( res => {
       this.updateTime = res.data[0][0]
       this.contributor = res.data[0][1]
