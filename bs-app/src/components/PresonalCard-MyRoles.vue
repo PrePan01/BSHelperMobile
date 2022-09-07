@@ -4,24 +4,24 @@
     <div v-if="personalBrawlers.length!==0" style="width: 95vw; margin: 2px auto;border: 1px solid rgb(232,232,232);padding: 5px 5px 20px 5px">
       <div v-if="personalBrawlers.length!==0" style="text-align: center;margin-top: 10px;display: flex;justify-content: space-around;align-items: flex-end">
         <div style="display: inline-block">
-          <img :src="require('../assets/pins/top/'+ topBrawlers[1].id +'top.png')" alt="" width="70vw" class="topBrawlers">
-          <img :src="require('../assets/pins/top/top2.png')" alt="" width="35vw" class="topIcon">
+          <img :src="('https://prepan.top/bsAssets/pins/top/'+ topBrawlers[1].id +'top.png')" alt="" width="70vw" class="topBrawlers">
+          <img :src="('https://prepan.top/bsAssets/pins/top/top2.png')" alt="" width="35vw" class="topIcon">
           <div style="margin-top: 5px">
             <img style="vertical-align: middle;margin-right: 3px" :src="require('../assets/icon_trophy_medium.png')" alt="" width="20vw">
             <span style="color: black;font-size: 18px;vertical-align: middle">{{topBrawlers[1].trophies}}</span>
           </div>
         </div>
         <div style="display: inline-block">
-          <img :src="require('../assets/pins/top/'+ topBrawlers[0].id +'top.png')" alt="" width="85vw" class="topBrawlers">
-          <img :src="require('../assets/pins/top/top1.png')" alt="" width="40vw" class="topIcon">
+          <img :src="('https://prepan.top/bsAssets/pins/top/'+ topBrawlers[0].id +'top.png')" alt="" width="85vw" class="topBrawlers">
+          <img :src="('https://prepan.top/bsAssets/pins/top/top1.png')" alt="" width="40vw" class="topIcon">
           <div style="margin-top: 5px">
             <img style="vertical-align: middle;margin-right: 3px" :src="require('../assets/icon_trophy_medium.png')" alt="" width="20vw">
             <span style="color: black;font-size: 18px;vertical-align: middle">{{topBrawlers[0].trophies}}</span>
           </div>
         </div>
         <div style="display: inline-block">
-          <img :src="require('../assets/pins/top/'+ topBrawlers[2].id +'top.png')" alt="" width="60vw" class="topBrawlers">
-          <img :src="require('../assets/pins/top/top3.png')" alt="" width="30vw" class="topIcon">
+          <img :src="('https://prepan.top/bsAssets/pins/top/'+ topBrawlers[2].id +'top.png')" alt="" width="60vw" class="topBrawlers">
+          <img :src="('https://prepan.top/bsAssets/pins/top/top3.png')" alt="" width="30vw" class="topIcon">
           <div style="margin-top: 5px">
             <img style="vertical-align: middle;margin-right: 3px" :src="require('../assets/icon_trophy_medium.png')" alt="" width="20vw">
             <span style="color: black;font-size: 18px;vertical-align: middle">{{topBrawlers[2].trophies}}</span>
@@ -77,7 +77,7 @@
         <van-col span="6">
           <div class="brawlersNum">
             <span style="border: 1px solid #d9d9d9;padding: 3px 5px;border-radius: 4px;color: rgb(57,118,227)">{{brawlsNum}}</span>
-            <span> / 58</span>
+            <span> / 60</span>
           </div>
         </van-col>
       </van-row>
@@ -89,7 +89,7 @@
         <!--标题-->
         <template #title>
           <div style="display: flex; flex-direction: row; align-items: center;">
-            <img :src="require('../assets/brawlers/'+ item.id +'.png')" alt="" width="52px" style="margin-right: 2vw">
+            <img :src="('https://prepan.top/bsAssets/brawlers/' + item.id +'.png')" alt="" width="52px" style="margin-right: 2vw">
             <div style="display: flex;flex-direction: column;align-items: flex-start">
               <span style="font-size: 18px;margin-bottom: 4px">{{item.name | brawlersName}}</span>
               <a-tag :color="item.power === 11? 'purple': item.power === 10? 'cyan': 'green'">
@@ -97,11 +97,8 @@
               </a-tag>
             </div>
             <span style="margin-left: auto;padding-right: 40px">
-              <!--<a-tag color="orange">
-                <b>{{item.trophies}}</b> / {{item.highestTrophies}}
-              </a-tag>-->
               <div style="display: inline-block;width: 120px">
-                <a-progress strokeWidth="8" :percent="item.trophies / item.highestTrophies * 100" status="active" strokeColor="rgb(255,190,32)">
+                <a-progress :strokeWidth="8" :percent="item.trophies / item.highestTrophies * 100" status="active" strokeColor="rgb(255,190,32)">
                 <template #format="">
                   <span style="color: black">
                     <span style="font-weight: bold;font-size: 16px;color: rgb(255,190,32)">{{ item.trophies }}</span>
@@ -138,21 +135,21 @@
               <div v-if="item.starPowers.length !== 0" style="margin-bottom: 1vh">
                 <div style="color: black; margin-bottom: 0.5em">星辉之力</div>
                 <span v-for="(picItem, index) in item.starPowers" :key="index">
-                <img :src="require('../assets/starPowersAndGadgets/'+ getStarPowers(picItem) +'.png')" alt="" width="30vh" style="margin-right: 15px">
+                <img :src="('https://prepan.top/bsAssets/starPowersAndGadgets/'+ picItem.id +'.png')" alt="" width="30vh" style="margin-right: 15px">
                 </span>
               </div>
               <!--武装配件-->
               <div v-if="item.gadgets.length !== 0" style="margin-bottom: 1vh">
                 <div style="color: black; margin-bottom: 0.5em">武装配件</div>
                 <span v-for="(picItem, index) in item.gadgets" :key="index">
-                <img :src="require('../assets/starPowersAndGadgets/'+ getStarPowers(picItem) +'.png')" alt="" width="30vh" style="margin-right: 15px">
+                <img :src="('https://prepan.top/bsAssets/starPowersAndGadgets/' + picItem.id +'.png')" alt="" width="30vh" style="margin-right: 15px">
                 </span>
               </div>
               <!--装备-->
               <div v-if="item.gears.length !== 0">
                 <div style="color: black; margin-bottom: 0.5em">装备</div>
                 <span v-for="(picItem, index) in item.gears" :key="index">
-                <img :src="require('../assets/gears/'+ picItem.name + picItem.level +'.png')" alt="" width="35vh" style="margin-right: 15px">
+                <img :src="('https://prepan.top/bsAssets/gears/'+ picItem.name + picItem.level +'.png')" alt="" width="35vh" style="margin-right: 15px">
                 </span>
               </div>
             </van-col>
@@ -310,7 +307,7 @@ export default {
     getStarPowers(){
       return function (data){
         try{
-          require('../assets/starPowersAndGadgets/'+ data.id +'.png')
+          require('https://prepan.top/bsAssets/starPowersAndGadgets/'+ data.id +'.png')
           return data.id
         }
         catch (e) {

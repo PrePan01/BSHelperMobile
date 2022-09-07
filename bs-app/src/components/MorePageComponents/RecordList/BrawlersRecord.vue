@@ -16,7 +16,7 @@
                 style="max-width: 95%;"
                 v-for="(item, index) in this.brawlersList"
                 :key="index"
-                :src="require('@/assets/brawlers/'+ item +'.png')"
+                :src="('https://prepan.top/bsAssets/brawlers/'+ item +'.png')"
                 alt=""
                 @click="chooseBrawlerData = brawlersRecordData.data[item];brawlActiveIndex = index"
             >

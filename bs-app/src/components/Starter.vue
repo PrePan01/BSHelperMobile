@@ -27,7 +27,7 @@
           scrollable
           text="皮肤图鉴模块正式上线，欢迎点击皮肤下方铅笔按钮共同维护最新史低价格数据，详情请查看【更多】-【皮肤图鉴】！"
       />
-      <img :src="require('../assets/startpic.png')" alt="" style="width: 80vw;margin: 0 0 -5vh 10vw">
+      <img :src="require('../assets/startlogo.png')" alt="" style="width: 80vw;margin: 0 0 -5vh 10vw">
     </div>
     <div></div>
     <div>

@@ -25,7 +25,7 @@
     <!--表格-->
     <a-table :columns="columns" :data-source="stats" :pagination="false" :scroll="{ y: '85vh' }">
       <span slot="brawler" slot-scope="brawler">
-        <img :src="require('@/assets/brawlers/'+ brawler +'.png')" alt="" width="50vh">
+        <img :src="('https://prepan.top/bsAssets/brawlers/'+ brawler +'.png')" alt="" width="50vh">
       </span>
       <span slot="winRate" slot-scope="winRate">
         {{winRate.toFixed(2)}}%

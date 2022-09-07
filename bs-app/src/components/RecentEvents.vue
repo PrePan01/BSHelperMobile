@@ -76,7 +76,7 @@
         <!--英雄次数-->
         <div class="brawlerUse">
           <div v-for="(key,index) in brawlUseSorted" :key="index" class="brawlerUseItem">
-            <img :src="require('../assets/brawlers/'+ key +'.png')" alt="" style="width: 17vw">
+            <img :src="('https://prepan.top/bsAssets/brawlers/' + key +'.png')" alt="" style="width: 17vw">
             <div style="color: black;font-size: 16px">{{brawlUse[key][0]+'次'}}</div>
             <div style="font-size: 14px;margin-top: -5px">
               <span style="color: rgb(82,196,26)">{{brawlUse[key][1]}}</span> / <span style="color: rgb(247,93,164)">{{brawlUse[key][2]}}</span>
@@ -120,50 +120,50 @@
             <!--3v3-->
             <span v-if="'teams' in item.battle && item.battle.teams.length === 2">
               <span v-for="(item, index) in item.battle.teams[0]" :key="index + '0'">
-                <img v-if="item.name === myName" :src="require('../assets/brawlers/'+ item.brawler.id +'.png')" alt="" width="44vw">
+                <img v-if="item.name === myName" :src="('https://prepan.top/bsAssets/brawlers/' + item.brawler.id +'.png')" alt="" width="44vw">
               </span>
               <span v-for="(item, index) in item.battle.teams[1]" :key="index + '1'">
-                <img v-if="item.name === myName" :src="require('../assets/brawlers/'+ item.brawler.id +'.png')" alt="" width="44vw">
+                <img v-if="item.name === myName" :src="('https://prepan.top/bsAssets/brawlers/' + item.brawler.id +'.png')" alt="" width="44vw">
               </span>
             </span>
             <!--duels-->
             <span v-if="item.event.mode === 'duels'">
               <span v-for="(picItem, index) in item.battle.players[0].brawlers" :key="index + '2'">
-                <img v-if="item.battle.players[0].name === myName" :src="require('../assets/brawlers/'+ picItem.id +'.png')" alt="" width="36vw" style="margin-right: 5px">
+                <img v-if="item.battle.players[0].name === myName" :src="('https://prepan.top/bsAssets/brawlers/'+ picItem.id +'.png')" alt="" width="36vw" style="margin-right: 5px">
               </span>
               <span v-for="(picItem, index) in item.battle.players[1].brawlers" :key="index+ '3'">
-                <img v-if="item.battle.players[1].name === myName" :src="require('../assets/brawlers/'+ picItem.id +'.png')" alt="" width="36vw" style="margin-right: 5px">
+                <img v-if="item.battle.players[1].name === myName" :src="('https://prepan.top/bsAssets/brawlers/'+ picItem.id +'.png')" alt="" width="36vw" style="margin-right: 5px">
               </span>
             </span>
             <!--soloSD-->
             <span v-if="item.event.mode === 'soloShowdown' || item.battle.mode === 'soloShowdown'">
               <span v-for="(playersItem, index) in item.battle.players" :key="index + '4'">
-                <img v-if="playersItem.name === myName" :src="require('../assets/brawlers/'+ playersItem.brawler.id +'.png')" alt="" width="44vw">
+                <img v-if="playersItem.name === myName" :src="('https://prepan.top/bsAssets/brawlers/' + playersItem.brawler.id +'.png')" alt="" width="44vw">
               </span>
             </span>
             <!--duoSD-->
             <span v-if="item.event.mode === 'duoShowdown' || item.battle.mode === 'duoShowdown'">
               <span v-for="(teamsItem, index) in item.battle.teams" :key="index + '5'">
-                <img v-if="teamsItem[0].name === myName" :src="require('../assets/brawlers/'+ teamsItem[0].brawler.id +'.png')" alt="" width="44vw">
-                <img v-if="teamsItem[1].name === myName" :src="require('../assets/brawlers/'+ teamsItem[1].brawler.id +'.png')" alt="" width="44vw">
+                <img v-if="teamsItem[0].name === myName" :src="('https://prepan.top/bsAssets/brawlers/'+ teamsItem[0].brawler.id +'.png')" alt="" width="44vw">
+                <img v-if="teamsItem[1].name === myName" :src="('https://prepan.top/bsAssets/brawlers/'+ teamsItem[1].brawler.id +'.png')" alt="" width="44vw">
               </span>
             </span>
             <!--机甲入侵-->
             <span v-if="item.event.mode === 'roboRumble'">
               <span v-for="(playersItem, index) in item.battle.players" :key="index">
-                <img v-if="playersItem.name === myName" :src="require('../assets/brawlers/'+ playersItem.brawler.id +'.png')" alt="" width="44vw">
+                <img v-if="playersItem.name === myName" :src="('https://prepan.top/bsAssets/brawlers/' + playersItem.brawler.id +'.png')" alt="" width="44vw">
               </span>
             </span>
             <!--天选之战-->
             <span v-if="item.event.mode === 'bigGame'">
               <span v-for="(playersItem, index) in item.battle.players" :key="index">
-                <img v-if="playersItem.name === myName" :src="require('../assets/brawlers/'+ playersItem.brawler.id +'.png')" alt="" width="44vw">
+                <img v-if="playersItem.name === myName" :src="('https://prepan.top/bsAssets/brawlers/'+ playersItem.brawler.id +'.png')" alt="" width="44vw">
               </span>
             </span>
             <!--追猎战-->
             <span v-if="item.event.mode === 'hunters'">
               <span v-for="(playersItem, index) in item.battle.players" :key="index">
-                <img v-if="playersItem.name === myName" :src="require('../assets/brawlers/'+ playersItem.brawler.id +'.png')" alt="" width="44vw">
+                <img v-if="playersItem.name === myName" :src="('https://prepan.top/bsAssets/brawlers/'+ playersItem.brawler.id +'.png')" alt="" width="44vw">
               </span>
             </span>
 
@@ -253,7 +253,7 @@
                     :key="index"
                     style="display: inline-block;text-align: center;margin: 0 3px"
                     @click="$bus.$emit('onSearch', brawlerItem.tag.slice(1))">
-                  <img :src="require('../assets/brawlers/'+ brawlerItem.brawler.id +'.png')" alt="" style="width: 13vw;display: block">
+                  <img :src="('https://prepan.top/bsAssets/brawlers/'+ brawlerItem.brawler.id +'.png')" alt="" style="width: 13vw;display: block">
                   <van-tag plain type="primary" :color="brawlerItem.brawler.power === 11? 'rgb(114,46,209)': brawlerItem.brawler.power === 10? 'rgb(19,194,194)': 'rgb(82,196,26)'">Lv.{{ brawlerItem.brawler.power }}</van-tag>
                   <div style="width: 13vw;font-size: 12px;color: black;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" :class="{name: item.name === myName}">{{brawlerItem.name}}</div>
                   <div style="color: black;font-size: 12px;margin-top: -2px">
@@ -272,7 +272,7 @@
                     :key="index"
                     style="display: inline-block;text-align: center;margin: 0 3px"
                     @click="$bus.$emit('onSearch', brawlerItem.tag.slice(1))">
-                  <img :src="require('../assets/brawlers/'+ brawlerItem.brawler.id +'.png')" alt="" style="width: 13vw;display: block">
+                  <img :src="('https://prepan.top/bsAssets/brawlers/' + brawlerItem.brawler.id +'.png')" alt="" style="width: 13vw;display: block">
                   <van-tag plain type="primary" :color="brawlerItem.brawler.power === 11? 'rgb(114,46,209)': brawlerItem.brawler.power === 10? 'rgb(19,194,194)': 'rgb(82,196,26)'">Lv.{{ brawlerItem.brawler.power }}</van-tag>
                   <div style="width: 13vw;font-size: 12px;color: black;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" :class="{name: brawlerItem.name === myName}">{{brawlerItem.name}}</div>
                   <div style="color: black;font-size: 12px;margin-top: -2px">
@@ -333,7 +333,7 @@
             <div style="display: flex; margin: 0 auto;align-items: center">
               <div style="text-align: center;display: inline-block">
                 <div v-for="(item, index) in item.battle.players[0].brawlers" :key="index" style="display: inline-block;text-align: center;margin: 0 3px">
-                  <img :src="require('../assets/brawlers/'+ item.id +'.png')" alt="" style="width: 13vw;display: block">
+                  <img :src="('https://prepan.top/bsAssets/brawlers/' + item.id +'.png')" alt="" style="width: 13vw;display: block">
                   <van-tag plain type="primary" :color="item.power === 11? 'rgb(114,46,209)': item.power === 10? 'rgb(19,194,194)': 'rgb(82,196,26)'">Lv.{{ item.power }}</van-tag>
                   <div style="color: black;font-size: 12px;margin-top: -2px">
                     <img style="vertical-align: middle" src="@/assets/icon_trophy_small.png" alt="" width="13px">
@@ -347,7 +347,7 @@
               </div>
               <div style="text-align: center;display: inline-block">
                 <span v-for="(item, index) in item.battle.players[1].brawlers" :key="index" style="display: inline-block;text-align: center;margin: 0 3px">
-                  <img :src="require('../assets/brawlers/'+ item.id +'.png')" alt="" style="width: 13vw;display: block">
+                  <img :src="('https://prepan.top/bsAssets/brawlers/' + item.id +'.png')" alt="" style="width: 13vw;display: block">
                   <van-tag plain type="primary" :color="item.power === 11? 'rgb(114,46,209)': item.power === 10? 'rgb(19,194,194)': 'rgb(82,196,26)'">Lv.{{ item.power }}</van-tag>
                   <div style="color: black;font-size: 12px;margin-top: -2px">
                     <img style="vertical-align: middle" src="@/assets/icon_trophy_small.png" alt="" width="13px">
@@ -372,7 +372,7 @@
             <van-col span="14">
               <div style="text-align: center">
                 <span v-for="(item, index) in item.battle.players" :key="index" style="display: inline-block;text-align: center;margin: 0vh 8px 0 0">
-                  <img :src="require('../assets/brawlers/'+ item.brawler.id +'.png')" alt="" style="width: 15vw;display: block">
+                  <img :src="('https://prepan.top/bsAssets/brawlers/' + item.brawler.id +'.png')" alt="" style="width: 15vw;display: block">
                   <van-tag plain type="primary">Lv.{{ item.brawler.power }}</van-tag>
                   <div style="width: 15vw;font-size: 0.2em;color: black;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" :class="{name: item.name === myName}">{{item.name}}</div>
                 </span>
@@ -391,7 +391,7 @@
               </a-descriptions>
               <div style="margin-left: 20px;text-align: center">
                 <div style="color: black">天选英雄</div>
-                <img :src="require('../assets/brawlers/'+ item.battle.bigBrawler.brawler.id +'.png')" alt="" style="width: 15vw;">
+                <img :src="('https://prepan.top/bsAssets/brawlers/' + item.battle.bigBrawler.brawler.id +'.png')" alt="" style="width: 15vw;">
                 <br>
                 <van-tag plain type="primary">Lv.{{ item.battle.bigBrawler.brawler.power }}</van-tag>
                 <br>
@@ -401,7 +401,7 @@
             <van-col span="14">
               <div style="text-align: center">
                 <span v-for="(item, index) in item.battle.players" :key="index" style="display: inline-block;text-align: center;margin: 0vh 8px 0 0">
-                  <img :src="require('../assets/brawlers/'+ item.brawler.id +'.png')" alt="" style="width: 15vw;display: block">
+                  <img :src="('https://prepan.top/bsAssets/brawlers/' + item.brawler.id +'.png')" alt="" style="width: 15vw;display: block">
                   <van-tag plain type="primary">Lv.{{ item.brawler.power }}</van-tag>
                   <div style="width: 15vw;font-size: 0.2em;color: black;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" :class="{name: item.name === myName}">{{item.name}}</div>
                 </span>
@@ -424,9 +424,8 @@
             <van-divider style="margin: 10px 0 10px 0"></van-divider>
 
             <div style="text-align: center;display: flex;flex-wrap: wrap;width: 85vw;margin: 0 auto;justify-content: space-between">
-              <span v-for="(item, index) in item.battle.players" :key="index" style="display: flex;text-align: center;flex-direction: column;
-align-items: center">
-                <img :src="require('../assets/brawlers/'+ item.brawler.id +'.png')" alt="" style="width: 14vw;display: block;margin-bottom: 4px">
+              <span v-for="(item, index) in item.battle.players" :key="index" style="display: flex;text-align: center;flex-direction: column;align-items: center">
+                <img :src="('https://prepan.top/bsAssets/brawlers/' + item.brawler.id +'.png')" alt="" style="width: 14vw;display: block;margin-bottom: 4px">
                 <van-tag plain type="primary" :color="item.brawler.power === 11? 'rgb(114,46,209)': item.brawler.power === 10? 'rgb(19,194,194)': 'rgb(82,196,26)'">Lv.{{ item.brawler.power }}</van-tag>
                 <div style="width: 15vw;font-size: 12px;color: black;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" :class="{name: item.name === myName}">{{item.name}}</div>
                 <div style="color: black;font-size: 12px;margin-top: -2px">

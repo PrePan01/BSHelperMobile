@@ -38,7 +38,7 @@
                 style="max-width: 95%;"
                 v-for="(item, index) in this.brawlersList"
                 :key="index"
-                :src="require('@/assets/brawlers/'+ item +'.png')"
+                :src="('https://prepan.top/bsAssets/brawlers/'+ item +'.png')"
                 alt=""
                 @click="brawlActiveIndex = index;"
             >
@@ -65,7 +65,6 @@
                       slot="cover"
                       :src="'https://prepan.top/bs_m/img/skins/' + brawlActiveIndex + '/' + item[0] + '.png'"
                       style="width: 70%;margin: 2vh auto 0 auto"
-
                   >
                     <template v-slot:loading>
                       <a-spin>
