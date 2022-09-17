@@ -139,7 +139,7 @@ export default {
     },
     createBrawlersList(){
       let num = 0
-      for(let i = 0; i <= 57; i++,num++){
+      for(let i = 0; i <= 59; i++,num++){
         if(num===33 || num===55) num++
         this.brawlersList[i] = 16000000 + num
       }
@@ -152,7 +152,7 @@ export default {
     this.createBrawlersList()
     axios({
       methods:'GET',
-      url: 'https://prepan.top/bs_m/skinData.json'
+      url: '/demo/skinData.json'
     }).then( res => {
       this.updateTime = res.data[0][0]
       this.contributor = res.data[0][1]
