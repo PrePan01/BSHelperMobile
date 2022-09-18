@@ -25,7 +25,7 @@
           background="#FFF"
           left-icon="volume-o"
           scrollable
-          text="皮肤图鉴模块正式上线，欢迎点击皮肤下方铅笔按钮共同维护最新史低价格数据，详情请查看【更多】-【皮肤图鉴】！"
+          text="战绩小助手PC端已经正式上线啦！移动端/PC端统一访问地址：prepan.top/bs"
       />
       <img :src="require('../assets/startlogo.png')" alt="" style="width: 80vw;margin: 0 0 -5vh 10vw">
     </div>
